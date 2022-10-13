@@ -23,7 +23,7 @@ namespace WindowsFormsApp1011
             InitializeComponent();
 
             this.button1 = new Button();
-            this.button1.Location = new Point(530, 10);
+            this.button1.Location = new Point(525, 10);
             this.button1.Text = "Click Me !";
             this.button1.Click += new EventHandler(this.button_Click);
 
