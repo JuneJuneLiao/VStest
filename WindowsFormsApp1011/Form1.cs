@@ -23,7 +23,7 @@ namespace WindowsFormsApp1011
             InitializeComponent();
 
             this.button1 = new Button();
-            this.button1.Location = new Point(10, 10);
+            this.button1.Location = new Point(530, 10);
             this.button1.Text = "Click Me !";
             this.button1.Click += new EventHandler(this.button_Click);
 
@@ -38,20 +38,29 @@ namespace WindowsFormsApp1011
         }
         [STAThread]
         
-
+        
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+        
 
         private void button_Click (object sender, EventArgs e)
         {
             //Console.WriteLine ("hello");
-            button1.Visible = false;
+            //button1.Visible = false;
 
             DataGridView dataGridView = new DataGridView();
-            //dataGridView.Dock = DockStyle.Fill;// 填滿視窗
+            
+            // 填滿視窗
+            dataGridView.Dock = DockStyle.Fill;
             //dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            //自動調欄寬
+            dataGridView.AutoResizeColumns();
+
+            //自動調欄高
+            //dataGridView.AutoResizeRows();
 
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("Level", typeof(string));
