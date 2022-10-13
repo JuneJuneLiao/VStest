@@ -23,7 +23,7 @@ namespace WindowsFormsApp1011
             InitializeComponent();
 
             this.button1 = new Button();
-            this.button1.Location = new Point(525, 10);
+            this.button1.Location = new Point(550, 10);
             this.button1.Text = "Click Me !";
             this.button1.Click += new EventHandler(this.button_Click);
 
@@ -60,34 +60,70 @@ namespace WindowsFormsApp1011
             dataGridView.AutoResizeColumns();
 
             //自動調欄高
-            //dataGridView.AutoResizeRows();
+            dataGridView.AutoResizeRows();
 
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Level", typeof(string));
-            dataTable.Columns.Add("Category", typeof(string));
-            dataTable.Columns.Add("Time", typeof(string));
-            dataTable.Columns.Add("Tags", typeof(string));
-            dataTable.Columns.Add("Message", typeof(string));
-            dataGridView.DataSource = dataTable;
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Level", typeof(string));
+            dt.Columns.Add("Category", typeof(string));
+            dt.Columns.Add("Time", typeof(string));
+            dt.Columns.Add("Tags", typeof(string));
+            dt.Columns.Add("Message", typeof(string));
+            dataGridView.DataSource = dt;
+
+            //width
+            //dataGridView.Columns["Level"].Width = 200;
+            //dataGridView.Columns["Level"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+
 
             using (StreamReader sr = new StreamReader("C:/Users/rita5/source/repos/WindowsFormsApp1011/cx_vis.log"))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] elements = line.Split(new char[2] { ',', ' '});
-                    DataRow dr = dataTable.NewRow();
+                    //string[] elements = line.Replace('@', ',').Split(',');
+                    string[] elements = line.Split(new char[] { ',', '{' });         
+                    DataRow dr = dt.NewRow();
+
+                    /*
+                    foreach (string info in elements)
+                    {
+                        Console.WriteLine("   {0}", info.Substring(info.IndexOf(": ") + 1));
+                    }
+
+                    
+                    if (dataGridView.Rows.Count == 0)
+                    {
+                        
+                    }
+                    
+                   
+                    if (elements[3] == "@" )
+                    {
+                        dr[3] = elements[3];
+                    }
+                    else
+                    {
+                        dr[3] = null;
+                    }
+
+                    */
+
                     dr[0] = elements[0];
                     dr[1] = elements[1];
                     dr[2] = elements[2];
-                    dr[3] = elements[3];
-                    dr[4] = elements[4];
 
-                    dataTable.Rows.Add(dr);
+                    dr[3] = elements[3];
+                    //dr[4] = elements[4];
+                    
+
+                    //將資料加入到datatable中
+                    dt.Rows.Add(dr);
                 }
             }
-
-            this.Controls.Add(dataGridView);// 新增到當前的 Form 中
+            
+            // 新增到當前的 Form 中
+            this.Controls.Add(dataGridView);
         }
 
 
