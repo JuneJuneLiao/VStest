@@ -81,15 +81,28 @@ namespace WindowsFormsApp1011
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
+                    Console.WriteLine(line.Length);
+
+                    int i = line.IndexOf("@");
+                    int j = line.IndexOf("#");
+                    line = (line.Substring(i + 1)).Substring(0, j - i - 1); //找出@#之間的字串
+                    Console.WriteLine(line.Length);
+
                     //string[] elements = line.Replace('@', ',').Split(',');
-                    string[] elements = line.Split(new char[] { ',', '{' });         
+                    string[] elements = line.Replace(';', ',').Split(new char[] { ',' });         
                     DataRow dr = dt.NewRow();
 
+
+                    StreamWriter str = new StreamWriter("C:/Users/rita5/source/repos/WindowsFormsApp1011/cx_vis_1.log");
+
+                    str.WriteLine(line);
                     /*
                     foreach (string info in elements)
                     {
-                        Console.WriteLine("   {0}", info.Substring(info.IndexOf(": ") + 1));
+                        str.WriteLine("   {0}", info.Substring(info.IndexOf("@ ") + 1));
                     }
+                    */
+                    str.Close();
 
                     
                     if (dataGridView.Rows.Count == 0)
@@ -107,7 +120,7 @@ namespace WindowsFormsApp1011
                         dr[3] = null;
                     }
 
-                    */
+                    
 
                     dr[0] = elements[0];
                     dr[1] = elements[1];
