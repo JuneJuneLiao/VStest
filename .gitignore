@@ -1,4 +1,9 @@
-WindowsFormsApp1011/obj/Debug/*.cs
+WindowsFormsApp1011/bin/Debug
+WindowsFormsApp1011/obj/Debug
 VStest
 *.exe
 *.pdb
+README.md
+*.png
+*.log
+*.txt
