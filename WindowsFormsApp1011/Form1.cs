@@ -64,11 +64,18 @@ namespace WindowsFormsApp1011
         {
             string [] lines = File.ReadAllLines(@"C:\Users\rita5\source\repos\WindowsFormsApp1011\cx_vis.log");
             string [] values;
+            string tags ;
+            string[] meg;
 
             for (int i = 0; i < lines.Length; i++)
             {
-                values = lines[i].ToString().Replace('@',' ').Split(',');
-                
+                values = lines[i].ToString().Split(',');
+
+                //tags = lines[i].ToString().Split();
+                lines[i].Contains('@');
+                //int index = lines[i].IndexOf(',');
+                //string content = lines.Substring(index,lines.Length-index-1);
+
                 string[] row = new string[values.Length];
 
                 for (int j = 0; j< lines.Length; j++)

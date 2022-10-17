@@ -1,0 +1,10 @@
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\bin\Debug\WindowsFormsApp1011.exe.config
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\bin\Debug\WindowsFormsApp1011.exe
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\bin\Debug\WindowsFormsApp1011.pdb
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.csprojAssemblyReference.cache
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.Form1.resources
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.Properties.Resources.resources
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.csproj.GenerateResource.cache
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.csproj.CoreCompileInputs.cache
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.exe
+C:\Users\rita5\source\repos\WindowsFormsApp1011\WindowsFormsApp1011\obj\Debug\WindowsFormsApp1011.pdb
