@@ -1,6 +1,4 @@
-obj/Debug/
+WindowsFormsApp1011/obj/Debug/*.cs
 VStest
-WindowsFormsApp1011/Form1.resx
-WindowsFormsApp1011/App.config
 *.exe
 *.pdb
