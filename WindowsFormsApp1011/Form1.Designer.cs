@@ -42,9 +42,9 @@
             // 
             // btn_rf
             // 
-            this.btn_rf.Location = new System.Drawing.Point(446, 27);
+            this.btn_rf.Location = new System.Drawing.Point(529, 27);
             this.btn_rf.Name = "btn_rf";
-            this.btn_rf.Size = new System.Drawing.Size(75, 23);
+            this.btn_rf.Size = new System.Drawing.Size(91, 23);
             this.btn_rf.TabIndex = 0;
             this.btn_rf.Text = "Read File";
             this.btn_rf.UseVisualStyleBackColor = true;
@@ -52,7 +52,7 @@
             // 
             // btn_cf
             // 
-            this.btn_cf.Location = new System.Drawing.Point(539, 27);
+            this.btn_cf.Location = new System.Drawing.Point(436, 28);
             this.btn_cf.Name = "btn_cf";
             this.btn_cf.Size = new System.Drawing.Size(75, 23);
             this.btn_cf.TabIndex = 1;
@@ -99,6 +99,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 115);
             this.dataGridView1.Name = "dataGridView1";
@@ -109,6 +110,7 @@
             // 
             // cmbType
             // 
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
             "Level",

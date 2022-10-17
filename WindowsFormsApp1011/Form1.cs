@@ -39,7 +39,10 @@ namespace WindowsFormsApp1011
         //[STAThread]
 
         DataTable dt = new DataTable();
+        private string[] values;
+        private string[] tags;
         //DateTimePicker dtp = new DateTimePicker();
+
         private void Form1_Load(object sender, EventArgs e)
         {
             cmbType.SelectedIndex = 0;
@@ -62,10 +65,41 @@ namespace WindowsFormsApp1011
 
         private void btn_rf_Click(object sender, EventArgs e)
         {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.Multiselect = true;  // 如果要允許選擇一個以上的
+            dialog.Title = "請選擇資料夾";
+            dialog.InitialDirectory = ".\\";    //設定起始目錄
+            //dialog.InitialDirectory = Application.StartupPath;  //設定起始目錄為程式目錄
+            dialog.Filter = "所有檔案(*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                //MessageBox.Show(dialog.FileName);
+                string[] lines = File.ReadAllLines(dialog.FileName);
+                foreach  (string line in lines)
+                {
+                        values = line.Split(',');
+                        //tags = line.Substring('@');
+                        dt.Rows.Add(line);
+                }
+            }
+            else if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                    dialog.Dispose();
+                    return;
+            }
+
+            
+            /*
             string [] lines = File.ReadAllLines(@"C:\Users\rita5\source\repos\WindowsFormsApp1011\cx_vis.log");
+            StreamReader sr = new StreamReader("C:/Users/rita5/source/repos/WindowsFormsApp1011/cx_vis.log");
+            string line;
+
             string [] values;
             string tags ;
             string[] meg;
+
+            //while()
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -83,21 +117,23 @@ namespace WindowsFormsApp1011
                     row[j] = values[j].Trim();
                 }
                 dt.Rows.Add(row);
-            }
+            }*/
         }
-
-         
 
 
         private void btn_cf_Click(object sender, EventArgs e) //confirm 設定
         {
-            if (string.IsNullOrEmpty(txtSearch.Text))  //confirm 設定 txt
+            DataView dv = dt.DefaultView;
+            if (string.IsNullOrEmpty(txtSearch.Text))  //confirm 設定 txt 篩選
             {
-                //customersBindingSource.Filter = string.Empty;
+                dv.RowFilter = string.Empty;
+                    //customersBindingSource.Filter = string.Empty;
             }
             else
             {
+                dv.RowFilter = string.Format("{0} ='{1}'", cmbType.Text, txtSearch.Text);
                 //customersBindingSource.Filter = string.Format("{0} ='{1}'", cmbType.Text, txtSearch.Text);
+                //productsBindingSource.Filter = string.Format("{0} ='{1}'", cmbType.Text, txtSearch.Text);
             }
 
 
