@@ -37,6 +37,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btn_sf = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +74,7 @@
             // 
             this.dateTimePicker_Star.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dateTimePicker_Star.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Star.Location = new System.Drawing.Point(137, 69);
+            this.dateTimePicker_Star.Location = new System.Drawing.Point(141, 69);
             this.dateTimePicker_Star.Name = "dateTimePicker_Star";
             this.dateTimePicker_Star.Size = new System.Drawing.Size(200, 25);
             this.dateTimePicker_Star.TabIndex = 3;
@@ -130,11 +131,22 @@
             this.txtSearch.Size = new System.Drawing.Size(196, 25);
             this.txtSearch.TabIndex = 8;
             // 
+            // btn_sf
+            // 
+            this.btn_sf.Location = new System.Drawing.Point(769, 75);
+            this.btn_sf.Name = "btn_sf";
+            this.btn_sf.Size = new System.Drawing.Size(91, 23);
+            this.btn_sf.TabIndex = 9;
+            this.btn_sf.Text = "Save File";
+            this.btn_sf.UseVisualStyleBackColor = true;
+            this.btn_sf.Click += new System.EventHandler(this.btn_sf_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(872, 458);
+            this.Controls.Add(this.btn_sf);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.cmbType);
             this.Controls.Add(this.dataGridView1);
@@ -164,6 +176,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btn_sf;
     }
 }
 
