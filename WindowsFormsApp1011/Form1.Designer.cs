@@ -76,16 +76,17 @@
             this.dateTimePicker_Star.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker_Star.Location = new System.Drawing.Point(141, 69);
             this.dateTimePicker_Star.Name = "dateTimePicker_Star";
-            this.dateTimePicker_Star.Size = new System.Drawing.Size(200, 25);
+            this.dateTimePicker_Star.Size = new System.Drawing.Size(196, 25);
             this.dateTimePicker_Star.TabIndex = 3;
+            this.dateTimePicker_Star.Value = new System.DateTime(2022, 10, 19, 10, 3, 1, 0);
             // 
             // dateTimePicker_Stop
             // 
             this.dateTimePicker_Stop.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dateTimePicker_Stop.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Stop.Location = new System.Drawing.Point(400, 69);
+            this.dateTimePicker_Stop.Location = new System.Drawing.Point(383, 69);
             this.dateTimePicker_Stop.Name = "dateTimePicker_Stop";
-            this.dateTimePicker_Stop.Size = new System.Drawing.Size(200, 25);
+            this.dateTimePicker_Stop.Size = new System.Drawing.Size(195, 25);
             this.dateTimePicker_Stop.TabIndex = 4;
             // 
             // cb_df
@@ -101,9 +102,11 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 115);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(848, 314);
