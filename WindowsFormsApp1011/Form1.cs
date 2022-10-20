@@ -247,7 +247,7 @@ namespace WindowsFormsApp1011
                         }
                     }
                     //clean 緩衝區
-                    //sw.Flush();
+                    sw.Flush();
                     sw.Close();
                     fs.Close();
                     MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);

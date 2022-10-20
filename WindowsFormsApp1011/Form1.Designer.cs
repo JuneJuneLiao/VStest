@@ -43,7 +43,7 @@
             // 
             // btn_rf
             // 
-            this.btn_rf.Location = new System.Drawing.Point(529, 27);
+            this.btn_rf.Location = new System.Drawing.Point(537, 27);
             this.btn_rf.Name = "btn_rf";
             this.btn_rf.Size = new System.Drawing.Size(91, 23);
             this.btn_rf.TabIndex = 0;
@@ -53,7 +53,7 @@
             // 
             // btn_cf
             // 
-            this.btn_cf.Location = new System.Drawing.Point(436, 28);
+            this.btn_cf.Location = new System.Drawing.Point(441, 27);
             this.btn_cf.Name = "btn_cf";
             this.btn_cf.Size = new System.Drawing.Size(75, 23);
             this.btn_cf.TabIndex = 1;
@@ -74,7 +74,7 @@
             // 
             this.dateTimePicker_Star.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dateTimePicker_Star.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Star.Location = new System.Drawing.Point(141, 69);
+            this.dateTimePicker_Star.Location = new System.Drawing.Point(121, 69);
             this.dateTimePicker_Star.Name = "dateTimePicker_Star";
             this.dateTimePicker_Star.Size = new System.Drawing.Size(196, 25);
             this.dateTimePicker_Star.TabIndex = 3;
@@ -84,7 +84,7 @@
             // 
             this.dateTimePicker_Stop.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dateTimePicker_Stop.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Stop.Location = new System.Drawing.Point(383, 69);
+            this.dateTimePicker_Stop.Location = new System.Drawing.Point(366, 69);
             this.dateTimePicker_Stop.Name = "dateTimePicker_Stop";
             this.dateTimePicker_Stop.Size = new System.Drawing.Size(195, 25);
             this.dateTimePicker_Stop.TabIndex = 4;
