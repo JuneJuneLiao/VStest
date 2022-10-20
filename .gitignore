@@ -7,4 +7,4 @@ README.md
 *.png
 *.log
 *.txt
-../.vs/
+.vs
