@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace WindowsFormsApp1011
 {
@@ -17,7 +18,7 @@ namespace WindowsFormsApp1011
         //public Button button1;
         //public TextBox textbox1;
         //public ListBox listbox1;
-
+        //Thread readfile_thread;
 
         public Form1()
         {
@@ -39,14 +40,14 @@ namespace WindowsFormsApp1011
         }
         //[STAThread]
 
-        DataTable dt = new DataTable();
+        private DataTable dt = new DataTable();
         //DateTimePicker dtp = new DateTimePicker();
 
         private void Form1_Load(object sender, EventArgs e)
         {
             cmbType.SelectedIndex = 1;
             //dtp.ShowCheckBox = true;
-            
+            dataGridView1.AllowUserToAddRows = false;
             dt.Columns.Add("Level", typeof(string));
             dt.Columns.Add("Category", typeof(string));
             dt.Columns.Add("Time", typeof(string));
@@ -75,6 +76,7 @@ namespace WindowsFormsApp1011
 
         private void btn_rf_Click(object sender, EventArgs e)       //read file
         {
+            
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;  // 如果要允許選擇一個以上的
             dialog.Title = "請選擇資料夾";
@@ -90,28 +92,51 @@ namespace WindowsFormsApp1011
                 //string sjn = "^#json$";         //規律字串
                 foreach  (string line in lines)
                 {
+                    bool get_tags = line.Contains('@');
+                    DataRow dr = dt.NewRow();
+                    if (get_tags == true)
+                    {
+                        string[] get_data = line.Split(new string[] { "@" },StringSplitOptions.RemoveEmptyEntries);
+                        string [] get_result = get_data[0].Split(',');
+                        dr["Level"] = get_result[0];
+                        dr["Category"] = get_result[1];
+                        dr["Time"] = get_result[2];
+
+                        string[] get_result_m = get_data[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
+                        dr["Tags"] = get_result_m[0].Replace(";", ",");
+                        dr["Message"] = get_result_m[1];
+                    }
+                    else
+                    {
+                        string[] get_data_else = line.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                        dr["Level"] = get_data_else[0];
+                        dr["Category"] = get_data_else[1];
+                        dr["Time"] = get_data_else[2];
+                        dr["Message"] = get_data_else[3];
+                        
+                    }
+                    dt.Rows.Add(dr);
+                    
+                    /*
                     string[] get_data = line.Split(new string[] { "," },StringSplitOptions.RemoveEmptyEntries);
-                    //string[] get_tag = get_data[3].Replace(";", ",");
 
                     DataRow dr = dt.NewRow();
                     dr["Level"] = get_data[0];
                     dr["Category"] = get_data[1];
                     dr["Time"] = get_data[2];
-                    //dr["Tags"] = get_tag[0];
-                    //dr["Message"] = get_tag[0];
 
                     bool tack_m = get_data[3].Contains('@');
                     //bool tack_m = Regex.IsMatch(get_tag[0], sPattern);
                     //bool take_sjn = Regex.IsMatch(get_tag[0], sjn);
                     //bool take_mes = Regex.IsMatch(get_tag[0], pattern);
 
-
                     if (tack_m == true)
                     {
                         //dt.Rows.Add(dr["Tags"]);
                         //dr["Tags"] = get_tag[0];
-                        string[] spl_msg = get_data[3].Replace(";", ",").Split(new string[] { "#" }, StringSplitOptions.RemoveEmptyEntries);
-                        dr["Tags"] = spl_msg[0].Replace("@", "");
+                        
+                        string[] spl_msg = get_data[3].Split('#');
+                        dr["Tags"] = spl_msg[0].Replace(";", ",").Substring(1);
                         dr["Message"] = spl_msg[1].Substring(5);
 
                     }
@@ -131,12 +156,13 @@ namespace WindowsFormsApp1011
                     
                     DataRow dr = dt.NewRow();
                     //tags = line.Substring('@');
-                    */
-                    dt.Rows.Add(dr);
                     
+                    dt.Rows.Add(dr); */
+
+
                 }
             }
-            else if (dialog.ShowDialog() != DialogResult.OK)
+            else    //if (dialog.ShowDialog() != DialogResult.OK)
             {
                     dialog.Dispose();
                     return;
@@ -144,35 +170,14 @@ namespace WindowsFormsApp1011
             //dt.DefaultView.Sort = "Time"; //按time排序
             //dt = dt.DefaultView.ToTable();
 
-            /*
-            string [] lines = File.ReadAllLines(@"C:\Users\rita5\source\repos\WindowsFormsApp1011\cx_vis.log");
-            StreamReader sr = new StreamReader("C:/Users/rita5/source/repos/WindowsFormsApp1011/cx_vis.log");
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                values = lines[i].ToString().Split(',');
-
-                //tags = lines[i].ToString().Split();
-                lines[i].Contains('@');
-                //int index = lines[i].IndexOf(',');
-                //string content = lines.Substring(index,lines.Length-index-1);
-
-                string[] row = new string[values.Length];
-
-                for (int j = 0; j< lines.Length; j++)
-                {
-                    row[j] = values[j].Trim();
-                }
-                dt.Rows.Add(row);
-            }*/
         }
 
 
-        private void btn_cf_Click(object sender, EventArgs e) //confirm 設定
+        private void btn_cf_Click(object sender, EventArgs e)  //confirm 設定
         {
             DataView dv = dt.DefaultView;
 
-            if (string.IsNullOrEmpty(txtSearch.Text))  //confirm 設定 txt 篩選
+            if (string.IsNullOrEmpty(txtSearch.Text))   //confirm 設定 txt 篩選
             {
                 dv.RowFilter = string.Empty;
                 DataTable newTable = dv.ToTable();
@@ -185,9 +190,11 @@ namespace WindowsFormsApp1011
             
             if (cb_df.Checked) //設定時間
             {
-                DateTime Date1 = dateTimePicker_Star.Value.Date;
-                DateTime Date2 = dateTimePicker_Stop.Value.Date;
-                dv.RowFilter = String.Format("Date1 > #{0:yyyy-MM-dd HH:mm:ss}# AND Date1 < #{0:yyyy-MM-dd HH:mm:ss}#", dateTimePicker_Star.Value, dateTimePicker_Stop.Value);
+                DateTime dateTime_Star = dateTimePicker_Star.Value.Date;
+                DateTime dateTime_Stop = dateTimePicker_Stop.Value.Date;
+                dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
+                    , dateTime_Star, dateTime_Stop);
+
                 //dv.DataSource = dt;
                 DataTable newTable = dv.ToTable();
 
@@ -219,7 +226,7 @@ namespace WindowsFormsApp1011
                 }
                 else
                 {
-                    sw.WriteLine(dataGridView1.Rows.Count-1);
+                    //sw.WriteLine(dataGridView1.Rows);
                     for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                     {
                         for (int j = 0; j < dataGridView1.Columns.Count; j++)
@@ -229,17 +236,19 @@ namespace WindowsFormsApp1011
                             //writer.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
                             if (dataGridView1.Rows[i].Cells[j].Value != null)
                             {
-                                sw.WriteLine(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
+                                sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
                                 DataTable table = new DataTable();
                                 DataRow row = table.NewRow();
                                 if (dt.Rows[3] != null)
                                 {
+                                    sw.Write(dataGridView1.Rows[3].ToString() + "," );
                                     //String.Join("@", dt.Rows[3]);
                                     //String.Join("#json ", dt.Rows[4]);
                                 }
-                                else
+                                else if(dt.Rows[4] != null)
                                 {
-                                     //row[4].TrimStar(',');
+                                    sw.Write(dataGridView1.Rows[3].ToString() + "," + "\n");
+                                    //row[4].TrimStar(',');
                                 }
                             }
                             //else
@@ -247,7 +256,7 @@ namespace WindowsFormsApp1011
                         }
                     }
                     //clean 緩衝區
-                    sw.Flush();
+                    //sw.Flush();
                     sw.Close();
                     fs.Close();
                     MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
