@@ -23,7 +23,6 @@ namespace WindowsFormsApp1011
         public Form1()
         {
             InitializeComponent();
-            
             //this.button1 = new Button();
             //this.button1.Location = new Point(550, 10);
             //this.button1.Text = "Click Me !";
@@ -40,7 +39,7 @@ namespace WindowsFormsApp1011
         }
         //[STAThread]
 
-        private DataTable dt = new DataTable();
+        DataTable dt = new DataTable();
         //DateTimePicker dtp = new DateTimePicker();
 
         private void Form1_Load(object sender, EventArgs e)
@@ -76,7 +75,15 @@ namespace WindowsFormsApp1011
 
         private void btn_rf_Click(object sender, EventArgs e)       //read file
         {
-            
+            Thread thread = new Thread(DataTableCollectionAddRange);
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            //Thread.Sleep(1);
+        }
+
+        private void DataTableCollectionAddRange()
+        {
+            DataSet dataSet = new DataSet();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;  // 如果要允許選擇一個以上的
             dialog.Title = "請選擇資料夾";
@@ -90,14 +97,14 @@ namespace WindowsFormsApp1011
                 //string pattern = @"^[A-Za-z0-9]+$";     //規律字串
                 //string sPattern = "^@$";    //規律字串
                 //string sjn = "^#json$";         //規律字串
-                foreach  (string line in lines)
+                foreach (string line in lines)
                 {
-                    bool get_tags = line.Contains('@');
                     DataRow dr = dt.NewRow();
+                    bool get_tags = line.Contains('@');
                     if (get_tags == true)
                     {
-                        string[] get_data = line.Split(new string[] { "@" },StringSplitOptions.RemoveEmptyEntries);
-                        string [] get_result = get_data[0].Split(',');
+                        string[] get_data = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] get_result = get_data[0].Split(',');
                         dr["Level"] = get_result[0];
                         dr["Category"] = get_result[1];
                         dr["Time"] = get_result[2];
@@ -113,10 +120,11 @@ namespace WindowsFormsApp1011
                         dr["Category"] = get_data_else[1];
                         dr["Time"] = get_data_else[2];
                         dr["Message"] = get_data_else[3];
-                        
+
                     }
                     dt.Rows.Add(dr);
-                    
+                    //dataSet.Tables.AddRange(dr);
+
                     /*
                     string[] get_data = line.Split(new string[] { "," },StringSplitOptions.RemoveEmptyEntries);
 
@@ -164,12 +172,9 @@ namespace WindowsFormsApp1011
             }
             else    //if (dialog.ShowDialog() != DialogResult.OK)
             {
-                    dialog.Dispose();
-                    return;
+                dialog.Dispose();
+                return;
             }
-            //dt.DefaultView.Sort = "Time"; //按time排序
-            //dt = dt.DefaultView.ToTable();
-
         }
 
 
@@ -179,29 +184,41 @@ namespace WindowsFormsApp1011
 
             if (string.IsNullOrEmpty(txtSearch.Text))   //confirm 設定 txt 篩選
             {
+                //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dv.RowFilter = string.Empty;
                 DataTable newTable = dv.ToTable();
             }
             else
             {
                 dv.RowFilter = string.Format("{0} ='{1}'", cmbType.Text, txtSearch.Text);
-                DataTable newTable = dv.ToTable();
-            }
-            
-            if (cb_df.Checked) //設定時間
-            {
-                DateTime dateTime_Star = dateTimePicker_Star.Value.Date;
-                DateTime dateTime_Stop = dateTimePicker_Stop.Value.Date;
-                dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
-                    , dateTime_Star, dateTime_Stop);
+                if (cb_df.Checked) //設定時間
+                {
+                    DateTime dateTime_Star = dateTimePicker_Start.Value.Date;
+                    DateTime dateTime_Stop = dateTimePicker_Stop.Value.Date;
+                    dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
+                        , dateTime_Star, dateTime_Stop);
 
-                //dv.DataSource = dt;
+                    //dv.DataSource = dt;
+                    //DataTable newTable = dv.ToTable();
+
+                }
+
                 DataTable newTable = dv.ToTable();
 
             }
+
+
         }
 
         private void btn_sf_Click(object sender, EventArgs e)       //write file
+        {
+            Thread thread_write = new Thread(Thread_writefile);
+            thread_write.SetApartmentState(ApartmentState.STA);
+            thread_write.Start();
+            //Thread.Sleep(1);
+        }
+            
+        private void Thread_writefile()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt|All files (*.*)|*.*";
@@ -209,7 +226,7 @@ namespace WindowsFormsApp1011
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.Title = "另存新檔";
             //saveFileDialog.ShowDialog();
-            
+
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //File.WriteAllText(saveFileDialog.FileName, string.Empty); 
@@ -220,51 +237,44 @@ namespace WindowsFormsApp1011
                 FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
 
-                if(dataGridView1.Rows.Count < 1)
+                if (dataGridView1.Rows.Count < 1)
                 {
-                    MessageBox.Show("沒有數據，輸出失敗","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("沒有數據，輸出失敗", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    //sw.WriteLine(dataGridView1.Rows);
-                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
                         for (int j = 0; j < dataGridView1.Columns.Count; j++)
                         {
-                            
 
-                            //writer.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
-                            if (dataGridView1.Rows[i].Cells[j].Value != null)
+                            if (dataGridView1.Rows[3].Cells[j].Value != null)
+                            {
+
+                                //string dataGridView1.Rows[i].Cells[j].Value.ToString() = String.Format("{0},{1},{2},@{3},#json {4}");
+                                //sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
+                                //sw.Write(dataGridView1.Rows[4].Cells[j].Value.ToString());
+                                //sw.Write(dataGridView1);
+                                //, Rows[i], Rows[i + 1], Rows[i + 2], Rows[i + 3]Rows[i + 4]
+
+                            }
+                            else if (dataGridView1.Rows[3].Cells[j].Value == null)
                             {
                                 sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
-                                DataTable table = new DataTable();
-                                DataRow row = table.NewRow();
-                                if (dt.Rows[3] != null)
-                                {
-                                    sw.Write(dataGridView1.Rows[3].ToString() + "," );
-                                    //String.Join("@", dt.Rows[3]);
-                                    //String.Join("#json ", dt.Rows[4]);
-                                }
-                                else if(dt.Rows[4] != null)
-                                {
-                                    sw.Write(dataGridView1.Rows[3].ToString() + "," + "\n");
-                                    //row[4].TrimStar(',');
-                                }
                             }
-                            //else
-                            //    sw.WriteLine("");
                         }
+                        sw.WriteLine(String.Join(",", ""));
                     }
                     //clean 緩衝區
                     //sw.Flush();
                     sw.Close();
                     fs.Close();
-                    MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
                 }
 
-                
+
             }
-            
+
             /* //write one file 
             TextWriter writer = new StreamWriter(@"C:\Users\rita5\source\repos\WindowsFormsApp1011\test.log");
             for(int i = 0; i < dataGridView1.Rows.Count-1; i++)

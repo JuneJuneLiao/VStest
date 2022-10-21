@@ -31,7 +31,7 @@
             this.btn_rf = new System.Windows.Forms.Button();
             this.btn_cf = new System.Windows.Forms.Button();
             this.lab_type = new System.Windows.Forms.Label();
-            this.dateTimePicker_Star = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker_Start = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker_Stop = new System.Windows.Forms.DateTimePicker();
             this.cb_df = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -70,15 +70,15 @@
             this.lab_type.TabIndex = 2;
             this.lab_type.Text = "Type";
             // 
-            // dateTimePicker_Star
+            // dateTimePicker_Start
             // 
-            this.dateTimePicker_Star.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            this.dateTimePicker_Star.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Star.Location = new System.Drawing.Point(121, 69);
-            this.dateTimePicker_Star.Name = "dateTimePicker_Star";
-            this.dateTimePicker_Star.Size = new System.Drawing.Size(196, 25);
-            this.dateTimePicker_Star.TabIndex = 3;
-            this.dateTimePicker_Star.Value = new System.DateTime(2022, 10, 19, 10, 3, 1, 0);
+            this.dateTimePicker_Start.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePicker_Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_Start.Location = new System.Drawing.Point(121, 69);
+            this.dateTimePicker_Start.Name = "dateTimePicker_Start";
+            this.dateTimePicker_Start.Size = new System.Drawing.Size(196, 25);
+            this.dateTimePicker_Start.TabIndex = 3;
+            this.dateTimePicker_Start.Value = new System.DateTime(2022, 10, 19, 10, 3, 1, 0);
             // 
             // dateTimePicker_Stop
             // 
@@ -155,7 +155,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.cb_df);
             this.Controls.Add(this.dateTimePicker_Stop);
-            this.Controls.Add(this.dateTimePicker_Star);
+            this.Controls.Add(this.dateTimePicker_Start);
             this.Controls.Add(this.lab_type);
             this.Controls.Add(this.btn_cf);
             this.Controls.Add(this.btn_rf);
@@ -173,7 +173,7 @@
         private System.Windows.Forms.Button btn_rf;
         private System.Windows.Forms.Button btn_cf;
         private System.Windows.Forms.Label lab_type;
-        private System.Windows.Forms.DateTimePicker dateTimePicker_Star;
+        private System.Windows.Forms.DateTimePicker dateTimePicker_Start;
         private System.Windows.Forms.DateTimePicker dateTimePicker_Stop;
         private System.Windows.Forms.CheckBox cb_df;
         private System.Windows.Forms.DataGridView dataGridView1;
