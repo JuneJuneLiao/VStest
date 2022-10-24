@@ -13,21 +13,22 @@ using System.Threading;
 
 namespace WindowsFormsApp1011
 {
-    public partial class Form1 : Form
+    public partial class form1 : Form
     {
 
-        public Form1()
+        public form1()
         {
             InitializeComponent();
         }
         //[STAThread]
 
-        DataSet dataSet = new DataSet();
-        DataTable dt = new DataTable();
+        private DataSet dataSet = new DataSet();
+        private DataTable dt = new DataTable();
+        int readAgain = 1;
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void form1_Load(object sender, EventArgs e)
         {
-            cmbType.SelectedIndex = 1;
+            typeComboBox.SelectedIndex = 1;
             //dtp.ShowCheckBox = true;
             dataGridView1.AllowUserToAddRows = false;
             dt.Columns.Add("Level", typeof(string));
@@ -53,20 +54,31 @@ namespace WindowsFormsApp1011
                                     AnchorStyles.Right |
                                     AnchorStyles.Top |
                                     AnchorStyles.Left;
-            BtnSaveFile.Anchor = AnchorStyles.Top |
+            saveFileButton.Anchor = AnchorStyles.Top |
                             AnchorStyles.Right;
 
         }
-        
+            
+
         // read file
-        private void BtnReadFile_Click(object sender, EventArgs e)       
+        private void readFileButton_Click(object sender, EventArgs e)       
         {
-            Thread thread = new Thread(DataTableCollection);
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
+            if (readAgain == 1)
+            {
+                Thread thread = new Thread(getDataTableCollection);
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                readAgain = 2;
+            }
+            else if (readAgain == 2)
+            {
+                MessageBox.Show("檔案執行中 請稍等 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                readAgain = 1;
+            }
+
         }
 
-        private void DataTableCollection()
+        private void getDataTableCollection()
         {
             OpenFileDialog dialog = new OpenFileDialog();
             // 如果要允許選擇一個以上的
@@ -86,26 +98,26 @@ namespace WindowsFormsApp1011
                 {
                     DataRow dr = dt.NewRow();
                     dr["all line"] = line;
-                    bool get_tags = line.Contains('@');
-                    if (get_tags == true)
+                    bool getTags = line.Contains('@');
+                    if (getTags == true)
                     {
-                        string[] get_data = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
-                        string[] get_result = get_data[0].Split(',');
-                        dr["Level"] = get_result[0];
-                        dr["Category"] = get_result[1];
-                        dr["Time"] = get_result[2];
+                        string[] getData = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] getResult = getData[0].Split(',');
+                        dr["Level"] = getResult[0];
+                        dr["Category"] = getResult[1];
+                        dr["Time"] = getResult[2];
 
-                        string[] get_result_m = get_data[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
-                        dr["Tags"] = get_result_m[0].Replace(";", ",");
-                        dr["Message"] = get_result_m[1];
+                        string[] getResultTags = getData[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
+                        dr["Tags"] = getResultTags[0].Replace(";", ",");
+                        dr["Message"] = getResultTags[1];
                     }
                     else
                     {
-                        string[] get_data_else = line.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                        dr["Level"] = get_data_else[0];
-                        dr["Category"] = get_data_else[1];
-                        dr["Time"] = get_data_else[2];
-                        dr["Message"] = get_data_else[3];
+                        string[] getDataElse = line.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                        dr["Level"] = getDataElse[0];
+                        dr["Category"] = getDataElse[1];
+                        dr["Time"] = getDataElse[2];
+                        dr["Message"] = getDataElse[3];
 
                     }
 
@@ -123,11 +135,11 @@ namespace WindowsFormsApp1011
 
 
         // confirm 設定
-        private void BtnConfirm_Click(object sender, EventArgs e)  
+        private void confirmButton_Click(object sender, EventArgs e)  
         {
             DataView dv = dt.DefaultView;
             // confirm 設定 txt 篩選
-            if (string.IsNullOrEmpty(txtSearch.Text))   
+            if (string.IsNullOrEmpty(searchTextBox.Text))   
             {
                 //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dv.RowFilter = string.Empty;
@@ -135,14 +147,14 @@ namespace WindowsFormsApp1011
             }
             else
             {
-                dv.RowFilter = string.Format("{0} ='{1}'", cmbType.Text, txtSearch.Text);
+                dv.RowFilter = string.Format("{0} ='{1}'", typeComboBox.Text, searchTextBox.Text);
                 // 設定時間
-                if (cb_df.Checked) 
+                if (dateFilterCheckBox.Checked) 
                 {
-                    DateTime dateTime_Star = dateTimePicker_Start.Value.Date;
-                    DateTime dateTime_Stop = dateTimePicker_Stop.Value.Date;
+                    DateTime dateTimeStar = startDateTimePicker.Value.Date;
+                    DateTime dateTimeStop = stopDateTimePicker.Value.Date;
                     dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
-                        , dateTime_Star, dateTime_Stop);
+                        , dateTimeStar, dateTimeStop);
 
                     //dv.DataSource = dt;
                     //DataTable newTable = dv.ToTable();
@@ -155,15 +167,15 @@ namespace WindowsFormsApp1011
         }
 
         // write file thread
-        private void BtnSaveFile_Click(object sender, EventArgs e)       
+        private void saveFileButton_Click(object sender, EventArgs e)       
         {
-            Thread thread_write = new Thread(ThreadWriteFile);
-            thread_write.SetApartmentState(ApartmentState.STA);
-            thread_write.Start();
+            Thread threadWrite = new Thread(threadWriteFile);
+            threadWrite.SetApartmentState(ApartmentState.STA);
+            threadWrite.Start();
             //Thread.Sleep(1);
         }
             
-        private void ThreadWriteFile()
+        private void threadWriteFile()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt|All files (*.*)|*.*";
@@ -200,6 +212,8 @@ namespace WindowsFormsApp1011
             }
 
         }
+
+
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1011
 {
-    partial class Form1
+    partial class form1
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -28,38 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.BtnReadFile = new System.Windows.Forms.Button();
-            this.BtnConfirm = new System.Windows.Forms.Button();
+            this.readFileButton = new System.Windows.Forms.Button();
+            this.confirmButton = new System.Windows.Forms.Button();
             this.lab_type = new System.Windows.Forms.Label();
-            this.dateTimePicker_Start = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker_Stop = new System.Windows.Forms.DateTimePicker();
-            this.cb_df = new System.Windows.Forms.CheckBox();
+            this.startDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.stopDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dateFilterCheckBox = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.cmbType = new System.Windows.Forms.ComboBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.BtnSaveFile = new System.Windows.Forms.Button();
+            this.typeComboBox = new System.Windows.Forms.ComboBox();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
+            this.saveFileButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // BtnReadFile
+            // readFileButton
             // 
-            this.BtnReadFile.Location = new System.Drawing.Point(537, 27);
-            this.BtnReadFile.Name = "BtnReadFile";
-            this.BtnReadFile.Size = new System.Drawing.Size(91, 23);
-            this.BtnReadFile.TabIndex = 0;
-            this.BtnReadFile.Text = "Read File";
-            this.BtnReadFile.UseVisualStyleBackColor = true;
-            this.BtnReadFile.Click += new System.EventHandler(this.BtnReadFile_Click);
+            this.readFileButton.Location = new System.Drawing.Point(537, 27);
+            this.readFileButton.Name = "readFileButton";
+            this.readFileButton.Size = new System.Drawing.Size(91, 23);
+            this.readFileButton.TabIndex = 0;
+            this.readFileButton.Text = "Read File";
+            this.readFileButton.UseVisualStyleBackColor = true;
+            this.readFileButton.Click += new System.EventHandler(this.readFileButton_Click);
             // 
-            // BtnConfirm
+            // confirmButton
             // 
-            this.BtnConfirm.Location = new System.Drawing.Point(441, 27);
-            this.BtnConfirm.Name = "BtnConfirm";
-            this.BtnConfirm.Size = new System.Drawing.Size(75, 23);
-            this.BtnConfirm.TabIndex = 1;
-            this.BtnConfirm.Text = "Confirm";
-            this.BtnConfirm.UseVisualStyleBackColor = true;
-            this.BtnConfirm.Click += new System.EventHandler(this.BtnConfirm_Click);
+            this.confirmButton.Location = new System.Drawing.Point(441, 27);
+            this.confirmButton.Name = "confirmButton";
+            this.confirmButton.Size = new System.Drawing.Size(75, 23);
+            this.confirmButton.TabIndex = 1;
+            this.confirmButton.Text = "Confirm";
+            this.confirmButton.UseVisualStyleBackColor = true;
+            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
             // lab_type
             // 
@@ -70,34 +70,34 @@
             this.lab_type.TabIndex = 2;
             this.lab_type.Text = "Type";
             // 
-            // dateTimePicker_Start
+            // startDateTimePicker
             // 
-            this.dateTimePicker_Start.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            this.dateTimePicker_Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Start.Location = new System.Drawing.Point(121, 69);
-            this.dateTimePicker_Start.Name = "dateTimePicker_Start";
-            this.dateTimePicker_Start.Size = new System.Drawing.Size(196, 25);
-            this.dateTimePicker_Start.TabIndex = 3;
-            this.dateTimePicker_Start.Value = new System.DateTime(2022, 10, 19, 10, 3, 1, 0);
+            this.startDateTimePicker.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.startDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startDateTimePicker.Location = new System.Drawing.Point(121, 69);
+            this.startDateTimePicker.Name = "startDateTimePicker";
+            this.startDateTimePicker.Size = new System.Drawing.Size(196, 25);
+            this.startDateTimePicker.TabIndex = 3;
+            this.startDateTimePicker.Value = new System.DateTime(2022, 10, 19, 10, 3, 1, 0);
             // 
-            // dateTimePicker_Stop
+            // stopDateTimePicker
             // 
-            this.dateTimePicker_Stop.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            this.dateTimePicker_Stop.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_Stop.Location = new System.Drawing.Point(366, 69);
-            this.dateTimePicker_Stop.Name = "dateTimePicker_Stop";
-            this.dateTimePicker_Stop.Size = new System.Drawing.Size(195, 25);
-            this.dateTimePicker_Stop.TabIndex = 4;
+            this.stopDateTimePicker.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.stopDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.stopDateTimePicker.Location = new System.Drawing.Point(366, 69);
+            this.stopDateTimePicker.Name = "stopDateTimePicker";
+            this.stopDateTimePicker.Size = new System.Drawing.Size(195, 25);
+            this.stopDateTimePicker.TabIndex = 4;
             // 
-            // cb_df
+            // dateFilterCheckBox
             // 
-            this.cb_df.AutoSize = true;
-            this.cb_df.Location = new System.Drawing.Point(25, 75);
-            this.cb_df.Name = "cb_df";
-            this.cb_df.Size = new System.Drawing.Size(90, 19);
-            this.cb_df.TabIndex = 5;
-            this.cb_df.Text = "Date Filter";
-            this.cb_df.UseVisualStyleBackColor = true;
+            this.dateFilterCheckBox.AutoSize = true;
+            this.dateFilterCheckBox.Location = new System.Drawing.Point(25, 75);
+            this.dateFilterCheckBox.Name = "dateFilterCheckBox";
+            this.dateFilterCheckBox.Size = new System.Drawing.Size(90, 19);
+            this.dateFilterCheckBox.TabIndex = 5;
+            this.dateFilterCheckBox.Text = "Date Filter";
+            this.dateFilterCheckBox.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -112,56 +112,56 @@
             this.dataGridView1.Size = new System.Drawing.Size(848, 314);
             this.dataGridView1.TabIndex = 6;
             // 
-            // cmbType
+            // typeComboBox
             // 
-            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
+            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.typeComboBox.FormattingEnabled = true;
+            this.typeComboBox.Items.AddRange(new object[] {
             "Level",
             "Category",
             "Time",
             "Tags",
             "Message"});
-            this.cmbType.Location = new System.Drawing.Point(64, 28);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(120, 23);
-            this.cmbType.TabIndex = 7;
+            this.typeComboBox.Location = new System.Drawing.Point(64, 28);
+            this.typeComboBox.Name = "typeComboBox";
+            this.typeComboBox.Size = new System.Drawing.Size(120, 23);
+            this.typeComboBox.TabIndex = 7;
             // 
-            // txtSearch
+            // searchTextBox
             // 
-            this.txtSearch.Location = new System.Drawing.Point(223, 25);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(196, 25);
-            this.txtSearch.TabIndex = 8;
+            this.searchTextBox.Location = new System.Drawing.Point(223, 25);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(196, 25);
+            this.searchTextBox.TabIndex = 8;
             // 
-            // BtnSaveFile
+            // saveFileButton
             // 
-            this.BtnSaveFile.Location = new System.Drawing.Point(769, 75);
-            this.BtnSaveFile.Name = "BtnSaveFile";
-            this.BtnSaveFile.Size = new System.Drawing.Size(91, 23);
-            this.BtnSaveFile.TabIndex = 9;
-            this.BtnSaveFile.Text = "Save File";
-            this.BtnSaveFile.UseVisualStyleBackColor = true;
-            this.BtnSaveFile.Click += new System.EventHandler(this.BtnSaveFile_Click);
+            this.saveFileButton.Location = new System.Drawing.Point(769, 75);
+            this.saveFileButton.Name = "saveFileButton";
+            this.saveFileButton.Size = new System.Drawing.Size(91, 23);
+            this.saveFileButton.TabIndex = 9;
+            this.saveFileButton.Text = "Save File";
+            this.saveFileButton.UseVisualStyleBackColor = true;
+            this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
             // 
-            // Form1
+            // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(872, 458);
-            this.Controls.Add(this.BtnSaveFile);
-            this.Controls.Add(this.txtSearch);
-            this.Controls.Add(this.cmbType);
+            this.Controls.Add(this.saveFileButton);
+            this.Controls.Add(this.searchTextBox);
+            this.Controls.Add(this.typeComboBox);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.cb_df);
-            this.Controls.Add(this.dateTimePicker_Stop);
-            this.Controls.Add(this.dateTimePicker_Start);
+            this.Controls.Add(this.dateFilterCheckBox);
+            this.Controls.Add(this.stopDateTimePicker);
+            this.Controls.Add(this.startDateTimePicker);
             this.Controls.Add(this.lab_type);
-            this.Controls.Add(this.BtnConfirm);
-            this.Controls.Add(this.BtnReadFile);
-            this.Name = "Form1";
+            this.Controls.Add(this.confirmButton);
+            this.Controls.Add(this.readFileButton);
+            this.Name = "form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -170,16 +170,16 @@
 
         #endregion
 
-        private System.Windows.Forms.Button BtnReadFile;
-        private System.Windows.Forms.Button BtnConfirm;
+        private System.Windows.Forms.Button readFileButton;
+        private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Label lab_type;
-        private System.Windows.Forms.DateTimePicker dateTimePicker_Start;
-        private System.Windows.Forms.DateTimePicker dateTimePicker_Stop;
-        private System.Windows.Forms.CheckBox cb_df;
+        private System.Windows.Forms.DateTimePicker startDateTimePicker;
+        private System.Windows.Forms.DateTimePicker stopDateTimePicker;
+        private System.Windows.Forms.CheckBox dateFilterCheckBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ComboBox cmbType;
-        private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Button BtnSaveFile;
+        private System.Windows.Forms.ComboBox typeComboBox;
+        private System.Windows.Forms.TextBox searchTextBox;
+        private System.Windows.Forms.Button saveFileButton;
     }
 }
 
