@@ -52,12 +52,14 @@ namespace WindowsFormsApp1011
             dt.Columns.Add("Time", typeof(string));
             dt.Columns.Add("Tags", typeof(string));
             dt.Columns.Add("Message", typeof(string));
+            dt.Columns.Add("all line", typeof(string));
             dataGridView1.DataSource = dt;
             dataGridView1.Columns[0].MinimumWidth = 90;
             dataGridView1.Columns[1].MinimumWidth = 90;
             dataGridView1.Columns[2].MinimumWidth = 120;
             dataGridView1.Columns[3].MinimumWidth = 90;
             dataGridView1.Columns[4].MinimumWidth = 180;
+            dataGridView1.Columns[5].Visible = false;
             //dataGridView1.Rows[0].MinimumHeight = 50;
             dataGridView1.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView1.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -100,6 +102,7 @@ namespace WindowsFormsApp1011
                 foreach (string line in lines)
                 {
                     DataRow dr = dt.NewRow();
+                    dr["all line"] = line;
                     bool get_tags = line.Contains('@');
                     if (get_tags == true)
                     {
@@ -204,13 +207,13 @@ namespace WindowsFormsApp1011
                 }
 
                 DataTable newTable = dv.ToTable();
-
+                int MyDataRow = dataGridView1.CurrentRow.Index;
             }
 
 
         }
 
-        private void btn_sf_Click(object sender, EventArgs e)       //write file
+        private void btn_sf_Click(object sender, EventArgs e)       //write file thread
         {
             Thread thread_write = new Thread(Thread_writefile);
             thread_write.SetApartmentState(ApartmentState.STA);
@@ -243,7 +246,11 @@ namespace WindowsFormsApp1011
                 }
                 else
                 {
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+
+                    //txtSearch.Text.IndexOf();
+                    sw.Write(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[5].Value.ToString());
+
+                    /*for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
                         for (int j = 0; j < dataGridView1.Columns.Count; j++)
                         {
@@ -270,6 +277,11 @@ namespace WindowsFormsApp1011
                     sw.Close();
                     fs.Close();
                     //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
+
+                    //clean 緩衝區
+                    sw.Flush();
+                    sw.Close();
+                    fs.Close();
                 }
 
 
