@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_rf = new System.Windows.Forms.Button();
-            this.btn_cf = new System.Windows.Forms.Button();
+            this.BtnReadFile = new System.Windows.Forms.Button();
+            this.BtnConfirm = new System.Windows.Forms.Button();
             this.lab_type = new System.Windows.Forms.Label();
             this.dateTimePicker_Start = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker_Stop = new System.Windows.Forms.DateTimePicker();
@@ -37,29 +37,29 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.btn_sf = new System.Windows.Forms.Button();
+            this.BtnSaveFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btn_rf
+            // BtnReadFile
             // 
-            this.btn_rf.Location = new System.Drawing.Point(537, 27);
-            this.btn_rf.Name = "btn_rf";
-            this.btn_rf.Size = new System.Drawing.Size(91, 23);
-            this.btn_rf.TabIndex = 0;
-            this.btn_rf.Text = "Read File";
-            this.btn_rf.UseVisualStyleBackColor = true;
-            this.btn_rf.Click += new System.EventHandler(this.btn_rf_Click);
+            this.BtnReadFile.Location = new System.Drawing.Point(537, 27);
+            this.BtnReadFile.Name = "BtnReadFile";
+            this.BtnReadFile.Size = new System.Drawing.Size(91, 23);
+            this.BtnReadFile.TabIndex = 0;
+            this.BtnReadFile.Text = "Read File";
+            this.BtnReadFile.UseVisualStyleBackColor = true;
+            this.BtnReadFile.Click += new System.EventHandler(this.BtnReadFile_Click);
             // 
-            // btn_cf
+            // BtnConfirm
             // 
-            this.btn_cf.Location = new System.Drawing.Point(441, 27);
-            this.btn_cf.Name = "btn_cf";
-            this.btn_cf.Size = new System.Drawing.Size(75, 23);
-            this.btn_cf.TabIndex = 1;
-            this.btn_cf.Text = "Confirm";
-            this.btn_cf.UseVisualStyleBackColor = true;
-            this.btn_cf.Click += new System.EventHandler(this.btn_cf_Click);
+            this.BtnConfirm.Location = new System.Drawing.Point(441, 27);
+            this.BtnConfirm.Name = "BtnConfirm";
+            this.BtnConfirm.Size = new System.Drawing.Size(75, 23);
+            this.BtnConfirm.TabIndex = 1;
+            this.BtnConfirm.Text = "Confirm";
+            this.BtnConfirm.UseVisualStyleBackColor = true;
+            this.BtnConfirm.Click += new System.EventHandler(this.BtnConfirm_Click);
             // 
             // lab_type
             // 
@@ -134,22 +134,22 @@
             this.txtSearch.Size = new System.Drawing.Size(196, 25);
             this.txtSearch.TabIndex = 8;
             // 
-            // btn_sf
+            // BtnSaveFile
             // 
-            this.btn_sf.Location = new System.Drawing.Point(769, 75);
-            this.btn_sf.Name = "btn_sf";
-            this.btn_sf.Size = new System.Drawing.Size(91, 23);
-            this.btn_sf.TabIndex = 9;
-            this.btn_sf.Text = "Save File";
-            this.btn_sf.UseVisualStyleBackColor = true;
-            this.btn_sf.Click += new System.EventHandler(this.btn_sf_Click);
+            this.BtnSaveFile.Location = new System.Drawing.Point(769, 75);
+            this.BtnSaveFile.Name = "BtnSaveFile";
+            this.BtnSaveFile.Size = new System.Drawing.Size(91, 23);
+            this.BtnSaveFile.TabIndex = 9;
+            this.BtnSaveFile.Text = "Save File";
+            this.BtnSaveFile.UseVisualStyleBackColor = true;
+            this.BtnSaveFile.Click += new System.EventHandler(this.BtnSaveFile_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(872, 458);
-            this.Controls.Add(this.btn_sf);
+            this.Controls.Add(this.BtnSaveFile);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.cmbType);
             this.Controls.Add(this.dataGridView1);
@@ -157,8 +157,8 @@
             this.Controls.Add(this.dateTimePicker_Stop);
             this.Controls.Add(this.dateTimePicker_Start);
             this.Controls.Add(this.lab_type);
-            this.Controls.Add(this.btn_cf);
-            this.Controls.Add(this.btn_rf);
+            this.Controls.Add(this.BtnConfirm);
+            this.Controls.Add(this.BtnReadFile);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -170,8 +170,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btn_rf;
-        private System.Windows.Forms.Button btn_cf;
+        private System.Windows.Forms.Button BtnReadFile;
+        private System.Windows.Forms.Button BtnConfirm;
         private System.Windows.Forms.Label lab_type;
         private System.Windows.Forms.DateTimePicker dateTimePicker_Start;
         private System.Windows.Forms.DateTimePicker dateTimePicker_Stop;
@@ -179,7 +179,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Button btn_sf;
+        private System.Windows.Forms.Button BtnSaveFile;
     }
 }
 

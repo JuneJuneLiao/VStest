@@ -15,32 +15,15 @@ namespace WindowsFormsApp1011
 {
     public partial class Form1 : Form
     {
-        //public Button button1;
-        //public TextBox textbox1;
-        //public ListBox listbox1;
-        //Thread readfile_thread;
 
         public Form1()
         {
             InitializeComponent();
-            //this.button1 = new Button();
-            //this.button1.Location = new Point(550, 10);
-            //this.button1.Text = "Click Me !";
-            //this.button1.Click += new EventHandler(this.button_Click);
-
-     
-            //this.Controls.Add(button1);
-            
-            //this.textbox1 = new TextBox();
-            //this.listbox1 = new ListBox();
-            //this.Controls.Add(textbox1);
-            //this.Controls.Add(listbox1);
-
         }
         //[STAThread]
 
+        DataSet dataSet = new DataSet();
         DataTable dt = new DataTable();
-        //DateTimePicker dtp = new DateTimePicker();
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -70,35 +53,35 @@ namespace WindowsFormsApp1011
                                     AnchorStyles.Right |
                                     AnchorStyles.Top |
                                     AnchorStyles.Left;
-            btn_sf.Anchor = AnchorStyles.Top |
+            BtnSaveFile.Anchor = AnchorStyles.Top |
                             AnchorStyles.Right;
 
         }
-
-        private void btn_rf_Click(object sender, EventArgs e)       //read file
+        
+        // read file
+        private void BtnReadFile_Click(object sender, EventArgs e)       
         {
-            Thread thread = new Thread(DataTableCollectionAddRange);
+            Thread thread = new Thread(DataTableCollection);
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            //Thread.Sleep(1);
         }
 
-        private void DataTableCollectionAddRange()
+        private void DataTableCollection()
         {
-            DataSet dataSet = new DataSet();
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = true;  // 如果要允許選擇一個以上的
+            // 如果要允許選擇一個以上的
+            dialog.Multiselect = true;  
             dialog.Title = "請選擇資料夾";
-            dialog.InitialDirectory = ".\\";    //設定起始目錄
-            //dialog.InitialDirectory = Application.StartupPath;  //設定起始目錄為程式目錄
+            // 設定起始目錄
+            dialog.InitialDirectory = ".\\";
+            // 設定起始目錄為程式目錄
+            //dialog.InitialDirectory = Application.StartupPath;  
             dialog.Filter = "所有檔案(*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                //MessageBox.Show(dialog.FileName);
+
                 string[] lines = File.ReadAllLines(dialog.FileName);
-                //string pattern = @"^[A-Za-z0-9]+$";     //規律字串
-                //string sPattern = "^@$";    //規律字串
-                //string sjn = "^#json$";         //規律字串
+
                 foreach (string line in lines)
                 {
                     DataRow dr = dt.NewRow();
@@ -125,52 +108,10 @@ namespace WindowsFormsApp1011
                         dr["Message"] = get_data_else[3];
 
                     }
+
                     dt.Rows.Add(dr);
-                    //dataSet.Tables.AddRange(dr);
-
-                    /*
-                    string[] get_data = line.Split(new string[] { "," },StringSplitOptions.RemoveEmptyEntries);
-
-                    DataRow dr = dt.NewRow();
-                    dr["Level"] = get_data[0];
-                    dr["Category"] = get_data[1];
-                    dr["Time"] = get_data[2];
-
-                    bool tack_m = get_data[3].Contains('@');
-                    //bool tack_m = Regex.IsMatch(get_tag[0], sPattern);
-                    //bool take_sjn = Regex.IsMatch(get_tag[0], sjn);
-                    //bool take_mes = Regex.IsMatch(get_tag[0], pattern);
-
-                    if (tack_m == true)
-                    {
-                        //dt.Rows.Add(dr["Tags"]);
-                        //dr["Tags"] = get_tag[0];
-                        
-                        string[] spl_msg = get_data[3].Split('#');
-                        dr["Tags"] = spl_msg[0].Replace(";", ",").Substring(1);
-                        dr["Message"] = spl_msg[1].Substring(5);
-
-                    }
-                    else
-                    {
-                        dr["Message"] = get_data[3];
-                    }
-
-                    /*else if (take_sjn == false)
-                    {
-                        //dt.Rows.Add(dr["Message"]);
-                    }
-                    else if (take_mes == false)
-                    {
-                        //dt.Rows.Add(dr["Message"]);
-                    }
-                    
-                    DataRow dr = dt.NewRow();
-                    //tags = line.Substring('@');
-                    
-                    dt.Rows.Add(dr); */
-
-
+                    DataTable[] array = { };
+                    dataSet.Tables.AddRange(array);
                 }
             }
             else    //if (dialog.ShowDialog() != DialogResult.OK)
@@ -181,11 +122,12 @@ namespace WindowsFormsApp1011
         }
 
 
-        private void btn_cf_Click(object sender, EventArgs e)  //confirm 設定
+        // confirm 設定
+        private void BtnConfirm_Click(object sender, EventArgs e)  
         {
             DataView dv = dt.DefaultView;
-
-            if (string.IsNullOrEmpty(txtSearch.Text))   //confirm 設定 txt 篩選
+            // confirm 設定 txt 篩選
+            if (string.IsNullOrEmpty(txtSearch.Text))   
             {
                 //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dv.RowFilter = string.Empty;
@@ -194,7 +136,8 @@ namespace WindowsFormsApp1011
             else
             {
                 dv.RowFilter = string.Format("{0} ='{1}'", cmbType.Text, txtSearch.Text);
-                if (cb_df.Checked) //設定時間
+                // 設定時間
+                if (cb_df.Checked) 
                 {
                     DateTime dateTime_Star = dateTimePicker_Start.Value.Date;
                     DateTime dateTime_Stop = dateTimePicker_Stop.Value.Date;
@@ -207,35 +150,30 @@ namespace WindowsFormsApp1011
                 }
 
                 DataTable newTable = dv.ToTable();
-                int MyDataRow = dataGridView1.CurrentRow.Index;
             }
-
 
         }
 
-        private void btn_sf_Click(object sender, EventArgs e)       //write file thread
+        // write file thread
+        private void BtnSaveFile_Click(object sender, EventArgs e)       
         {
-            Thread thread_write = new Thread(Thread_writefile);
+            Thread thread_write = new Thread(ThreadWriteFile);
             thread_write.SetApartmentState(ApartmentState.STA);
             thread_write.Start();
             //Thread.Sleep(1);
         }
             
-        private void Thread_writefile()
+        private void ThreadWriteFile()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog.InitialDirectory = @"C:\Users\rita5\source\repos\WindowsFormsApp1011";
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.Title = "另存新檔";
-            //saveFileDialog.ShowDialog();
+
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //File.WriteAllText(saveFileDialog.FileName, string.Empty); 
-                //dataGridView1.DataSource = saveFileDialog.FileName;
-                //Stream myStream;
-                //myStream = saveFileDialog.OpenFile();
 
                 FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
@@ -246,60 +184,21 @@ namespace WindowsFormsApp1011
                 }
                 else
                 {
-
-                    //txtSearch.Text.IndexOf();
-                    sw.Write(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[5].Value.ToString());
-
-                    /*for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
-                        {
-
-                            if (dataGridView1.Rows[3].Cells[j].Value != null)
-                            {
-
-                                //string dataGridView1.Rows[i].Cells[j].Value.ToString() = String.Format("{0},{1},{2},@{3},#json {4}");
-                                //sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
-                                //sw.Write(dataGridView1.Rows[4].Cells[j].Value.ToString());
-                                //sw.Write(dataGridView1);
-                                //, Rows[i], Rows[i + 1], Rows[i + 2], Rows[i + 3]Rows[i + 4]
-
-                            }
-                            else if (dataGridView1.Rows[3].Cells[j].Value == null)
-                            {
-                                sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString() + ",");
-                            }
-                        }
-                        sw.WriteLine(String.Join(",", ""));
+                    for(int i = 0; i < dataGridView1.Rows.Count; i++)//
+                    { 
+                        sw.Write(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                        sw.WriteLine("");                       
+                        //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    //clean 緩衝區
+                    // clean 緩衝區
                     //sw.Flush();
                     sw.Close();
                     fs.Close();
-                    //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
-
-                    //clean 緩衝區
-                    sw.Flush();
-                    sw.Close();
-                    fs.Close();
                 }
 
 
             }
 
-            /* //write one file 
-            TextWriter writer = new StreamWriter(@"C:\Users\rita5\source\repos\WindowsFormsApp1011\test.log");
-            for(int i = 0; i < dataGridView1.Rows.Count-1; i++)
-            {
-                for(int j = 0; j < dataGridView1.Columns.Count-1; j++)
-                {
-                    writer.Write( dataGridView1.Rows[i].Cells[j].Value.ToString()  + ",");
-                }
-                writer.WriteLine("");
-            }
-            writer.Close();
-            MessageBox.Show("Data Exported!");
-            */
         }
     }
 
