@@ -26,39 +26,86 @@ namespace WindowsFormsApp1011
         private DataTable dt = new DataTable();
         int readAgain = 1;
 
+        class RowItem
+        {
+            public string RowData;
+            public string Level;
+            public string Category;
+            public DateTime Time;
+            public string Tags;
+            public string Message;
+
+            public DataGridViewRow ToRow()
+            {
+                var row = new DataGridViewRow();
+                for (int i = 0; i < 5; i++)
+                
+                    row.Cells.Add(new DataGridViewTextBoxCell());
+                
+
+                row.Cells[0].Value = Level;
+                row.Cells[1].Value = Category;
+                row.Cells[2].Value = Time;
+                row.Cells[3].Value = Tags;
+                row.Cells[4].Value = Message;
+
+                return row;
+            }
+
+        }
+        private List<RowItem> rowItems;
+
         private void form1_Load(object sender, EventArgs e)
         {
             typeComboBox.SelectedIndex = 1;
             //dtp.ShowCheckBox = true;
             dataGridView1.AllowUserToAddRows = false;
-            dt.Columns.Add("Level", typeof(string));
-            dt.Columns.Add("Category", typeof(string));
-            dt.Columns.Add("Time", typeof(string));
-            dt.Columns.Add("Tags", typeof(string));
-            dt.Columns.Add("Message", typeof(string));
-            dt.Columns.Add("all line", typeof(string));
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns[0].MinimumWidth = 90;
-            dataGridView1.Columns[1].MinimumWidth = 90;
-            dataGridView1.Columns[2].MinimumWidth = 120;
-            dataGridView1.Columns[3].MinimumWidth = 90;
-            dataGridView1.Columns[4].MinimumWidth = 180;
-            dataGridView1.Columns[5].Visible = false;
+            //dt.Columns.Add("Level", typeof(string));
+            //dt.Columns.Add("Category", typeof(string));
+            //dt.Columns.Add("Time", typeof(string));
+            //dt.Columns.Add("Tags", typeof(string));
+            //dt.Columns.Add("Message", typeof(string));
+            //dt.Columns.Add("all line", typeof(string));
+            //dataGridView1.DataSource = dt;
+            //dataGridView1.Columns[0].MinimumWidth = 90;
+            //dataGridView1.Columns[1].MinimumWidth = 90;
+            //dataGridView1.Columns[2].MinimumWidth = 120;
+            //dataGridView1.Columns[3].MinimumWidth = 90;
+            //dataGridView1.Columns[4].MinimumWidth = 180;
+            //dataGridView1.Columns[5].Visible = false;
             //dataGridView1.Rows[0].MinimumHeight = 50;
-            dataGridView1.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView1.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView1.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView1.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView1.Columns[4].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView1.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView1.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView1.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView1.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView1.Columns[4].SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView1.Anchor = AnchorStyles.Bottom |
                                     AnchorStyles.Right |
                                     AnchorStyles.Top |
                                     AnchorStyles.Left;
             saveFileButton.Anchor = AnchorStyles.Top |
                             AnchorStyles.Right;
+            typeComboBox.Enabled = false;
+            searchTextBox.Enabled = false;
+            confirmButton.Enabled = false;
+            saveFileButton.Enabled = false;
+            dateFilterCheckBox.Enabled = false;
+            startDateTimePicker.Enabled = false;
+            stopDateTimePicker.Enabled = false;
+
+            List<DataGridViewRow> rows = new List<DataGridViewRow>();
+            foreach (var rowItem in rowItems)
+                rows.Add(rowItem.ToRow());
+
+            var filterItems = rowItems.FindAll(x => x.Level == "INFO");
+
+            dataGridView1.Rows.Clear();
+            dataGridView1.Rows.AddRange(rows.ToArray());
+            rows = filterItems.ConvertAll(x => x.ToRow());
 
         }
-            
+
+
 
         // read file
         private void readFileButton_Click(object sender, EventArgs e)       
@@ -69,12 +116,22 @@ namespace WindowsFormsApp1011
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
                 readAgain = 2;
+                Thread.Sleep(5000); 
+                typeComboBox.Enabled = true;
+                searchTextBox.Enabled = true;
+                confirmButton.Enabled = true;
+                saveFileButton.Enabled = true;
+                dateFilterCheckBox.Enabled = true;
+                startDateTimePicker.Enabled = true;
+                stopDateTimePicker.Enabled = true;
             }
             else if (readAgain == 2)
             {
                 MessageBox.Show("檔案執行中 請稍等 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //readFileButton.Enabled = false;
                 readAgain = 1;
             }
+
 
         }
 
@@ -91,7 +148,6 @@ namespace WindowsFormsApp1011
             dialog.Filter = "所有檔案(*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-
                 string[] lines = File.ReadAllLines(dialog.FileName);
 
                 foreach (string line in lines)
@@ -124,6 +180,8 @@ namespace WindowsFormsApp1011
                     dt.Rows.Add(dr);
                     DataTable[] array = { };
                     dataSet.Tables.AddRange(array);
+
+                    
                 }
             }
             else    //if (dialog.ShowDialog() != DialogResult.OK)
@@ -131,7 +189,8 @@ namespace WindowsFormsApp1011
                 dialog.Dispose();
                 return;
             }
-        }
+
+      }
 
 
         // confirm 設定
