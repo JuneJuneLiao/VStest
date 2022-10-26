@@ -38,6 +38,11 @@
             this.typeComboBox = new System.Windows.Forms.ComboBox();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.saveFileButton = new System.Windows.Forms.Button();
+            this.levelTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tagsTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.messageTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,9 +106,19 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.levelTextBoxCol,
+            this.categoryTextBoxCol,
+            this.timeTextBoxCol,
+            this.tagsTextBoxCol,
+            this.messageTextBoxCol});
             this.dataGridView1.Location = new System.Drawing.Point(12, 115);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -144,6 +159,41 @@
             this.saveFileButton.UseVisualStyleBackColor = true;
             this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
             // 
+            // levelTextBoxCol
+            // 
+            this.levelTextBoxCol.HeaderText = "Level";
+            this.levelTextBoxCol.Name = "levelTextBoxCol";
+            this.levelTextBoxCol.ReadOnly = true;
+            this.levelTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // categoryTextBoxCol
+            // 
+            this.categoryTextBoxCol.HeaderText = "Category";
+            this.categoryTextBoxCol.Name = "categoryTextBoxCol";
+            this.categoryTextBoxCol.ReadOnly = true;
+            this.categoryTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // timeTextBoxCol
+            // 
+            this.timeTextBoxCol.HeaderText = "Time";
+            this.timeTextBoxCol.Name = "timeTextBoxCol";
+            this.timeTextBoxCol.ReadOnly = true;
+            this.timeTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // tagsTextBoxCol
+            // 
+            this.tagsTextBoxCol.HeaderText = "Tags";
+            this.tagsTextBoxCol.Name = "tagsTextBoxCol";
+            this.tagsTextBoxCol.ReadOnly = true;
+            this.tagsTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // messageTextBoxCol
+            // 
+            this.messageTextBoxCol.HeaderText = "Message";
+            this.messageTextBoxCol.Name = "messageTextBoxCol";
+            this.messageTextBoxCol.ReadOnly = true;
+            this.messageTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -180,6 +230,11 @@
         private System.Windows.Forms.ComboBox typeComboBox;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button saveFileButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn levelTextBoxCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn categoryTextBoxCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timeTextBoxCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tagsTextBoxCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn messageTextBoxCol;
     }
 }
 

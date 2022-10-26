@@ -22,7 +22,6 @@ namespace WindowsFormsApp1011
         }
         //[STAThread]
 
-        private DataSet dataSet = new DataSet();
         private DataTable dt = new DataTable();
         int readAgain = 1;
 
@@ -34,6 +33,8 @@ namespace WindowsFormsApp1011
             public DateTime Time;
             public string Tags;
             public string Message;
+
+
 
             public DataGridViewRow ToRow()
             {
@@ -51,40 +52,22 @@ namespace WindowsFormsApp1011
 
                 return row;
             }
+            
 
         }
         private List<RowItem> rowItems;
 
         private void form1_Load(object sender, EventArgs e)
         {
-            typeComboBox.SelectedIndex = 1;
+            DataGridView dataGridView1 = new DataGridView();
+            typeComboBox.SelectedIndex = 0;
             //dtp.ShowCheckBox = true;
             dataGridView1.AllowUserToAddRows = false;
-            //dt.Columns.Add("Level", typeof(string));
-            //dt.Columns.Add("Category", typeof(string));
-            //dt.Columns.Add("Time", typeof(string));
-            //dt.Columns.Add("Tags", typeof(string));
-            //dt.Columns.Add("Message", typeof(string));
-            //dt.Columns.Add("all line", typeof(string));
-            //dataGridView1.DataSource = dt;
-            //dataGridView1.Columns[0].MinimumWidth = 90;
-            //dataGridView1.Columns[1].MinimumWidth = 90;
-            //dataGridView1.Columns[2].MinimumWidth = 120;
-            //dataGridView1.Columns[3].MinimumWidth = 90;
-            //dataGridView1.Columns[4].MinimumWidth = 180;
-            //dataGridView1.Columns[5].Visible = false;
+
             //dataGridView1.Rows[0].MinimumHeight = 50;
-            //dataGridView1.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
-            //dataGridView1.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
-            //dataGridView1.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
-            //dataGridView1.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
-            //dataGridView1.Columns[4].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView1.Anchor = AnchorStyles.Bottom |
-                                    AnchorStyles.Right |
-                                    AnchorStyles.Top |
-                                    AnchorStyles.Left;
+
             saveFileButton.Anchor = AnchorStyles.Top |
-                            AnchorStyles.Right;
+                                    AnchorStyles.Right;
             typeComboBox.Enabled = false;
             searchTextBox.Enabled = false;
             confirmButton.Enabled = false;
@@ -92,19 +75,7 @@ namespace WindowsFormsApp1011
             dateFilterCheckBox.Enabled = false;
             startDateTimePicker.Enabled = false;
             stopDateTimePicker.Enabled = false;
-
-            List<DataGridViewRow> rows = new List<DataGridViewRow>();
-            foreach (var rowItem in rowItems)
-                rows.Add(rowItem.ToRow());
-
-            var filterItems = rowItems.FindAll(x => x.Level == "INFO");
-
-            dataGridView1.Rows.Clear();
-            dataGridView1.Rows.AddRange(rows.ToArray());
-            rows = filterItems.ConvertAll(x => x.ToRow());
-
         }
-
 
 
         // read file
@@ -124,6 +95,13 @@ namespace WindowsFormsApp1011
                 dateFilterCheckBox.Enabled = true;
                 startDateTimePicker.Enabled = true;
                 stopDateTimePicker.Enabled = true;
+
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+
+                foreach (var rowItem in rowItems)
+                    rows.Add(rowItem.ToRow());
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
             }
             else if (readAgain == 2)
             {
@@ -137,6 +115,8 @@ namespace WindowsFormsApp1011
 
         private void getDataTableCollection()
         {
+            rowItems = new List<RowItem>();
+            //dataGridView1 = new DataGridView();
             OpenFileDialog dialog = new OpenFileDialog();
             // 如果要允許選擇一個以上的
             dialog.Multiselect = true;  
@@ -152,36 +132,33 @@ namespace WindowsFormsApp1011
 
                 foreach (string line in lines)
                 {
-                    DataRow dr = dt.NewRow();
-                    dr["all line"] = line;
+                    RowItem rowItem = new RowItem();
+                    
+                    rowItem.RowData = line;
                     bool getTags = line.Contains('@');
                     if (getTags == true)
                     {
                         string[] getData = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
                         string[] getResult = getData[0].Split(',');
-                        dr["Level"] = getResult[0];
-                        dr["Category"] = getResult[1];
-                        dr["Time"] = getResult[2];
+                        rowItem.Level = getResult[0];
+                        rowItem.Category = getResult[1];
+                        rowItem.Time = DateTime.Parse(getResult[2]);
 
                         string[] getResultTags = getData[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
-                        dr["Tags"] = getResultTags[0].Replace(";", ",");
-                        dr["Message"] = getResultTags[1];
+                        rowItem.Tags= getResultTags[0].Replace(";", ",");
+                        rowItem.Message = getResultTags[1];
                     }
                     else
                     {
                         string[] getDataElse = line.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                        dr["Level"] = getDataElse[0];
-                        dr["Category"] = getDataElse[1];
-                        dr["Time"] = getDataElse[2];
-                        dr["Message"] = getDataElse[3];
+                        rowItem.Level = getDataElse[0];
+                        rowItem.Category = getDataElse[1];
+                        rowItem.Time = DateTime.Parse(getDataElse[2]);
+                        rowItem.Message = getDataElse[3];
+
 
                     }
-
-                    dt.Rows.Add(dr);
-                    DataTable[] array = { };
-                    dataSet.Tables.AddRange(array);
-
-                    
+                    rowItems.Add(rowItem);
                 }
             }
             else    //if (dialog.ShowDialog() != DialogResult.OK)
@@ -189,24 +166,26 @@ namespace WindowsFormsApp1011
                 dialog.Dispose();
                 return;
             }
-
-      }
+        }
 
 
         // confirm 設定
         private void confirmButton_Click(object sender, EventArgs e)  
         {
+            rowItems = new List<RowItem>();
             DataView dv = dt.DefaultView;
+
             // confirm 設定 txt 篩選
             if (string.IsNullOrEmpty(searchTextBox.Text))   
             {
-                //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                dv.RowFilter = string.Empty;
-                DataTable newTable = dv.ToTable();
+                MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //dv.RowFilter = string.Empty;
+               //DataTable newTable = dv.ToTable();
             }
-            else
+            else 
             {
-                dv.RowFilter = string.Format("{0} ='{1}'", typeComboBox.Text, searchTextBox.Text);
+               // dv.RowFilter = string.Format("{0} ='{1}'", typeComboBox.Text, searchTextBox.Text);
+
                 // 設定時間
                 if (dateFilterCheckBox.Checked) 
                 {
@@ -214,14 +193,75 @@ namespace WindowsFormsApp1011
                     DateTime dateTimeStop = stopDateTimePicker.Value.Date;
                     dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
                         , dateTimeStar, dateTimeStop);
-
-                    //dv.DataSource = dt;
-                    //DataTable newTable = dv.ToTable();
-
                 }
 
-                DataTable newTable = dv.ToTable();
+                //DataTable newTable = dv.ToTable();
             }
+
+            if (typeComboBox.Text== "Level")
+            {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                //foreach (var rowItem in rowItems)
+                    //rows.Add(rowItem.ToRow());
+
+                var filterItems = rowItems.FindAll(x => x.Level == searchTextBox.Text);
+                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
+                rows = filterItems.ConvertAll(x => x.ToRow());
+
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+            }
+            else if (typeComboBox.Text == "Category" )
+            {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                var filterItems = rowItems.FindAll(x => x.Category == searchTextBox.Text);
+                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
+                rows = filterItems.ConvertAll(x => x.ToRow());
+
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+            }
+            else if (typeComboBox.Text == "Tags")
+            {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                var filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
+                rows = filterItems.ConvertAll(x => x.ToRow());
+
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+            }
+            else if (typeComboBox.Text == "Message")
+            {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                var filterItems = rowItems.FindAll(x => x.Message == searchTextBox.Text);
+                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
+                rows = filterItems.ConvertAll(x => x.ToRow());
+
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+            }
+            else if (dateFilterCheckBox.Checked)
+            {
+                DateTime dateTimeStar = startDateTimePicker.Value.Date;
+                DateTime dateTimeStop = stopDateTimePicker.Value.Date;
+                //dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
+                  //  , dateTimeStar, dateTimeStop);
+
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                //var filterItems = rowItems.FindAll(x => x.Time == String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#", dateTimeStar, dateTimeStop));
+                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
+                //rows = filterItems.ConvertAll(x => x.ToRow());
+
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+            }
+
+
+
+
+
+
 
         }
 
@@ -256,10 +296,13 @@ namespace WindowsFormsApp1011
                 else
                 {
                     for(int i = 0; i < dataGridView1.Rows.Count; i++)//
-                    { 
-                        sw.Write(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                    {
+                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                        {
+                        sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
                         sw.WriteLine("");                       
                         //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }    
                     }
                     // clean 緩衝區
                     //sw.Flush();
