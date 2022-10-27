@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1011
 {
-    partial class form1
+    partial class Form1
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -35,15 +35,15 @@
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.dateFilterCheckBox = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.typeComboBox = new System.Windows.Forms.ComboBox();
-            this.searchTextBox = new System.Windows.Forms.TextBox();
-            this.saveFileButton = new System.Windows.Forms.Button();
             this.levelTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoryTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tagsTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rowDataTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.typeComboBox = new System.Windows.Forms.ComboBox();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
+            this.saveFileButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,6 +104,7 @@
             this.dateFilterCheckBox.TabIndex = 5;
             this.dateFilterCheckBox.Text = "Date Filter";
             this.dateFilterCheckBox.UseVisualStyleBackColor = true;
+            this.dateFilterCheckBox.CheckedChanged += new System.EventHandler(this.dateFilterCheckBox_CheckedChanged);
             // 
             // dataGridView1
             // 
@@ -128,38 +129,6 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(848, 314);
             this.dataGridView1.TabIndex = 6;
-            // 
-            // typeComboBox
-            // 
-            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.typeComboBox.FormattingEnabled = true;
-            this.typeComboBox.Items.AddRange(new object[] {
-            "Level",
-            "Category",
-            "Time",
-            "Tags",
-            "Message"});
-            this.typeComboBox.Location = new System.Drawing.Point(64, 28);
-            this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(120, 23);
-            this.typeComboBox.TabIndex = 7;
-            // 
-            // searchTextBox
-            // 
-            this.searchTextBox.Location = new System.Drawing.Point(223, 25);
-            this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(196, 25);
-            this.searchTextBox.TabIndex = 8;
-            // 
-            // saveFileButton
-            // 
-            this.saveFileButton.Location = new System.Drawing.Point(769, 75);
-            this.saveFileButton.Name = "saveFileButton";
-            this.saveFileButton.Size = new System.Drawing.Size(91, 23);
-            this.saveFileButton.TabIndex = 9;
-            this.saveFileButton.Text = "Save File";
-            this.saveFileButton.UseVisualStyleBackColor = true;
-            this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
             // 
             // levelTextBoxCol
             // 
@@ -204,7 +173,39 @@
             this.rowDataTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.rowDataTextBoxCol.Visible = false;
             // 
-            // form1
+            // typeComboBox
+            // 
+            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.typeComboBox.FormattingEnabled = true;
+            this.typeComboBox.Items.AddRange(new object[] {
+            "Level",
+            "Category",
+            "Time",
+            "Tags",
+            "Message"});
+            this.typeComboBox.Location = new System.Drawing.Point(64, 28);
+            this.typeComboBox.Name = "typeComboBox";
+            this.typeComboBox.Size = new System.Drawing.Size(120, 23);
+            this.typeComboBox.TabIndex = 7;
+            // 
+            // searchTextBox
+            // 
+            this.searchTextBox.Location = new System.Drawing.Point(223, 25);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(196, 25);
+            this.searchTextBox.TabIndex = 8;
+            // 
+            // saveFileButton
+            // 
+            this.saveFileButton.Location = new System.Drawing.Point(769, 75);
+            this.saveFileButton.Name = "saveFileButton";
+            this.saveFileButton.Size = new System.Drawing.Size(91, 23);
+            this.saveFileButton.TabIndex = 9;
+            this.saveFileButton.Text = "Save File";
+            this.saveFileButton.UseVisualStyleBackColor = true;
+            this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
+            // 
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,7 +220,7 @@
             this.Controls.Add(this.lab_type);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.readFileButton);
-            this.Name = "form1";
+            this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
