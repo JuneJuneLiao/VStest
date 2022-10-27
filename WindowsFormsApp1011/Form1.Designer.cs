@@ -32,7 +32,7 @@
             this.confirmButton = new System.Windows.Forms.Button();
             this.lab_type = new System.Windows.Forms.Label();
             this.startDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.stopDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.dateFilterCheckBox = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.typeComboBox = new System.Windows.Forms.ComboBox();
@@ -43,6 +43,7 @@
             this.timeTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tagsTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rowDataTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,22 +78,22 @@
             // 
             // startDateTimePicker
             // 
-            this.startDateTimePicker.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.startDateTimePicker.CustomFormat = "yyyy/MM/dd tt hh:mm:ss";
             this.startDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.startDateTimePicker.Location = new System.Drawing.Point(121, 69);
             this.startDateTimePicker.Name = "startDateTimePicker";
-            this.startDateTimePicker.Size = new System.Drawing.Size(196, 25);
+            this.startDateTimePicker.Size = new System.Drawing.Size(224, 25);
             this.startDateTimePicker.TabIndex = 3;
             this.startDateTimePicker.Value = new System.DateTime(2022, 10, 19, 10, 3, 1, 0);
             // 
-            // stopDateTimePicker
+            // endDateTimePicker
             // 
-            this.stopDateTimePicker.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            this.stopDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.stopDateTimePicker.Location = new System.Drawing.Point(366, 69);
-            this.stopDateTimePicker.Name = "stopDateTimePicker";
-            this.stopDateTimePicker.Size = new System.Drawing.Size(195, 25);
-            this.stopDateTimePicker.TabIndex = 4;
+            this.endDateTimePicker.CustomFormat = "yyyy/MM/dd tt hh:mm:ss";
+            this.endDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.endDateTimePicker.Location = new System.Drawing.Point(366, 69);
+            this.endDateTimePicker.Name = "endDateTimePicker";
+            this.endDateTimePicker.Size = new System.Drawing.Size(230, 25);
+            this.endDateTimePicker.TabIndex = 4;
             // 
             // dateFilterCheckBox
             // 
@@ -118,7 +119,8 @@
             this.categoryTextBoxCol,
             this.timeTextBoxCol,
             this.tagsTextBoxCol,
-            this.messageTextBoxCol});
+            this.messageTextBoxCol,
+            this.rowDataTextBoxCol});
             this.dataGridView1.Location = new System.Drawing.Point(12, 115);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -194,6 +196,14 @@
             this.messageTextBoxCol.ReadOnly = true;
             this.messageTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // rowDataTextBoxCol
+            // 
+            this.rowDataTextBoxCol.HeaderText = "RowData";
+            this.rowDataTextBoxCol.Name = "rowDataTextBoxCol";
+            this.rowDataTextBoxCol.ReadOnly = true;
+            this.rowDataTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.rowDataTextBoxCol.Visible = false;
+            // 
             // form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -204,7 +214,7 @@
             this.Controls.Add(this.typeComboBox);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.dateFilterCheckBox);
-            this.Controls.Add(this.stopDateTimePicker);
+            this.Controls.Add(this.endDateTimePicker);
             this.Controls.Add(this.startDateTimePicker);
             this.Controls.Add(this.lab_type);
             this.Controls.Add(this.confirmButton);
@@ -224,7 +234,7 @@
         private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Label lab_type;
         private System.Windows.Forms.DateTimePicker startDateTimePicker;
-        private System.Windows.Forms.DateTimePicker stopDateTimePicker;
+        private System.Windows.Forms.DateTimePicker endDateTimePicker;
         private System.Windows.Forms.CheckBox dateFilterCheckBox;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox typeComboBox;
@@ -235,6 +245,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn timeTextBoxCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn tagsTextBoxCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn messageTextBoxCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rowDataTextBoxCol;
     }
 }
 

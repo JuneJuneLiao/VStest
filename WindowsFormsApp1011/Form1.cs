@@ -39,20 +39,18 @@ namespace WindowsFormsApp1011
             public DataGridViewRow ToRow()
             {
                 var row = new DataGridViewRow();
-                for (int i = 0; i < 5; i++)
-                
+                for (int i = 0; i < 6; i++)
                     row.Cells.Add(new DataGridViewTextBoxCell());
-                
 
                 row.Cells[0].Value = Level;
                 row.Cells[1].Value = Category;
                 row.Cells[2].Value = Time;
                 row.Cells[3].Value = Tags;
                 row.Cells[4].Value = Message;
+                row.Cells[5].Value = RowData;
 
                 return row;
             }
-            
 
         }
         private List<RowItem> rowItems;
@@ -61,7 +59,6 @@ namespace WindowsFormsApp1011
         {
             DataGridView dataGridView1 = new DataGridView();
             typeComboBox.SelectedIndex = 0;
-            //dtp.ShowCheckBox = true;
             dataGridView1.AllowUserToAddRows = false;
 
             //dataGridView1.Rows[0].MinimumHeight = 50;
@@ -74,7 +71,7 @@ namespace WindowsFormsApp1011
             saveFileButton.Enabled = false;
             dateFilterCheckBox.Enabled = false;
             startDateTimePicker.Enabled = false;
-            stopDateTimePicker.Enabled = false;
+            endDateTimePicker.Enabled = false;
         }
 
 
@@ -94,7 +91,7 @@ namespace WindowsFormsApp1011
                 saveFileButton.Enabled = true;
                 dateFilterCheckBox.Enabled = true;
                 startDateTimePicker.Enabled = true;
-                stopDateTimePicker.Enabled = true;
+                endDateTimePicker.Enabled = true;
 
                 List<DataGridViewRow> rows = new List<DataGridViewRow>();
 
@@ -109,8 +106,6 @@ namespace WindowsFormsApp1011
                 //readFileButton.Enabled = false;
                 readAgain = 1;
             }
-
-
         }
 
         private void getDataTableCollection()
@@ -133,7 +128,6 @@ namespace WindowsFormsApp1011
                 foreach (string line in lines)
                 {
                     RowItem rowItem = new RowItem();
-                    
                     rowItem.RowData = line;
                     bool getTags = line.Contains('@');
                     if (getTags == true)
@@ -155,8 +149,6 @@ namespace WindowsFormsApp1011
                         rowItem.Category = getDataElse[1];
                         rowItem.Time = DateTime.Parse(getDataElse[2]);
                         rowItem.Message = getDataElse[3];
-
-
                     }
                     rowItems.Add(rowItem);
                 }
@@ -172,97 +164,95 @@ namespace WindowsFormsApp1011
         // confirm 設定
         private void confirmButton_Click(object sender, EventArgs e)  
         {
-            rowItems = new List<RowItem>();
-            DataView dv = dt.DefaultView;
 
             // confirm 設定 txt 篩選
-            if (string.IsNullOrEmpty(searchTextBox.Text))   
-            {
-                MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //dv.RowFilter = string.Empty;
-               //DataTable newTable = dv.ToTable();
-            }
-            else 
-            {
-               // dv.RowFilter = string.Format("{0} ='{1}'", typeComboBox.Text, searchTextBox.Text);
-
-                // 設定時間
-                if (dateFilterCheckBox.Checked) 
-                {
-                    DateTime dateTimeStar = startDateTimePicker.Value.Date;
-                    DateTime dateTimeStop = stopDateTimePicker.Value.Date;
-                    dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
-                        , dateTimeStar, dateTimeStop);
-                }
-
-                //DataTable newTable = dv.ToTable();
-            }
-
             if (typeComboBox.Text== "Level")
             {
                 List<DataGridViewRow> rows = new List<DataGridViewRow>();
-                //foreach (var rowItem in rowItems)
-                    //rows.Add(rowItem.ToRow());
-
                 var filterItems = rowItems.FindAll(x => x.Level == searchTextBox.Text);
-                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
                 rows = filterItems.ConvertAll(x => x.ToRow());
+                if (dateFilterCheckBox.Checked == true)
+                {
+                    var dateTimeStart = startDateTimePicker.Value;
+                    var dateTimeEnd = endDateTimePicker.Value;
 
+                    var filterTimeItems = filterItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                    rows = filterTimeItems.ConvertAll(x => x.ToRow());
+                }
+                if (string.IsNullOrEmpty(searchTextBox.Text))
+                {
+                    //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    rows = rowItems.ConvertAll(x => x.ToRow());
+                }
                 dataGridView1.Rows.Clear();
                 dataGridView1.Rows.AddRange(rows.ToArray());
             }
-            else if (typeComboBox.Text == "Category" )
+
+            if (typeComboBox.Text == "Category" )
             {
                 List<DataGridViewRow> rows = new List<DataGridViewRow>();
                 var filterItems = rowItems.FindAll(x => x.Category == searchTextBox.Text);
-                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
                 rows = filterItems.ConvertAll(x => x.ToRow());
+                if (dateFilterCheckBox.Checked == true)
+                {
+                    var dateTimeStart = startDateTimePicker.Value;
+                    var dateTimeEnd = endDateTimePicker.Value;
 
+                    var filterTimeItems = filterItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                    rows = filterTimeItems.ConvertAll(x => x.ToRow());
+                }
+                if (string.IsNullOrEmpty(searchTextBox.Text))
+                {
+                    //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    rows = rowItems.ConvertAll(x => x.ToRow());
+                }
                 dataGridView1.Rows.Clear();
                 dataGridView1.Rows.AddRange(rows.ToArray());
             }
-            else if (typeComboBox.Text == "Tags")
+
+            if (typeComboBox.Text == "Tags")
             {
                 List<DataGridViewRow> rows = new List<DataGridViewRow>();
                 var filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
-                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
                 rows = filterItems.ConvertAll(x => x.ToRow());
+                if (dateFilterCheckBox.Checked == true)
+                {
+                    var dateTimeStart = startDateTimePicker.Value;
+                    var dateTimeEnd = endDateTimePicker.Value;
 
+                    var filterTimeItems = filterItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                    rows = filterTimeItems.ConvertAll(x => x.ToRow());
+                }
+                if (string.IsNullOrEmpty(searchTextBox.Text))
+                {
+                    //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    rows = rowItems.ConvertAll(x => x.ToRow());
+                }
                 dataGridView1.Rows.Clear();
                 dataGridView1.Rows.AddRange(rows.ToArray());
             }
-            else if (typeComboBox.Text == "Message")
+
+            if (typeComboBox.Text == "Message")
             {
                 List<DataGridViewRow> rows = new List<DataGridViewRow>();
                 var filterItems = rowItems.FindAll(x => x.Message == searchTextBox.Text);
-                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
                 rows = filterItems.ConvertAll(x => x.ToRow());
+                if (dateFilterCheckBox.Checked == true)
+                {
+                    var dateTimeStart = startDateTimePicker.Value;
+                    var dateTimeEnd = endDateTimePicker.Value;
 
+                    var filterTimeItems = filterItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                    rows = filterTimeItems.ConvertAll(x => x.ToRow());
+                }
+                if (string.IsNullOrEmpty(searchTextBox.Text))
+                {
+                    //MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    rows = rowItems.ConvertAll(x => x.ToRow());
+                }
                 dataGridView1.Rows.Clear();
                 dataGridView1.Rows.AddRange(rows.ToArray());
             }
-            else if (dateFilterCheckBox.Checked)
-            {
-                DateTime dateTimeStar = startDateTimePicker.Value.Date;
-                DateTime dateTimeStop = stopDateTimePicker.Value.Date;
-                //dv.RowFilter = String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#"
-                  //  , dateTimeStar, dateTimeStop);
-
-                List<DataGridViewRow> rows = new List<DataGridViewRow>();
-                //var filterItems = rowItems.FindAll(x => x.Time == String.Format("Time >= #{0:yyyy-MM-dd HH:mm:ss}# AND Time <= #{0:yyyy-MM-dd HH:mm:ss}#", dateTimeStar, dateTimeStop));
-                //var filterItems = rowItems.FindAll(x => x.Time == "yyyy-MM-dd HH:mm:ss");
-                //rows = filterItems.ConvertAll(x => x.ToRow());
-
-                dataGridView1.Rows.Clear();
-                dataGridView1.Rows.AddRange(rows.ToArray());
-            }
-
-
-
-
-
-
-
         }
 
         // write file thread
@@ -294,28 +284,19 @@ namespace WindowsFormsApp1011
                     MessageBox.Show("沒有數據，輸出失敗", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
-                {
-                    for(int i = 0; i < dataGridView1.Rows.Count; i++)//
+                { 
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)//
                     {
-                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
-                        {
-                        sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
-                        sw.WriteLine("");                       
-                        //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }    
+                            sw.Write(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                            sw.WriteLine("");                       
+                            //MessageBox.Show("保存成功 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     // clean 緩衝區
                     //sw.Flush();
                     sw.Close();
                     fs.Close();
                 }
-
-
             }
-
         }
-
-
     }
-
 }
