@@ -84,7 +84,18 @@ namespace WindowsFormsApp1011
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
                 readAgain = 2;
-                Thread.Sleep(5000); 
+
+                readFileButton.Enabled = false;
+                typeComboBox.Enabled = false;
+                searchTextBox.Enabled = false;
+                confirmButton.Enabled = false;
+                saveFileButton.Enabled = false;
+                dateFilterCheckBox.Enabled = false;
+                startDateTimePicker.Enabled = false;
+                endDateTimePicker.Enabled = false;
+                return;
+
+                //Thread.Sleep(5000); 
                 typeComboBox.Enabled = true;
                 searchTextBox.Enabled = true;
                 confirmButton.Enabled = true;
@@ -158,8 +169,32 @@ namespace WindowsFormsApp1011
                 dialog.Dispose();
                 return;
             }
+
+            Action action = () =>
+            {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                foreach (var rowItem in rowItems)
+                    rows.Add(rowItem.ToRow());
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+
+                uiEnabled(true);
+            };
+
+            Invoke(action);
         }
 
+        private void uiEnabled(bool enabled)
+        {
+            readFileButton.Enabled = enabled;
+            typeComboBox.Enabled = enabled;
+            searchTextBox.Enabled = enabled;
+            confirmButton.Enabled = enabled;
+            saveFileButton.Enabled = enabled;
+            dateFilterCheckBox.Enabled = enabled;
+            startDateTimePicker.Enabled = enabled;
+            endDateTimePicker.Enabled = enabled;
+        }
 
         // confirm 設定
         private void confirmButton_Click(object sender, EventArgs e)  
