@@ -46,7 +46,7 @@ namespace WindowsFormsApp1011
             }
         }
         private List<RowItem> rowItems;
-        private void form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             DataGridView dataGridView1 = new DataGridView();
             typeComboBox.SelectedIndex = 0;
@@ -87,7 +87,6 @@ namespace WindowsFormsApp1011
         private void getDataTableCollection()
         {
             rowItems = new List<RowItem>();
-            //dataGridView1 = new DataGridView();
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -155,7 +154,7 @@ namespace WindowsFormsApp1011
             // confirm 設定 txt 篩選
             if (typeComboBox.Text == "Level")
             {
-                filterItems = rowItems.FindAll(x => x.Level == searchTextBox.Text);
+                filterItems = rowItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
                 rows = filterItems.ConvertAll(x => x.ToRow());
 
                 if (string.IsNullOrEmpty(searchTextBox.Text))
@@ -166,7 +165,7 @@ namespace WindowsFormsApp1011
             }
             if (typeComboBox.Text == "Category" )
             {
-                filterItems = rowItems.FindAll(x => x.Category == searchTextBox.Text);
+                filterItems = rowItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
                 rows = filterItems.ConvertAll(x => x.ToRow());
 
                 if (string.IsNullOrEmpty(searchTextBox.Text))
@@ -188,8 +187,9 @@ namespace WindowsFormsApp1011
             }
             if (typeComboBox.Text == "Message")
             {
-                searchTextBox.Text = string.Format("");
-                filterItems = rowItems.FindAll(x => x.Message == searchTextBox.Text);
+                filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
+                //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                //    searchTextBox.Text = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 rows = filterItems.ConvertAll(x => x.ToRow());
 
                 if (string.IsNullOrEmpty(searchTextBox.Text))
@@ -198,12 +198,18 @@ namespace WindowsFormsApp1011
                     rows = rowItems.ConvertAll(x => x.ToRow());
                 }
             }
-
             dataGridView1.Rows.Clear();
             dataGridView1.Rows.AddRange(rows.ToArray());
         }
 
         private void dateFilterCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(dateFilterCheck);
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
+
+        private void dateFilterCheck()
         {
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             List<RowItem> filterItems = new List<RowItem>();
@@ -212,15 +218,19 @@ namespace WindowsFormsApp1011
             {
                 var dateTimeStart = startDateTimePicker.Value;
                 var dateTimeEnd = endDateTimePicker.Value;
-                var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                rows = filterTimeItems.ConvertAll(x => x.ToRow()); 
+                var filterTimeItems = filterItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                rows = filterTimeItems.ConvertAll(x => x.ToRow());
             }
             else
             {
                 rows = rowItems.ConvertAll(x => x.ToRow());
             }
-            dataGridView1.Rows.Clear();
-            dataGridView1.Rows.AddRange(rows.ToArray());
+            Action check = () =>
+            {
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.AddRange(rows.ToArray());
+            };
+            Invoke(check);
         }
 
         // write file thread
