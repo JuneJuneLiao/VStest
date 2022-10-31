@@ -35,15 +35,15 @@
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.dateFilterCheckBox = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.typeComboBox = new System.Windows.Forms.ComboBox();
-            this.searchTextBox = new System.Windows.Forms.TextBox();
-            this.saveFileButton = new System.Windows.Forms.Button();
             this.levelTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoryTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tagsTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rowDataTextBoxCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.typeComboBox = new System.Windows.Forms.ComboBox();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
+            this.saveFileButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,38 +130,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(836, 318);
             this.dataGridView1.TabIndex = 6;
             // 
-            // typeComboBox
-            // 
-            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.typeComboBox.FormattingEnabled = true;
-            this.typeComboBox.Items.AddRange(new object[] {
-            "Level",
-            "Category",
-            "Time",
-            "Tags",
-            "Message"});
-            this.typeComboBox.Location = new System.Drawing.Point(64, 28);
-            this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(120, 23);
-            this.typeComboBox.TabIndex = 7;
-            // 
-            // searchTextBox
-            // 
-            this.searchTextBox.Location = new System.Drawing.Point(223, 25);
-            this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(196, 25);
-            this.searchTextBox.TabIndex = 8;
-            // 
-            // saveFileButton
-            // 
-            this.saveFileButton.Location = new System.Drawing.Point(769, 75);
-            this.saveFileButton.Name = "saveFileButton";
-            this.saveFileButton.Size = new System.Drawing.Size(91, 23);
-            this.saveFileButton.TabIndex = 9;
-            this.saveFileButton.Text = "Save File";
-            this.saveFileButton.UseVisualStyleBackColor = true;
-            this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
-            // 
             // levelTextBoxCol
             // 
             this.levelTextBoxCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -213,6 +181,39 @@
             this.rowDataTextBoxCol.ReadOnly = true;
             this.rowDataTextBoxCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.rowDataTextBoxCol.Visible = false;
+            // 
+            // typeComboBox
+            // 
+            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.typeComboBox.FormattingEnabled = true;
+            this.typeComboBox.Items.AddRange(new object[] {
+            "Level",
+            "Category",
+            "Time",
+            "Tags",
+            "Message"});
+            this.typeComboBox.Location = new System.Drawing.Point(64, 28);
+            this.typeComboBox.Name = "typeComboBox";
+            this.typeComboBox.Size = new System.Drawing.Size(120, 23);
+            this.typeComboBox.TabIndex = 7;
+            // 
+            // searchTextBox
+            // 
+            this.searchTextBox.Location = new System.Drawing.Point(223, 25);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(196, 25);
+            this.searchTextBox.TabIndex = 8;
+            // 
+            // saveFileButton
+            // 
+            this.saveFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveFileButton.Location = new System.Drawing.Point(757, 75);
+            this.saveFileButton.Name = "saveFileButton";
+            this.saveFileButton.Size = new System.Drawing.Size(91, 23);
+            this.saveFileButton.TabIndex = 9;
+            this.saveFileButton.Text = "Save File";
+            this.saveFileButton.UseVisualStyleBackColor = true;
+            this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
             // 
             // Form1
             // 

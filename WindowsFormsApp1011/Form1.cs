@@ -15,46 +15,18 @@ namespace WindowsFormsApp1011
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
-        }
-
-        class RowItem
-        {
-            public string RowData;
-            public string Level;
-            public string Category;
-            public DateTime Time;
-            public string Tags;
-            public string Message;
-            public DataGridViewRow ToRow()
-            {
-                var row = new DataGridViewRow();
-                for (int i = 0; i < 6; i++)
-                    row.Cells.Add(new DataGridViewTextBoxCell());
-
-                row.Cells[0].Value = Level;
-                row.Cells[1].Value = Category;
-                row.Cells[2].Value = Time;
-                row.Cells[3].Value = Tags;
-                row.Cells[4].Value = Message;
-                row.Cells[5].Value = RowData;
-
-                return row;
-            }
-        }
-        private List<RowItem> rowItems;
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            DataGridView dataGridView1 = new DataGridView();
-            typeComboBox.SelectedIndex = 0;
-            dataGridView1.AllowUserToAddRows = false;
-            saveFileButton.Anchor = AnchorStyles.Top |
-                                    AnchorStyles.Right;
             uiEnable(false);
             readFileButton.Enabled = true;
+        }
+
+        private List<RowItem> rowItems;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void uiEnable(bool enable)
@@ -69,11 +41,13 @@ namespace WindowsFormsApp1011
             endDateTimePicker.Enabled = enable;
         }
 
-        private OpenFileDialog dialog = new OpenFileDialog();
+        OpenFileDialog dialog = new OpenFileDialog();
+
         // read file
         private void readFileButton_Click(object sender, EventArgs e)       
         {
             uiEnable(false);
+            OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;
             dialog.Title = "請選擇資料夾";
             // 設定起始目錄
@@ -83,8 +57,7 @@ namespace WindowsFormsApp1011
             dialog.Filter = "所有檔案(*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Thread thread = new Thread(getDataTableCollection);
-                thread.Start();
+                new Thread(() => { }).Start();
             }
             else
             {
@@ -94,7 +67,7 @@ namespace WindowsFormsApp1011
             }
         }
 
-        private void getDataTableCollection()
+        private void getDataPutInTheUI()
         {
             rowItems = new List<RowItem>();
             string[] lines = File.ReadAllLines(dialog.FileName);
@@ -102,18 +75,18 @@ namespace WindowsFormsApp1011
             {
                 RowItem rowItem = new RowItem();
                 rowItem.RowData = line;
-                bool getTags = line.Contains('@');
-                if (getTags == true)
+                bool containsMouse = line.Contains('@');
+                if (containsMouse)
                 {
                     string[] getData = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
-                    string[] getResult = getData[0].Split(',');
-                    rowItem.Level = getResult[0];
-                    rowItem.Category = getResult[1];
-                    rowItem.Time = DateTime.Parse(getResult[2]);
+                    string[] getResults = getData[0].Split(',');
+                    rowItem.Level = getResults[0];
+                    rowItem.Category = getResults[1];
+                    rowItem.Time = DateTime.Parse(getResults[2]);
 
-                    string[] getResultTags = getData[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
-                    rowItem.Tags = getResultTags[0].Replace(";", ",");
-                    rowItem.Message = getResultTags[1];
+                    string[] getResultsTags = getData[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
+                    rowItem.Tags = getResultsTags[0].Replace(";", ",");
+                    rowItem.Message = getResultsTags[1];
                 }
                 else
                 {
@@ -142,7 +115,6 @@ namespace WindowsFormsApp1011
         {
             uiEnable(false);
             Thread thread = new Thread(confirmThread);
-            thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }
 
@@ -150,6 +122,7 @@ namespace WindowsFormsApp1011
         private List<RowItem> filterItems = new List<RowItem>();
         private void confirmThread ()
         {
+            rows = new List<DataGridViewRow>();
             Action confirm = () =>
             {
                 // confirm 設定 txt 篩選
@@ -207,7 +180,7 @@ namespace WindowsFormsApp1011
         private void dateFilterCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             uiEnable(false);
-            if (dateFilterCheckBox.Checked == true)
+            if (dateFilterCheckBox.Checked)
             {
                 Thread thread = new Thread(dateFilterChecked);
                 thread.Start();
@@ -321,8 +294,35 @@ namespace WindowsFormsApp1011
                     sw.Close();
                     fs.Close();
                 }
+                uiEnable(true);
             };
             Invoke(saveFile);
+        }
+
+        class RowItem
+        {
+            public string RowData;
+            public string Level;
+            public string Category;
+            public DateTime Time;
+            public string Tags;
+            public string Message;
+
+            public DataGridViewRow ToRow()
+            {
+                var row = new DataGridViewRow();
+                for (int i = 0; i < 6; i++)
+                    row.Cells.Add(new DataGridViewTextBoxCell());
+
+                row.Cells[0].Value = Level;
+                row.Cells[1].Value = Category;
+                row.Cells[2].Value = Time;
+                row.Cells[3].Value = Tags;
+                row.Cells[4].Value = Message;
+                row.Cells[5].Value = RowData;
+
+                return row;
+            }
         }
     }
 }
