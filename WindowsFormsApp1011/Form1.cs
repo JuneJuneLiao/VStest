@@ -209,7 +209,7 @@ namespace WindowsFormsApp1011
             uiEnable(false);
             if (dateFilterCheckBox.Checked == true)
             {
-                Thread thread = new Thread(dateFilterCheck);
+                Thread thread = new Thread(dateFilterChecked);
                 thread.Start();
             }
             else
@@ -219,7 +219,7 @@ namespace WindowsFormsApp1011
             }
         }
 
-        private void dateFilterCheck()
+        private void dateFilterChecked()
         {
             var dateTimeStart = startDateTimePicker.Value;
             var dateTimeEnd = endDateTimePicker.Value;
@@ -227,13 +227,13 @@ namespace WindowsFormsApp1011
             {
                 var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
                 rows = filterTimeItems.ConvertAll(x => x.ToRow());
-                Action checkNoSearchTextBox = () =>
+                Action checkedNoSearchTextBox = () =>
                 {
                     dataGridView1.Rows.Clear();
                     dataGridView1.Rows.AddRange(rows.ToArray());
                     uiEnable(true);
                 };
-                Invoke(checkNoSearchTextBox);
+                Invoke(checkedNoSearchTextBox);
             }
             else
             {
@@ -248,18 +248,19 @@ namespace WindowsFormsApp1011
                 Invoke(check);
             }  
         }
+
         private void dateFilterUnchecked()
         {
             if (string.IsNullOrEmpty(searchTextBox.Text))
             {
                 rows = rowItems.ConvertAll(x => x.ToRow());
-                Action uncheck = () =>
+                Action uncheckNoSearchTextBox = () =>
                 {
                     dataGridView1.Rows.Clear();
                     dataGridView1.Rows.AddRange(rows.ToArray());
                     uiEnable(true);
                 };
-                Invoke(uncheck);
+                Invoke(uncheckNoSearchTextBox);
             }
             else
             {
