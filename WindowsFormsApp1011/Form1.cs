@@ -127,7 +127,7 @@ namespace WindowsFormsApp1011
             Action confirm = () =>
             {
                 // confirm 設定 txt 篩選
-                if (dateFilterCheckBox.Checked==true)
+                if (dateFilterCheckBox.Checked)
                 {
                     uiEnable(false);
                     if (string.IsNullOrEmpty(searchTextBox.Text))
