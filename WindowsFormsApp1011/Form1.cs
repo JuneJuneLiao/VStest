@@ -67,7 +67,7 @@ namespace WindowsFormsApp1011
             foreach (string line in lines)
             {
                 RowItem rowItem = new RowItem();
-                rowItem.RowData = line;
+                rowItem.RawData = line;
                 bool containsMouse = line.Contains('@');
                 if (containsMouse)
                 {
@@ -107,110 +107,89 @@ namespace WindowsFormsApp1011
         private void confirmButton_Click(object sender, EventArgs e)  
         {
             uiEnable(false);
+            //new Thread(confirmThread).Start();
+            paraarameter = new Paraarameter();
+            paraarameter.TypeComboBox = typeComboBox.Text;
             new Thread(confirmThread).Start();
         }
+        
+        class Paraarameter
+        {
+            public string TypeComboBox;
+        }
+
+        private Paraarameter paraarameter;
 
         private List<RowItem> filterItems = new List<RowItem>();
-
+   
         private void confirmThread ()
         {
             var dateTimeStart = startDateTimePicker.Value;
             var dateTimeEnd = endDateTimePicker.Value;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
+            
+            // confirm 設定 txt 篩選
+            if (dateFilterCheckBox.Checked)
+            {
+                uiEnable(false);
+                var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                if (paraarameter.TypeComboBox == "Level")
+                {
+                    filterItems = filterTimeItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
+                }
+                else if (paraarameter.TypeComboBox == "Category")
+                {
+                    filterItems = filterTimeItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
+                }
+                else if (paraarameter.TypeComboBox == "Tags")
+                {
+                    filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                }
+                else if (paraarameter.TypeComboBox == "Message")
+                {
+                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
+                }
+                rows = filterItems.ConvertAll(x => x.ToRow());
 
+                if (string.IsNullOrEmpty(searchTextBox.Text))
+                {
+                    rows = filterTimeItems.ConvertAll(x => x.ToRow());
+                }
+            }
+            else
+            {
+                if (paraarameter.TypeComboBox == "Level")
+                {
+                    filterItems = rowItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
+                }
+                else if (paraarameter.TypeComboBox == "Category")
+                {
+                    filterItems = rowItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
+                }
+                else if (paraarameter.TypeComboBox == "Tags")
+                {
+                    filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                }
+                else if (paraarameter.TypeComboBox == "Message")
+                {
+                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
+
+                }
+                rows = filterItems.ConvertAll(x => x.ToRow());
+
+                if (string.IsNullOrEmpty(searchTextBox.Text))
+                {
+                    MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    rows = rowItems.ConvertAll(x => x.ToRow());
+                }
+            }
             Action confirm = () =>
             {
-                // confirm 設定 txt 篩選
-                if (dateFilterCheckBox.Checked)
-                {
-                    uiEnable(false);
-                    if (string.IsNullOrEmpty(searchTextBox.Text))
-                    {
-                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                        rows = filterTimeItems.ConvertAll(x => x.ToRow());
-                    }
-                    else if (typeComboBox.Text == "Level")
-                    {
-                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                        filterItems = filterTimeItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-                    }
-                    else if (typeComboBox.Text == "Category")
-                    {
-                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                        filterItems = filterTimeItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-                    }
-                    else if (typeComboBox.Text == "Tags")
-                    {
-                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                        filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-                    }
-                    else if (typeComboBox.Text == "Message")
-                    {
-                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                        filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-                    }
-                }
-                else
-                {
-                    if (typeComboBox.Text == "Level")
-                    {
-                        filterItems = rowItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-
-                        if (string.IsNullOrEmpty(searchTextBox.Text))
-                        {
-                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            rows = rowItems.ConvertAll(x => x.ToRow());
-                        }
-                    }
-                    else if (typeComboBox.Text == "Category")
-                    {
-                        filterItems = rowItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-
-                        if (string.IsNullOrEmpty(searchTextBox.Text))
-                        {
-                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            rows = rowItems.ConvertAll(x => x.ToRow());
-                        }
-                    }
-                    else if (typeComboBox.Text == "Tags")
-                    {
-                        filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-
-                        if (string.IsNullOrEmpty(searchTextBox.Text))
-                        {
-                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            rows = rowItems.ConvertAll(x => x.ToRow());
-                        }
-                    }
-                    else if (typeComboBox.Text == "Message")
-                    {
-                        filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
-                        rows = filterItems.ConvertAll(x => x.ToRow());
-
-                        if (string.IsNullOrEmpty(searchTextBox.Text))
-                        {
-                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            rows = rowItems.ConvertAll(x => x.ToRow());
-                        }
-                    }
-                    if (string.IsNullOrEmpty(searchTextBox.Text))
-                    {
-                        MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        rows = rowItems.ConvertAll(x => x.ToRow());
-                    }
-                }
                 dataGridView1.Rows.Clear();
                 dataGridView1.Rows.AddRange(rows.ToArray());
                 uiEnable(true);
             };
-            Invoke(confirm);           
+            Invoke(confirm);
         }
 
         // write file thread
@@ -264,7 +243,7 @@ namespace WindowsFormsApp1011
 
         class RowItem
         {
-            public string RowData;
+            public string RawData;
             public string Level;
             public string Category;
             public DateTime Time;
@@ -282,7 +261,7 @@ namespace WindowsFormsApp1011
                 row.Cells[2].Value = Time;
                 row.Cells[3].Value = Tags;
                 row.Cells[4].Value = Message;
-                row.Cells[5].Value = RowData;
+                row.Cells[5].Value = RawData;
 
                 return row;
             }
