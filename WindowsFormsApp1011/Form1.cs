@@ -41,13 +41,12 @@ namespace WindowsFormsApp1011
             endDateTimePicker.Enabled = enable;
         }
 
-        OpenFileDialog dialog = new OpenFileDialog();
+        private OpenFileDialog dialog = new OpenFileDialog();
 
         // read file
         private void readFileButton_Click(object sender, EventArgs e)       
         {
             uiEnable(false);
-            OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;
             dialog.Title = "請選擇資料夾";
             // 設定起始目錄
@@ -57,7 +56,7 @@ namespace WindowsFormsApp1011
             dialog.Filter = "所有檔案(*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                new Thread(() => { }).Start();
+                new Thread(getDataPutInTheUI).Start();       
             }
             else
             {
@@ -78,23 +77,23 @@ namespace WindowsFormsApp1011
                 bool containsMouse = line.Contains('@');
                 if (containsMouse)
                 {
-                    string[] getData = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
-                    string[] getResults = getData[0].Split(',');
-                    rowItem.Level = getResults[0];
-                    rowItem.Category = getResults[1];
-                    rowItem.Time = DateTime.Parse(getResults[2]);
+                    string[] containsMouseSplit = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] containsMouseResults = containsMouseSplit[0].Split(',');
+                    rowItem.Level = containsMouseResults[0];
+                    rowItem.Category = containsMouseResults[1];
+                    rowItem.Time = DateTime.Parse(containsMouseResults[2]);
 
-                    string[] getResultsTags = getData[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
-                    rowItem.Tags = getResultsTags[0].Replace(";", ",");
-                    rowItem.Message = getResultsTags[1];
+                    string[] mouseMessageSplit = containsMouseSplit[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
+                    rowItem.Tags = mouseMessageSplit[0].Replace(";", ",");
+                    rowItem.Message = mouseMessageSplit[1];
                 }
                 else
                 {
-                    string[] getDataElse = line.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                    rowItem.Level = getDataElse[0];
-                    rowItem.Category = getDataElse[1];
-                    rowItem.Time = DateTime.Parse(getDataElse[2]);
-                    rowItem.Message = getDataElse[3];
+                    string[] uncontainsMouseSplit = line.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    rowItem.Level = uncontainsMouseSplit[0];
+                    rowItem.Category = uncontainsMouseSplit[1];
+                    rowItem.Time = DateTime.Parse(uncontainsMouseSplit[2]);
+                    rowItem.Message = uncontainsMouseSplit[3];
                 }
                 rowItems.Add(rowItem);
             }
@@ -114,56 +113,99 @@ namespace WindowsFormsApp1011
         private void confirmButton_Click(object sender, EventArgs e)  
         {
             uiEnable(false);
-            Thread thread = new Thread(confirmThread);
-            thread.Start();
+            new Thread(confirmThread).Start();
         }
 
-        private List<DataGridViewRow> rows = new List<DataGridViewRow>();
         private List<RowItem> filterItems = new List<RowItem>();
+
         private void confirmThread ()
         {
-            rows = new List<DataGridViewRow>();
+            var dateTimeStart = startDateTimePicker.Value;
+            var dateTimeEnd = endDateTimePicker.Value;
+            List<DataGridViewRow> rows = new List<DataGridViewRow>();
+
             Action confirm = () =>
             {
                 // confirm 設定 txt 篩選
-                if (typeComboBox.Text == "Level")
+                if (dateFilterCheckBox.Checked==true)
                 {
-                    filterItems = rowItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
-                    rows = filterItems.ConvertAll(x => x.ToRow());
-
+                    uiEnable(false);
                     if (string.IsNullOrEmpty(searchTextBox.Text))
                     {
-                        MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        rows = rowItems.ConvertAll(x => x.ToRow());
+                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                        rows = filterTimeItems.ConvertAll(x => x.ToRow());
                     }
-                }
-                else if (typeComboBox.Text == "Category")
-                {
-                    filterItems = rowItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
-                    rows = filterItems.ConvertAll(x => x.ToRow());
-
-                    if (string.IsNullOrEmpty(searchTextBox.Text))
+                    else if (typeComboBox.Text == "Level")
                     {
-                        MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        rows = rowItems.ConvertAll(x => x.ToRow());
+                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                        filterItems = filterTimeItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
+                        rows = filterItems.ConvertAll(x => x.ToRow());
                     }
-                }
-                else if (typeComboBox.Text == "Tags")
-                {
-                    filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
-                    rows = filterItems.ConvertAll(x => x.ToRow());
-
-                    if (string.IsNullOrEmpty(searchTextBox.Text))
+                    else if (typeComboBox.Text == "Category")
                     {
-                        MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        rows = rowItems.ConvertAll(x => x.ToRow());
+                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                        filterItems = filterTimeItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
+                        rows = filterItems.ConvertAll(x => x.ToRow());
+                    }
+                    else if (typeComboBox.Text == "Tags")
+                    {
+                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                        filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                        rows = filterItems.ConvertAll(x => x.ToRow());
+                    }
+                    else if (typeComboBox.Text == "Message")
+                    {
+                        var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
+                        filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
+                        rows = filterItems.ConvertAll(x => x.ToRow());
                     }
                 }
-                else if (typeComboBox.Text == "Message")
+                else
                 {
-                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
-                    rows = filterItems.ConvertAll(x => x.ToRow());
+                    if (typeComboBox.Text == "Level")
+                    {
+                        filterItems = rowItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
+                        rows = filterItems.ConvertAll(x => x.ToRow());
 
+                        if (string.IsNullOrEmpty(searchTextBox.Text))
+                        {
+                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            rows = rowItems.ConvertAll(x => x.ToRow());
+                        }
+                    }
+                    else if (typeComboBox.Text == "Category")
+                    {
+                        filterItems = rowItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
+                        rows = filterItems.ConvertAll(x => x.ToRow());
+
+                        if (string.IsNullOrEmpty(searchTextBox.Text))
+                        {
+                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            rows = rowItems.ConvertAll(x => x.ToRow());
+                        }
+                    }
+                    else if (typeComboBox.Text == "Tags")
+                    {
+                        filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                        rows = filterItems.ConvertAll(x => x.ToRow());
+
+                        if (string.IsNullOrEmpty(searchTextBox.Text))
+                        {
+                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            rows = rowItems.ConvertAll(x => x.ToRow());
+                        }
+                    }
+                    else if (typeComboBox.Text == "Message")
+                    {
+                        filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
+                        rows = filterItems.ConvertAll(x => x.ToRow());
+
+                        if (string.IsNullOrEmpty(searchTextBox.Text))
+                        {
+                            MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            rows = rowItems.ConvertAll(x => x.ToRow());
+                        }
+                    }
                     if (string.IsNullOrEmpty(searchTextBox.Text))
                     {
                         MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -175,77 +217,6 @@ namespace WindowsFormsApp1011
                 uiEnable(true);
             };
             Invoke(confirm);           
-        }
-
-        private void dateFilterCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            uiEnable(false);
-            if (dateFilterCheckBox.Checked)
-            {
-                Thread thread = new Thread(dateFilterChecked);
-                thread.Start();
-            }
-            else
-            {
-                Thread thread = new Thread(dateFilterUnchecked);
-                thread.Start();
-            }
-        }
-
-        private void dateFilterChecked()
-        {
-            var dateTimeStart = startDateTimePicker.Value;
-            var dateTimeEnd = endDateTimePicker.Value;
-            if (string.IsNullOrEmpty(searchTextBox.Text))
-            {
-                var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                rows = filterTimeItems.ConvertAll(x => x.ToRow());
-                Action checkedNoSearchTextBox = () =>
-                {
-                    dataGridView1.Rows.Clear();
-                    dataGridView1.Rows.AddRange(rows.ToArray());
-                    uiEnable(true);
-                };
-                Invoke(checkedNoSearchTextBox);
-            }
-            else
-            {
-                var filterTimeItems = filterItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                rows = filterTimeItems.ConvertAll(x => x.ToRow());
-                Action check = () =>
-                {
-                    dataGridView1.Rows.Clear();
-                    dataGridView1.Rows.AddRange(rows.ToArray());
-                    uiEnable(true);
-                };
-                Invoke(check);
-            }  
-        }
-
-        private void dateFilterUnchecked()
-        {
-            if (string.IsNullOrEmpty(searchTextBox.Text))
-            {
-                rows = rowItems.ConvertAll(x => x.ToRow());
-                Action uncheckNoSearchTextBox = () =>
-                {
-                    dataGridView1.Rows.Clear();
-                    dataGridView1.Rows.AddRange(rows.ToArray());
-                    uiEnable(true);
-                };
-                Invoke(uncheckNoSearchTextBox);
-            }
-            else
-            {
-                rows = filterItems.ConvertAll(x => x.ToRow());
-                Action uncheck = () =>
-                {
-                    dataGridView1.Rows.Clear();
-                    dataGridView1.Rows.AddRange(rows.ToArray());
-                    uiEnable(true);
-                };
-                Invoke(uncheck);
-            }                
         }
 
         private SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -266,7 +237,7 @@ namespace WindowsFormsApp1011
             else
             {
                 uiEnable(true);
-                dialog.Dispose();
+                saveFileDialog.Dispose();
                 return;
             }
         }

@@ -104,7 +104,6 @@
             this.dateFilterCheckBox.TabIndex = 5;
             this.dateFilterCheckBox.Text = "Date Filter";
             this.dateFilterCheckBox.UseVisualStyleBackColor = true;
-            this.dateFilterCheckBox.CheckedChanged += new System.EventHandler(this.dateFilterCheckBox_CheckedChanged);
             // 
             // dataGridView1
             // 
