@@ -24,11 +24,6 @@ namespace WindowsFormsApp1011
 
         private List<RowItem> rowItems;
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void uiEnable(bool enable)
         {
             readFileButton.Enabled = enable;
@@ -41,22 +36,21 @@ namespace WindowsFormsApp1011
             endDateTimePicker.Enabled = enable;
         }
 
-        private OpenFileDialog dialog = new OpenFileDialog();
-
         // read file
         private void readFileButton_Click(object sender, EventArgs e)       
         {
             uiEnable(false);
+            OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;
             dialog.Title = "請選擇資料夾";
             // 設定起始目錄
             dialog.InitialDirectory = ".\\";
             // 設定起始目錄為程式目錄
-            //dialog.InitialDirectory = Application.StartupPath;  
+            //dialog.InitialDirectory = Application.StartupPath;  x
             dialog.Filter = "所有檔案(*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                new Thread(getDataPutInTheUI).Start();       
+                new Thread(new ParameterizedThreadStart(getDataPutInTheUI)).Start(dialog.FileName);
             }
             else
             {
@@ -66,10 +60,10 @@ namespace WindowsFormsApp1011
             }
         }
 
-        private void getDataPutInTheUI()
+        private void getDataPutInTheUI(object fileName)
         {
             rowItems = new List<RowItem>();
-            string[] lines = File.ReadAllLines(dialog.FileName);
+            string[] lines = File.ReadAllLines(fileName.ToString());
             foreach (string line in lines)
             {
                 RowItem rowItem = new RowItem();
@@ -219,20 +213,18 @@ namespace WindowsFormsApp1011
             Invoke(confirm);           
         }
 
-        private SaveFileDialog saveFileDialog = new SaveFileDialog();
         // write file thread
         private void saveFileButton_Click(object sender, EventArgs e)
         {
             uiEnable(false);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog.InitialDirectory = @"C:\Users\rita5\source\repos\WindowsFormsApp1011";
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.Title = "另存新檔";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Thread threadWrite = new Thread(threadWriteFile);
-                threadWrite.SetApartmentState(ApartmentState.STA);
-                threadWrite.Start();
+                new Thread(new ParameterizedThreadStart(threadWriteFile)).Start(saveFileDialog.FileName);
             }
             else
             {
@@ -242,11 +234,11 @@ namespace WindowsFormsApp1011
             }
         }
 
-        private void threadWriteFile()
+        private void threadWriteFile(object fileName)
         {
             Action saveFile = () =>
             {
-                FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create);
+                FileStream fs = new FileStream(fileName.ToString(), FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
 
                 if (dataGridView1.Rows.Count < 1)
