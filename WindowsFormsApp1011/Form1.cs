@@ -125,15 +125,14 @@ namespace WindowsFormsApp1011
             var dateTimeEnd = parameter.EndDateTime;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
 
+            filterItems = rowItems.ToList();
+
             // confirm 設定 txt 篩選
             if (parameter.DateFilterCheck)
             {
                 filterItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
             }
-            else
-            {
-                filterItems = rowItems;
-            }
+
             if (!string.IsNullOrEmpty(parameter.SearchText))
             {
                 if (parameter.TypeCombo == "Level")
@@ -152,10 +151,9 @@ namespace WindowsFormsApp1011
                 {
                     filterItems = filterItems.FindAll(x => x.Message.ToLower().Contains(parameter.SearchText));
                 }
-                rows = filterItems.ConvertAll(x => x.ToRow());
             }
-            else
-                rows = filterItems.ConvertAll(x => x.ToRow());
+
+            rows = filterItems.ConvertAll(x => x.ToRow());
 
             Action confirm = () =>
             {
