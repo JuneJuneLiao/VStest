@@ -103,60 +103,60 @@ namespace WindowsFormsApp1011
             Invoke(action);
         }
 
-        private ThreadParameter threadParameter;
-
         // confirm 設定
         private void confirmButton_Click(object sender, EventArgs e)  
         {
             uiEnable(false);
-            threadParameter = new ThreadParameter();
-            threadParameter.TypeComboBox = typeComboBox.Text;
-            threadParameter.SearchTextBox = searchTextBox.Text;
-            threadParameter.DateFilterCheckBox = dateFilterCheckBox.Checked;
-            threadParameter.StartDateTimePicker = startDateTimePicker.Value;
-            threadParameter.EndDateTimePicker = endDateTimePicker.Value;
-            new Thread(confirmThread).Start();
+            Parameter parameter = new Parameter();
+            parameter.TypeCombo = typeComboBox.Text;
+            parameter.SearchText = searchTextBox.Text;
+            parameter.DateFilterCheck = dateFilterCheckBox.Checked;
+            parameter.StartDateTime = startDateTimePicker.Value;
+            parameter.EndDateTime = endDateTimePicker.Value;
+            new Thread(new ParameterizedThreadStart(confirmThread)).Start(parameter);
         }
 
         private List<RowItem> filterItems = new List<RowItem>();
    
-        private void confirmThread ()
+        private void confirmThread (object obj)
         {
-            var dateTimeStart = threadParameter.StartDateTimePicker;
-            var dateTimeEnd = threadParameter.EndDateTimePicker;
+            Parameter parameter = obj as Parameter;
+            var dateTimeStart = parameter.StartDateTime;
+            var dateTimeEnd = parameter.EndDateTime;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
 
             // confirm 設定 txt 篩選
-            if (threadParameter.DateFilterCheckBox)
+            if (parameter.DateFilterCheck)
             {
-                uiEnable(false);
                 filterItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
             }
             else
             {
                 filterItems = rowItems;
             }
-            if (string.IsNullOrEmpty(threadParameter.SearchTextBox))
+            if (!string.IsNullOrEmpty(parameter.SearchText))
             {
+                if (parameter.TypeCombo == "Level")
+                {
+                    filterItems = filterItems.FindAll(x => x.Level.ToLower() == parameter.SearchText);
+                }
+                else if (parameter.TypeCombo == "Category")
+                {
+                    filterItems = filterItems.FindAll(x => x.Category.ToLower() == parameter.SearchText);
+                }
+                else if (parameter.TypeCombo == "Tags")
+                {
+                    filterItems = filterItems.FindAll(x => x.Tags == parameter.SearchText);
+                }
+                else if (parameter.TypeCombo == "Message")
+                {
+                    filterItems = filterItems.FindAll(x => x.Message.ToLower().Contains(parameter.SearchText));
+                }
                 rows = filterItems.ConvertAll(x => x.ToRow());
             }
-            else if (threadParameter.TypeComboBox == "Level")
-            {
-                filterItems = filterItems.FindAll(x => x.Level.ToLower() == threadParameter.SearchTextBox);
-            }
-            else if (threadParameter.TypeComboBox == "Category")
-            {
-                filterItems = filterItems.FindAll(x => x.Category.ToLower() == threadParameter.SearchTextBox);
-            }
-            else if (threadParameter.TypeComboBox == "Tags")
-            {
-                filterItems = filterItems.FindAll(x => x.Tags == threadParameter.SearchTextBox);
-            }
-            else if (threadParameter.TypeComboBox == "Message")
-            {
-                filterItems = filterItems.FindAll(x => x.Message.ToLower().Contains(threadParameter.SearchTextBox));
-            }
-            rows = filterItems.ConvertAll(x => x.ToRow());
+            else
+                rows = filterItems.ConvertAll(x => x.ToRow());
+
             Action confirm = () =>
             {
                 dataGridView1.Rows.Clear();
@@ -241,13 +241,13 @@ namespace WindowsFormsApp1011
             }
         }
 
-        class ThreadParameter
+        class Parameter
         {
-            public string TypeComboBox;
-            public string SearchTextBox;
-            public bool DateFilterCheckBox;
-            public DateTime StartDateTimePicker;
-            public DateTime EndDateTimePicker;
+            public string TypeCombo;
+            public string SearchText;
+            public bool DateFilterCheck;
+            public DateTime StartDateTime;
+            public DateTime EndDateTime;
         }
     }
 }
