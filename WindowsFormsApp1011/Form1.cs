@@ -87,7 +87,7 @@ namespace WindowsFormsApp1011
                     rowItem.Level = uncontainsMouseSplit[0];
                     rowItem.Category = uncontainsMouseSplit[1];
                     rowItem.Time = DateTime.Parse(uncontainsMouseSplit[2]);
-                    rowItem.Message = uncontainsMouseSplit[3];
+                    rowItem.Message = uncontainsMouseSplit[3].Replace("#json ", "");
                 }
                 rowItems.Add(rowItem);
             }
