@@ -103,22 +103,17 @@ namespace WindowsFormsApp1011
             Invoke(action);
         }
 
+        private Paraarameter paraarameter;
+
         // confirm 設定
         private void confirmButton_Click(object sender, EventArgs e)  
         {
             uiEnable(false);
-            //new Thread(confirmThread).Start();
             paraarameter = new Paraarameter();
             paraarameter.TypeComboBox = typeComboBox.Text;
+            paraarameter.SearchTextBox = searchTextBox.Text;
             new Thread(confirmThread).Start();
         }
-        
-        class Paraarameter
-        {
-            public string TypeComboBox;
-        }
-
-        private Paraarameter paraarameter;
 
         private List<RowItem> filterItems = new List<RowItem>();
    
@@ -135,15 +130,15 @@ namespace WindowsFormsApp1011
                 var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
                 if (paraarameter.TypeComboBox == "Level")
                 {
-                    filterItems = filterTimeItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
+                    filterItems = filterTimeItems.FindAll(x => x.Level.ToLower() == paraarameter.SearchTextBox);
                 }
                 else if (paraarameter.TypeComboBox == "Category")
                 {
-                    filterItems = filterTimeItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
+                    filterItems = filterTimeItems.FindAll(x => x.Category.ToLower() == paraarameter.SearchTextBox);
                 }
                 else if (paraarameter.TypeComboBox == "Tags")
                 {
-                    filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                    filterItems = rowItems.FindAll(x => x.Tags == paraarameter.SearchTextBox);
                 }
                 else if (paraarameter.TypeComboBox == "Message")
                 {
@@ -160,20 +155,19 @@ namespace WindowsFormsApp1011
             {
                 if (paraarameter.TypeComboBox == "Level")
                 {
-                    filterItems = rowItems.FindAll(x => x.Level.ToLower() == searchTextBox.Text);
+                    filterItems = rowItems.FindAll(x => x.Level.ToLower() == paraarameter.SearchTextBox);
                 }
                 else if (paraarameter.TypeComboBox == "Category")
                 {
-                    filterItems = rowItems.FindAll(x => x.Category.ToLower() == searchTextBox.Text);
+                    filterItems = rowItems.FindAll(x => x.Category.ToLower() == paraarameter.SearchTextBox);
                 }
                 else if (paraarameter.TypeComboBox == "Tags")
                 {
-                    filterItems = rowItems.FindAll(x => x.Tags == searchTextBox.Text);
+                    filterItems = rowItems.FindAll(x => x.Tags == paraarameter.SearchTextBox);
                 }
                 else if (paraarameter.TypeComboBox == "Message")
                 {
-                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
-
+                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(paraarameter.SearchTextBox));
                 }
                 rows = filterItems.ConvertAll(x => x.ToRow());
 
@@ -265,6 +259,12 @@ namespace WindowsFormsApp1011
 
                 return row;
             }
+        }
+
+        class Paraarameter
+        {
+            public string TypeComboBox;
+            public string SearchTextBox;
         }
     }
 }
