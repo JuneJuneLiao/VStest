@@ -103,15 +103,18 @@ namespace WindowsFormsApp1011
             Invoke(action);
         }
 
-        private Paraarameter paraarameter;
+        private ThreadParameter threadParameter;
 
         // confirm 設定
         private void confirmButton_Click(object sender, EventArgs e)  
         {
             uiEnable(false);
-            paraarameter = new Paraarameter();
-            paraarameter.TypeComboBox = typeComboBox.Text;
-            paraarameter.SearchTextBox = searchTextBox.Text;
+            threadParameter = new ThreadParameter();
+            threadParameter.TypeComboBox = typeComboBox.Text;
+            threadParameter.SearchTextBox = searchTextBox.Text;
+            threadParameter.DateFilterCheckBox = dateFilterCheckBox.Checked;
+            threadParameter.StartDateTimePicker = startDateTimePicker.Value;
+            threadParameter.EndDateTimePicker = endDateTimePicker.Value;
             new Thread(confirmThread).Start();
         }
 
@@ -119,64 +122,41 @@ namespace WindowsFormsApp1011
    
         private void confirmThread ()
         {
-            var dateTimeStart = startDateTimePicker.Value;
-            var dateTimeEnd = endDateTimePicker.Value;
+            var dateTimeStart = threadParameter.StartDateTimePicker;
+            var dateTimeEnd = threadParameter.EndDateTimePicker;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
-            
+
             // confirm 設定 txt 篩選
-            if (dateFilterCheckBox.Checked)
+            if (threadParameter.DateFilterCheckBox)
             {
                 uiEnable(false);
-                var filterTimeItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
-                if (paraarameter.TypeComboBox == "Level")
-                {
-                    filterItems = filterTimeItems.FindAll(x => x.Level.ToLower() == paraarameter.SearchTextBox);
-                }
-                else if (paraarameter.TypeComboBox == "Category")
-                {
-                    filterItems = filterTimeItems.FindAll(x => x.Category.ToLower() == paraarameter.SearchTextBox);
-                }
-                else if (paraarameter.TypeComboBox == "Tags")
-                {
-                    filterItems = rowItems.FindAll(x => x.Tags == paraarameter.SearchTextBox);
-                }
-                else if (paraarameter.TypeComboBox == "Message")
-                {
-                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(searchTextBox.Text));
-                }
-                rows = filterItems.ConvertAll(x => x.ToRow());
-
-                if (string.IsNullOrEmpty(searchTextBox.Text))
-                {
-                    rows = filterTimeItems.ConvertAll(x => x.ToRow());
-                }
+                filterItems = rowItems.FindAll(x => x.Time >= dateTimeStart && x.Time <= dateTimeEnd);
             }
             else
             {
-                if (paraarameter.TypeComboBox == "Level")
-                {
-                    filterItems = rowItems.FindAll(x => x.Level.ToLower() == paraarameter.SearchTextBox);
-                }
-                else if (paraarameter.TypeComboBox == "Category")
-                {
-                    filterItems = rowItems.FindAll(x => x.Category.ToLower() == paraarameter.SearchTextBox);
-                }
-                else if (paraarameter.TypeComboBox == "Tags")
-                {
-                    filterItems = rowItems.FindAll(x => x.Tags == paraarameter.SearchTextBox);
-                }
-                else if (paraarameter.TypeComboBox == "Message")
-                {
-                    filterItems = rowItems.FindAll(x => x.Message.ToLower().Contains(paraarameter.SearchTextBox));
-                }
-                rows = filterItems.ConvertAll(x => x.ToRow());
-
-                if (string.IsNullOrEmpty(searchTextBox.Text))
-                {
-                    MessageBox.Show("請輸入文字 !", "顯示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    rows = rowItems.ConvertAll(x => x.ToRow());
-                }
+                filterItems = rowItems;
             }
+            if (string.IsNullOrEmpty(threadParameter.SearchTextBox))
+            {
+                rows = filterItems.ConvertAll(x => x.ToRow());
+            }
+            else if (threadParameter.TypeComboBox == "Level")
+            {
+                filterItems = filterItems.FindAll(x => x.Level.ToLower() == threadParameter.SearchTextBox);
+            }
+            else if (threadParameter.TypeComboBox == "Category")
+            {
+                filterItems = filterItems.FindAll(x => x.Category.ToLower() == threadParameter.SearchTextBox);
+            }
+            else if (threadParameter.TypeComboBox == "Tags")
+            {
+                filterItems = filterItems.FindAll(x => x.Tags == threadParameter.SearchTextBox);
+            }
+            else if (threadParameter.TypeComboBox == "Message")
+            {
+                filterItems = filterItems.FindAll(x => x.Message.ToLower().Contains(threadParameter.SearchTextBox));
+            }
+            rows = filterItems.ConvertAll(x => x.ToRow());
             Action confirm = () =>
             {
                 dataGridView1.Rows.Clear();
@@ -261,10 +241,13 @@ namespace WindowsFormsApp1011
             }
         }
 
-        class Paraarameter
+        class ThreadParameter
         {
             public string TypeComboBox;
             public string SearchTextBox;
+            public bool DateFilterCheckBox;
+            public DateTime StartDateTimePicker;
+            public DateTime EndDateTimePicker;
         }
     }
 }
