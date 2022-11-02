@@ -1,5 +1,6 @@
 WindowsFormsApp1011/bin/Debug
 WindowsFormsApp1011/obj/Debug
+packages
 VStest
 *.exe
 *.pdb
