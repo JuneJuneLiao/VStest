@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace WindowsFormsApp1011
 {
@@ -68,18 +69,17 @@ namespace WindowsFormsApp1011
             {
                 RowItem rowItem = new RowItem();
                 rowItem.RawData = line;
-                bool containsMouse = line.Contains('@');
-                if (containsMouse)
-                {
-                    string[] containsMouseSplit = line.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
-                    string[] containsMouseResults = containsMouseSplit[0].Split(',');
-                    rowItem.Level = containsMouseResults[0];
-                    rowItem.Category = containsMouseResults[1];
-                    rowItem.Time = DateTime.Parse(containsMouseResults[2]);
+                bool containsJson = line.Contains("#json ");
 
-                    string[] mouseMessageSplit = containsMouseSplit[1].Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
-                    rowItem.Tags = mouseMessageSplit[0].Replace(";", ",");
-                    rowItem.Message = mouseMessageSplit[1];
+                if (containsJson)
+                {
+                    string[] containsJsonSplit = line.Split(new string[] { "#json " }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] containsJsonResults = containsJsonSplit[0].Split(',');
+                    rowItem.Level = containsJsonResults[0];
+                    rowItem.Category = containsJsonResults[1];
+                    rowItem.Time = DateTime.Parse(containsJsonResults[2]);
+                    rowItem.Tags = containsJsonResults[3].Replace("@", "").Replace(";", ",");
+                    rowItem.Message = containsJsonSplit[1];
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace WindowsFormsApp1011
                     rowItem.Level = uncontainsMouseSplit[0];
                     rowItem.Category = uncontainsMouseSplit[1];
                     rowItem.Time = DateTime.Parse(uncontainsMouseSplit[2]);
-                    rowItem.Message = uncontainsMouseSplit[3].Replace("#json ", "");
+                    rowItem.Message = uncontainsMouseSplit[3];
                 }
                 rowItems.Add(rowItem);
             }
