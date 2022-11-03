@@ -213,6 +213,12 @@ namespace WindowsFormsApp1011
             Invoke(saveFile);
         }
 
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Form2 form2 = new Form2(dataGridView1.CurrentRow);
+            form2.Show();
+        }
+
         class RowItem
         {
             public string RawData;
