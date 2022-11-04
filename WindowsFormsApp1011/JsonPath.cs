@@ -13,12 +13,12 @@ using Newtonsoft.Json.Schema;
 
 namespace WindowsFormsApp1011
 {
-    public partial class Form2 : Form
+    public partial class JsonPath : Form
     {
-        public Form2 (DataGridViewCell dataGridViewCell1)
+        public JsonPath (string pushJsonData)
         {
             InitializeComponent();
-            JObject json = JObject.Parse(dataGridViewCell1.Value.ToString());
+            JObject json = JObject.Parse(pushJsonData.ToString());
             inputTextBox.Text = json.ToString();
         }
 

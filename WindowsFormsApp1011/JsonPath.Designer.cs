@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1011
 {
-    partial class Form2
+    partial class JsonPath
     {
         /// <summary>
         /// Required designer variable.
@@ -63,7 +63,7 @@
             // outputTextBox
             // 
             this.outputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.outputTextBox.Location = new System.Drawing.Point(423, 104);
             this.outputTextBox.Multiline = true;
             this.outputTextBox.Name = "outputTextBox";
@@ -81,7 +81,7 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
-            // Form2
+            // JsonPath
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -90,7 +90,7 @@
             this.Controls.Add(this.outputTextBox);
             this.Controls.Add(this.inputTextBox);
             this.Controls.Add(this.searchJsonTextBox);
-            this.Name = "Form2";
+            this.Name = "JsonPath";
             this.Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);

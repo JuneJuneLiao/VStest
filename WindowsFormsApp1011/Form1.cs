@@ -215,14 +215,8 @@ namespace WindowsFormsApp1011
 
         private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.Selected)
-                {
-                    dataGridView1.CurrentCell = dataGridView1.Rows[row.Index].Cells[4];  
-                }  
-            }
-            Form2 form2 = new Form2(dataGridView1.CurrentCell);
+            string jsonData = dataGridView1[4,dataGridView1.CurrentRow.Index].Value.ToString();
+            JsonPath form2 = new JsonPath(jsonData);
             form2.Show();
         }
 
