@@ -15,12 +15,10 @@ namespace WindowsFormsApp1011
 {
     public partial class Form2 : Form
     {
-        public Form2 (DataGridViewRow DataGridViewRow1)
+        public Form2 (DataGridViewCell dataGridViewCell1)
         {
             InitializeComponent();
-            DataGridViewRow dataGridViewRow;
-            dataGridViewRow = DataGridViewRow1;
-            JObject json = JObject.Parse(dataGridViewRow.Cells[4].Value.ToString());
+            JObject json = JObject.Parse(dataGridViewCell1.Value.ToString());
             inputTextBox.Text = json.ToString();
         }
 
