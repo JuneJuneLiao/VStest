@@ -19,6 +19,7 @@ namespace Simple_Computer
         private Button equalsButton;
 
         private double number = 0;
+        private double number2 = 0;
         private string operatorNumber;
         private bool deleteInputTextBox = false;
 
@@ -32,90 +33,56 @@ namespace Simple_Computer
             int LengthX = 75;
             int WidthY = 23;
 
-            Size = new System.Drawing.Size(LengthX + GapX * 4, WidthY + GapY*7); //410,220
+            Size = new System.Drawing.Size(LengthX + GapX * 4, WidthY + GapY*7); // 410,220
             inputNumberTextBox = new TextBox();
             inputNumberTextBox.Location = new Point(startX, startY);
             inputNumberTextBox.Size = new Size(LengthX + GapX*2, WidthY + GapY);
             Controls.Add(inputNumberTextBox);
-
-            for (int i = 0; i < 11; i++) // 0 ~ 9,"."
+            
+            // 0 ~ 9,"."
+            for (int i = 0; i < 11; i++) 
             {
                 numberButton = new Button();
                 numberButton.Text = i.ToString();
-
-                if (i == 0)
-                {
-                    numberButton.Location = new Point(startX + GapX, startY + GapY * 4);
-                }
-                else if (i == 1)
-                {
-                    numberButton.Location = new Point(startX, startY + GapY );
-                }
-                else if (i == 2)
-                {
-                    numberButton.Location = new Point(startX + GapX, startY + GapY);
-                }
-                else if (i == 3)
-                {
-                    numberButton.Location = new Point(startX + GapX * 2, startY + GapY);
-                }
-                else if (i == 4)
-                {
-                    numberButton.Location = new Point(startX, startY + GapY * 2);
-                }
-                else if (i == 5)
-                {
-                    numberButton.Location = new Point(startX + GapX, startY + GapY * 2);
-                }
-                else if (i == 6)
-                {
-                    numberButton.Location = new Point(startX + GapX * 2, startY + GapY * 2);
-                }
-                else if (i == 7)
-                {
-                    numberButton.Location = new Point(startX, startY + GapY * 3);
-                }
-                else if (i == 8)
-                {
-                    numberButton.Location = new Point(startX + GapX, startY + GapY * 3);
-                }
-                else if (i == 9)
-                {
-                    numberButton.Location = new Point(startX + GapX * 2, startY + GapY * 3);
-                }
-                else if (i == 10)
+                if (i == 10)
                 {
                     numberButton.Text = ".";
-                    numberButton.Location = new Point(startX, startY + GapY * 4);                   
+                }
+
+                int column = i % 3;
+                int row = i / 3;  
+                
+                if(column == 0)     // 3, 6, 9
+                {
+                    if (i == 0)
+                    {
+                        numberButton.Location = new Point(startX + GapX, startY + GapY * 4);
+                    }
+                    else
+                    {
+                        numberButton.Location = new Point(startX + GapX * 2, startY + GapY * row);
+                    }
+                }
+                else if (column == 1)       // 1, 4, 7, .
+                {
+                    numberButton.Location = new Point(startX, startY + GapY * (row + 1));
+                }
+                else if (column == 2)       // 2, 5, 8
+                {
+                    numberButton.Location = new Point(startX + GapX, startY + GapY * (row + 1));
                 }
                 numberButton.Size = new Size(LengthX, WidthY);
                 numberButton.Click += new EventHandler(numberButton_Click);
                 Controls.Add(numberButton);
             }
 
-            for (int j = 0; j < 5; j++) // C + - * / =
+            string[] operatorButtonText = new string[] { "C", "+", "-", "*", "/" };
+            
+            // C, +, -, *, /, =
+            for (int j = 0; j < operatorButtonText.Count(); j++) 
             {
                 operatorButton = new Button();
-                if (j == 0)
-                {
-                    operatorButton.Text = "C";
-                }
-                else if (j == 1)
-                {
-                    operatorButton.Text = "+";
-                }
-                else if (j == 2)
-                {
-                    operatorButton.Text = "-";
-                }
-                else if (j == 3)
-                {
-                    operatorButton.Text = "*";
-                }
-                else if (j == 4)
-                {
-                    operatorButton.Text = "/";
-                }
+                operatorButton.Text = operatorButtonText[j];
                 operatorButton.Location = new Point(startX + GapX * 3, startY + GapY * j);
                 operatorButton.Size = new Size(LengthX, WidthY);
                 operatorButton.Click += new EventHandler(operatorButton_Click);
@@ -145,17 +112,30 @@ namespace Simple_Computer
             if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
             {
                 double operatorResult = 0;
-                number = Convert.ToDouble(inputNumberTextBox.Text);
+                number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorNumber = ((Button)sender).Text;
                 if (((Button)sender).Text == "C")
                 {
-                    inputNumberTextBox.Text = "0";
+                    inputNumberTextBox.Text = "";
                 }
-                if (((Button)sender).Text == "+")
+
+                switch (operatorNumber)
                 {
-                    operatorResult = number + Convert.ToDouble(inputNumberTextBox.Text);
-                    inputNumberTextBox.Text = operatorResult.ToString();
+                    case "+":
+                        operatorResult = number + number2;
+                        break;
+                    case "-":
+                        operatorResult = number - number2;
+                        break;
+                    case "*":
+                        operatorResult = number * number2;
+                        break;
+                    case "/":
+                        operatorResult = number / number2;
+                        break;
                 }
+                inputNumberTextBox.Text = operatorResult.ToString();
+                number = operatorResult;
                 deleteInputTextBox = true;
             }
         }
@@ -165,23 +145,25 @@ namespace Simple_Computer
             if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
             {  
                 double calculateResult = 0;
-                switch(operatorNumber)
+                number2 = Convert.ToDouble(inputNumberTextBox.Text);
+
+                switch (operatorNumber)
                 {
                     case "+":
-                        calculateResult = number + Convert.ToDouble(inputNumberTextBox.Text);
+                        calculateResult = number + number2;
                         break;
                     case "-":
-                        calculateResult = number - Convert.ToDouble(inputNumberTextBox.Text);
+                        calculateResult = number - number2;
                         break;
                     case "*":
-                        calculateResult = number * Convert.ToDouble(inputNumberTextBox.Text);
+                        calculateResult = number * number2;
                         break;
                     case "/":
-                        calculateResult = number / Convert.ToDouble(inputNumberTextBox.Text);
+                        calculateResult = number / number2;
                         break;
                 }
-                inputNumberTextBox.Text = calculateResult.ToString();
                 number = calculateResult;
+                inputNumberTextBox.Text = calculateResult.ToString();
             }
         }
     }
