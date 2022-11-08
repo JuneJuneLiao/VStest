@@ -14,164 +14,117 @@ namespace Simple_Computer
     {
         private TextBox inputNumberTextBox;
 
-        private Button tureZeroButton;
-        private Button numberOneButton;
-        private Button numberTwoButton;
-        private Button numberThreeButton;
-        private Button numberFourButton;
-        private Button numberFiveButton;
-        private Button numberSixButton;
-        private Button numberSevenButton;
-        private Button numberEightButton;
-        private Button numberNineButton;
-        private Button numberZeroButton;
-        private Button pointButton;
-
-        private Button addButton;
-        private Button subtractButton;
-        private Button multiplyButton;
-        private Button dividedButton;
+        private Button numberButton;
+        private Button operatorButton;
         private Button equalsButton;
 
         private double number = 0;
-        private int calculateNumber;
+        private string operatorNumber;
         private bool deleteInputTextBox = false;
-        
+
         public Form1()
         {
             InitializeComponent();
-            // 開頭位置(i,j)
-            int i = 20;
-            int j = 20;
+            int startX = 20;
+            int startY = 20;
+            int GapX = 90;
+            int GapY = 30;
+            int LengthX = 75;
+            int WidthY = 23;
 
-            // 運算式子(+、-、*、/) Button的x位置
-            int m = 295;
-
-            // Button size (l,w)
-            int l = 265;
-            int w = 23;
-            Size = new System.Drawing.Size(410,220);
+            Size = new System.Drawing.Size(LengthX + GapX * 4, WidthY + GapY*7); //410,220
             inputNumberTextBox = new TextBox();
-            inputNumberTextBox.Location = new Point(i, j);
-            inputNumberTextBox.Size = new Size(l, w);
+            inputNumberTextBox.Location = new Point(startX, startY);
+            inputNumberTextBox.Size = new Size(LengthX + GapX*2, WidthY + GapY);
             Controls.Add(inputNumberTextBox);
 
-            numberOneButton = new Button();
-            numberOneButton.Location = new Point(i, j+30);
-            numberOneButton.Size = new Size((l - 40) / 3, w);
-            numberOneButton.Text = "1";
-            numberOneButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberOneButton);
+            for (int i = 0; i < 11; i++) // 0 ~ 9,"."
+            {
+                numberButton = new Button();
+                numberButton.Text = i.ToString();
 
-            numberTwoButton = new Button();
-            numberTwoButton.Location = new Point(i + 95, j + 30);
-            numberTwoButton.Size = new Size((l - 40) / 3, w);
-            numberTwoButton.Text = "2";
-            numberTwoButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberTwoButton);
+                if (i == 0)
+                {
+                    numberButton.Location = new Point(startX + GapX, startY + GapY * 4);
+                }
+                else if (i == 1)
+                {
+                    numberButton.Location = new Point(startX, startY + GapY );
+                }
+                else if (i == 2)
+                {
+                    numberButton.Location = new Point(startX + GapX, startY + GapY);
+                }
+                else if (i == 3)
+                {
+                    numberButton.Location = new Point(startX + GapX * 2, startY + GapY);
+                }
+                else if (i == 4)
+                {
+                    numberButton.Location = new Point(startX, startY + GapY * 2);
+                }
+                else if (i == 5)
+                {
+                    numberButton.Location = new Point(startX + GapX, startY + GapY * 2);
+                }
+                else if (i == 6)
+                {
+                    numberButton.Location = new Point(startX + GapX * 2, startY + GapY * 2);
+                }
+                else if (i == 7)
+                {
+                    numberButton.Location = new Point(startX, startY + GapY * 3);
+                }
+                else if (i == 8)
+                {
+                    numberButton.Location = new Point(startX + GapX, startY + GapY * 3);
+                }
+                else if (i == 9)
+                {
+                    numberButton.Location = new Point(startX + GapX * 2, startY + GapY * 3);
+                }
+                else if (i == 10)
+                {
+                    numberButton.Text = ".";
+                    numberButton.Location = new Point(startX, startY + GapY * 4);                   
+                }
+                numberButton.Size = new Size(LengthX, WidthY);
+                numberButton.Click += new EventHandler(numberButton_Click);
+                Controls.Add(numberButton);
+            }
 
-            numberThreeButton = new Button();
-            numberThreeButton.Location = new Point(i + 190, j + 30);
-            numberThreeButton.Size = new Size((l - 40) / 3, w);
-            numberThreeButton.Text = "3";
-            numberThreeButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberThreeButton);
-
-            numberFourButton = new Button();
-            numberFourButton.Location = new Point(i, j + 60);
-            numberFourButton.Size = new Size((l - 40) / 3, w);
-            numberFourButton.Text = "4";
-            numberFourButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberFourButton);
-
-            numberFiveButton = new Button();
-            numberFiveButton.Location = new Point(i + 95, j + 60);
-            numberFiveButton.Size = new Size((l - 40) / 3, w);
-            numberFiveButton.Text = "5";
-            numberFiveButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberFiveButton);
-
-            numberSixButton = new Button();
-            numberSixButton.Location = new Point(i + 190, j + 60);
-            numberSixButton.Size = new Size((l - 40) / 3, w);
-            numberSixButton.Text = "6";
-            numberSixButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberSixButton);
-
-            numberSevenButton = new Button();
-            numberSevenButton.Location = new Point(i, j + 90);
-            numberSevenButton.Size = new Size((l - 40) / 3, w);
-            numberSevenButton.Text = "7";
-            numberSevenButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberSevenButton);
-
-            numberEightButton = new Button();
-            numberEightButton.Location = new Point(i + 95, j + 90);
-            numberEightButton.Size = new Size((l - 40) / 3, w);
-            numberEightButton.Text = "8";
-            numberEightButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberEightButton);
-
-            numberNineButton = new Button();
-            numberNineButton.Location = new Point(i + 190, j + 90);
-            numberNineButton.Size = new Size((l - 40) / 3, w);
-            numberNineButton.Text = "9";
-            numberNineButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberNineButton);
-
-            numberZeroButton = new Button();
-            numberZeroButton.Location = new Point(i + 95, j + 120);
-            numberZeroButton.Size = new Size((l - 40) / 3, w);
-            numberZeroButton.Text = "0";
-            numberZeroButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberZeroButton);
-
-            pointButton = new Button();
-            pointButton.Location = new Point(i, j + 120);
-            pointButton.Size = new Size((l - 40) / 3, w);
-            pointButton.Text = ".";
-            pointButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(pointButton);
-
-            tureZeroButton = new Button();
-            tureZeroButton.Location = new Point(m, j);
-            tureZeroButton.Size = new Size((l - 40) / 3, w);
-            tureZeroButton.Text = "C";
-            tureZeroButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(tureZeroButton);
-
-            addButton = new Button();
-            addButton.Location = new Point(m, j + 30);
-            addButton.Size = new Size((l - 40) / 3, w);
-            addButton.Text = "+";
-            addButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(addButton);
-
-            subtractButton = new Button();
-            subtractButton.Location = new Point(m, j + 60);
-            subtractButton.Size = new Size((l - 40) / 3, w);
-            subtractButton.Text = "-";
-            subtractButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(subtractButton);
-
-            multiplyButton = new Button();
-            multiplyButton.Location = new Point(m, j + 90);
-            multiplyButton.Size = new Size((l - 40) / 3, w);
-            multiplyButton.Text = "*";
-            multiplyButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(multiplyButton);
-
-            dividedButton = new Button();
-            dividedButton.Location = new Point(m, j + 120);
-            dividedButton.Size = new Size((l - 40) / 3, w);
-            dividedButton.Text = "/";
-            dividedButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(dividedButton);
-
+            for (int j = 0; j < 5; j++) // C + - * / =
+            {
+                operatorButton = new Button();
+                if (j == 0)
+                {
+                    operatorButton.Text = "C";
+                }
+                else if (j == 1)
+                {
+                    operatorButton.Text = "+";
+                }
+                else if (j == 2)
+                {
+                    operatorButton.Text = "-";
+                }
+                else if (j == 3)
+                {
+                    operatorButton.Text = "*";
+                }
+                else if (j == 4)
+                {
+                    operatorButton.Text = "/";
+                }
+                operatorButton.Location = new Point(startX + GapX * 3, startY + GapY * j);
+                operatorButton.Size = new Size(LengthX, WidthY);
+                operatorButton.Click += new EventHandler(operatorButton_Click);
+                Controls.Add(operatorButton);
+            }
             equalsButton = new Button();
-            equalsButton.Location = new Point(i + 190, j + 120);
-            equalsButton.Size = new Size((l - 40) / 3, w);
             equalsButton.Text = "=";
+            equalsButton.Location = new Point(startX + GapX * 2, startY + GapY * 4);
+            equalsButton.Size = new Size(LengthX, WidthY);
             equalsButton.Click += new EventHandler(equalsButton_Click);
             Controls.Add(equalsButton);
         }
@@ -191,26 +144,17 @@ namespace Simple_Computer
         {
             if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
             {
+                double operatorResult = 0;
                 number = Convert.ToDouble(inputNumberTextBox.Text);
+                operatorNumber = ((Button)sender).Text;
+                if (((Button)sender).Text == "C")
+                {
+                    inputNumberTextBox.Text = "0";
+                }
                 if (((Button)sender).Text == "+")
                 {
-                    calculateNumber = 0;
-                }
-                else if (((Button)sender).Text == "-")
-                {
-                    calculateNumber = 1;
-                }
-                else if (((Button)sender).Text == "*")
-                {
-                    calculateNumber = 2;
-                }
-                else if (((Button)sender).Text == "/")
-                {
-                    calculateNumber = 3;
-                }
-                else if (((Button)sender).Text == "C")
-                {
-                    inputNumberTextBox.Text = "";
+                    operatorResult = number + Convert.ToDouble(inputNumberTextBox.Text);
+                    inputNumberTextBox.Text = operatorResult.ToString();
                 }
                 deleteInputTextBox = true;
             }
@@ -220,27 +164,24 @@ namespace Simple_Computer
         {
             if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
             {  
-                double calculateResult;
-                if (calculateNumber == 0)
+                double calculateResult = 0;
+                switch(operatorNumber)
                 {
-                    calculateResult = number + Convert.ToDouble(inputNumberTextBox.Text);
-                    inputNumberTextBox.Text = calculateResult.ToString();
+                    case "+":
+                        calculateResult = number + Convert.ToDouble(inputNumberTextBox.Text);
+                        break;
+                    case "-":
+                        calculateResult = number - Convert.ToDouble(inputNumberTextBox.Text);
+                        break;
+                    case "*":
+                        calculateResult = number * Convert.ToDouble(inputNumberTextBox.Text);
+                        break;
+                    case "/":
+                        calculateResult = number / Convert.ToDouble(inputNumberTextBox.Text);
+                        break;
                 }
-                else if (calculateNumber == 1)
-                {
-                    calculateResult = number - Convert.ToDouble(inputNumberTextBox.Text);
-                    inputNumberTextBox.Text = calculateResult.ToString();
-                }
-                else if (calculateNumber == 2)
-                {
-                    calculateResult = number * Convert.ToDouble(inputNumberTextBox.Text);
-                    inputNumberTextBox.Text = calculateResult.ToString();
-                }
-                else if (calculateNumber == 3)
-                {
-                    calculateResult = number / Convert.ToDouble(inputNumberTextBox.Text);
-                    inputNumberTextBox.Text = calculateResult.ToString();
-                }
+                inputNumberTextBox.Text = calculateResult.ToString();
+                number = calculateResult;
             }
         }
     }
