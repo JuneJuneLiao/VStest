@@ -20,6 +20,9 @@ namespace Simple_Computer
 
         private double number ;
         private double number2 = 0;
+        private double numberTrigger;
+        private string operatorBefore;
+        private string operatorAfter;
         private string operatorNumber;
         private bool deleteInputTextBox = false;
         private bool startInput = true;
@@ -108,9 +111,19 @@ namespace Simple_Computer
             inputNumberTextBox.Text += numberButton.Text;
         }
 
+
         private void operatorFunction()
         {
             double calculateResult = 0;
+
+            if (operatorBefore != operatorAfter)
+            {
+                operatorNumber = operatorBefore;
+            }
+            else
+            {
+                operatorNumber = operatorAfter;
+            }
 
             switch (operatorNumber)
             {
@@ -129,6 +142,7 @@ namespace Simple_Computer
             }
             inputNumberTextBox.Text = calculateResult.ToString();
             number = calculateResult;
+            numberTrigger = calculateResult;
         }
         
         private void operatorButton_Click(object sender, EventArgs e)
@@ -136,19 +150,27 @@ namespace Simple_Computer
             if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && startInput)
             {
                 number = Convert.ToDouble(inputNumberTextBox.Text);
+                operatorNumber = ((Button)sender).Text;
+                operatorAfter = operatorNumber;
                 startInput = false;
             }
             else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && !startInput)
             {
-                number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorNumber = ((Button)sender).Text;
+                number2 = Convert.ToDouble(inputNumberTextBox.Text);
+                operatorAfter = operatorNumber;
+                if (inputNumberTextBox.Text != numberTrigger.ToString())
+                {
+                    operatorFunction();
+                }
+
                 if (((Button)sender).Text == "C")
                 {
-                    inputNumberTextBox.Text = "";
+                    inputNumberTextBox.Text = "0";
                     startInput = true;
                 }
-                operatorFunction();
             }
+            operatorBefore = operatorAfter;
             deleteInputTextBox = true;
         }
 
@@ -158,6 +180,7 @@ namespace Simple_Computer
             {
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorFunction();
+                startInput = true;
             }
         }
     }
