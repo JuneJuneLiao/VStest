@@ -18,10 +18,11 @@ namespace Simple_Computer
         private Button operatorButton;
         private Button equalsButton;
 
-        private double number = 0;
+        private double number ;
         private double number2 = 0;
         private string operatorNumber;
         private bool deleteInputTextBox = false;
+        private bool startInput = true;
 
         public Form1()
         {
@@ -107,63 +108,56 @@ namespace Simple_Computer
             inputNumberTextBox.Text += numberButton.Text;
         }
 
-        private void operatorButton_Click(object sender, EventArgs e)
+        private void operatorFunction()
         {
-            if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
+            double calculateResult = 0;
+
+            switch (operatorNumber)
             {
-                double operatorResult = 0;
+                case "+":
+                    calculateResult = number + number2;
+                    break;
+                case "-":
+                    calculateResult = number - number2;
+                    break;
+                case "*":
+                    calculateResult = number * number2;
+                    break;
+                case "/":
+                    calculateResult = number / number2;
+                    break;
+            }
+            inputNumberTextBox.Text = calculateResult.ToString();
+            number = calculateResult;
+        }
+        
+        private void operatorButton_Click(object sender, EventArgs e)
+        {            
+            if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && startInput)
+            {
+                number = Convert.ToDouble(inputNumberTextBox.Text);
+                startInput = false;
+            }
+            else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && !startInput)
+            {
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorNumber = ((Button)sender).Text;
                 if (((Button)sender).Text == "C")
                 {
                     inputNumberTextBox.Text = "";
+                    startInput = true;
                 }
-
-                switch (operatorNumber)
-                {
-                    case "+":
-                        operatorResult = number + number2;
-                        break;
-                    case "-":
-                        operatorResult = number - number2;
-                        break;
-                    case "*":
-                        operatorResult = number * number2;
-                        break;
-                    case "/":
-                        operatorResult = number / number2;
-                        break;
-                }
-                inputNumberTextBox.Text = operatorResult.ToString();
-                number = operatorResult;
-                deleteInputTextBox = true;
+                operatorFunction();
             }
+            deleteInputTextBox = true;
         }
 
         private void equalsButton_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
-            {  
-                double calculateResult = 0;
+            {
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
-
-                switch (operatorNumber)
-                {
-                    case "+":
-                        calculateResult = number + number2;
-                        break;
-                    case "-":
-                        calculateResult = number - number2;
-                        break;
-                    case "*":
-                        calculateResult = number * number2;
-                        break;
-                    case "/":
-                        calculateResult = number / number2;
-                        break;
-                }
-                number = calculateResult;
-                inputNumberTextBox.Text = calculateResult.ToString();
+                operatorFunction();
             }
         }
     }
