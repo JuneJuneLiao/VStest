@@ -21,6 +21,7 @@ namespace Simple_Computer
         private double number ;
         private double number2 = 0;
         private double numberTrigger;
+        private double numberSame;
         private string operatorBefore;
         private string operatorAfter;
         private string operatorNumber;
@@ -53,27 +54,21 @@ namespace Simple_Computer
                     numberButton.Text = ".";
                 }
 
-                int column = i % 3;
-                int row = i / 3;  
-                
-                if(column == 0)     // 3, 6, 9
+                int column = i % 3 ;
+                int row = i / 3;
+
+                if (i == 0)
                 {
-                    if (i == 0)
-                    {
-                        numberButton.Location = new Point(startX + GapX, startY + GapY * 4);
-                    }
-                    else
-                    {
-                        numberButton.Location = new Point(startX + GapX * 2, startY + GapY * row);
-                    }
+                    numberButton.Location = new Point(startX + GapX, startY + GapY * 4);
                 }
-                else if (column == 1)       // 1, 4, 7, .
+                else
                 {
-                    numberButton.Location = new Point(startX, startY + GapY * (row + 1));
-                }
-                else if (column == 2)       // 2, 5, 8
-                {
-                    numberButton.Location = new Point(startX + GapX, startY + GapY * (row + 1));
+                    if(column == 0)
+                    {
+                        column += 3;
+                        row -= 1;
+                    }
+                    numberButton.Location = new Point(startX + GapX * (column - 1), startY + GapY * (row + 1));
                 }
                 numberButton.Size = new Size(LengthX, WidthY);
                 numberButton.Click += new EventHandler(numberButton_Click);
@@ -152,6 +147,7 @@ namespace Simple_Computer
                 number = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorNumber = ((Button)sender).Text;
                 operatorAfter = operatorNumber;
+                numberTrigger = number;
                 startInput = false;
             }
             else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && !startInput)
@@ -163,12 +159,23 @@ namespace Simple_Computer
                 {
                     operatorFunction();
                 }
-
-                if (((Button)sender).Text == "C")
+                else if(operatorBefore == operatorAfter && inputNumberTextBox.Text == numberTrigger.ToString())
                 {
-                    inputNumberTextBox.Text = "0";
-                    startInput = true;
+                    operatorFunction();
+
                 }
+                else if(operatorBefore != operatorAfter)
+                {
+                    if(inputNumberTextBox.Text != numberTrigger.ToString())
+                    {
+                        operatorFunction();
+                    }
+                }
+            }
+            if (((Button)sender).Text == "C")
+            {
+                inputNumberTextBox.Text = "0";
+                startInput = true;
             }
             operatorBefore = operatorAfter;
             deleteInputTextBox = true;
