@@ -31,6 +31,7 @@ namespace Simple_Computer
         public Form1()
         {
             InitializeComponent();
+
             int startX = 20;
             int startY = 20;
             int GapX = 90;
@@ -38,7 +39,8 @@ namespace Simple_Computer
             int LengthX = 75;
             int WidthY = 23;
 
-            Size = new System.Drawing.Size(LengthX + GapX * 4, WidthY + GapY * 7); // 410,220
+            Size = new Size(LengthX + GapX * 4, WidthY + GapY * 7); // 410,220
+
             inputNumberTextBox = new TextBox();
             inputNumberTextBox.Location = new Point(startX, startY);
             inputNumberTextBox.Size = new Size(LengthX + GapX * 2, WidthY + GapY);
@@ -87,6 +89,7 @@ namespace Simple_Computer
                 operatorButton.Click += new EventHandler(operatorButton_Click);
                 Controls.Add(operatorButton);
             }
+
             equalsButton = new Button();
             equalsButton.Text = "=";
             equalsButton.Location = new Point(startX + GapX * 2, startY + GapY * 4);
@@ -127,6 +130,7 @@ namespace Simple_Computer
                     calculateResult = number / number2;
                     break;
             }
+
             inputNumberTextBox.Text = calculateResult.ToString();
             number = calculateResult;
             numberTrigger = calculateResult;
@@ -142,7 +146,7 @@ namespace Simple_Computer
                 confirmNumber = false;
                 operatorBefore = null;
             }
-            else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && startInput)
+            else if (startInput && !string.IsNullOrEmpty(inputNumberTextBox.Text))
             {
                 number = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorNumber = ((Button)sender).Text;
@@ -152,27 +156,17 @@ namespace Simple_Computer
                 confirmNumber = false;
                 operatorBefore = operatorBefore == null ? operatorNumber : operatorBefore;
             }
-            else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && !startInput)
+            else if (!startInput && !string.IsNullOrEmpty(inputNumberTextBox.Text))
             {
                 operatorNumber = ((Button)sender).Text;
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorAfter = operatorNumber;
 
-                // 數字不相同
-                if (inputNumberTextBox.Text != numberTrigger.ToString() && confirmNumber)
+                if (confirmNumber)
                 {
                     operatorFunction();
                 }
-                // 數字相同、符號相同
-                else if (operatorBefore == operatorAfter && inputNumberTextBox.Text == numberTrigger.ToString() && confirmNumber)
-                {
-                    operatorFunction();
-                }
-                // 符號不相同
-                else if (operatorBefore != operatorAfter && confirmNumber)
-                {
-                    operatorFunction();
-                }
+              
                 operatorBefore = operatorAfter;
             }
             deleteInputTextBox = true;
@@ -185,6 +179,7 @@ namespace Simple_Computer
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorFunction();
                 startInput = true;
+                deleteInputTextBox = true;
             }
         }
     }
