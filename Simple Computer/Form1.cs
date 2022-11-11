@@ -18,15 +18,15 @@ namespace Simple_Computer
         private Button operatorButton;
         private Button equalsButton;
 
-        private double number ;
+        private double number;
         private double number2 = 0;
         private double numberTrigger;
-        private double numberSame;
         private string operatorBefore;
         private string operatorAfter;
         private string operatorNumber;
         private bool deleteInputTextBox = false;
         private bool startInput = true;
+        private bool confirmNumber = false;
 
         public Form1()
         {
@@ -38,14 +38,14 @@ namespace Simple_Computer
             int LengthX = 75;
             int WidthY = 23;
 
-            Size = new System.Drawing.Size(LengthX + GapX * 4, WidthY + GapY*7); // 410,220
+            Size = new System.Drawing.Size(LengthX + GapX * 4, WidthY + GapY * 7); // 410,220
             inputNumberTextBox = new TextBox();
             inputNumberTextBox.Location = new Point(startX, startY);
-            inputNumberTextBox.Size = new Size(LengthX + GapX*2, WidthY + GapY);
+            inputNumberTextBox.Size = new Size(LengthX + GapX * 2, WidthY + GapY);
             Controls.Add(inputNumberTextBox);
-            
+
             // 0 ~ 9,"."
-            for (int i = 0; i < 11; i++) 
+            for (int i = 0; i < 11; i++)
             {
                 numberButton = new Button();
                 numberButton.Text = i.ToString();
@@ -54,7 +54,7 @@ namespace Simple_Computer
                     numberButton.Text = ".";
                 }
 
-                int column = i % 3 ;
+                int column = i % 3;
                 int row = i / 3;
 
                 if (i == 0)
@@ -63,7 +63,7 @@ namespace Simple_Computer
                 }
                 else
                 {
-                    if(column == 0)
+                    if (column == 0)
                     {
                         column += 3;
                         row -= 1;
@@ -76,9 +76,9 @@ namespace Simple_Computer
             }
 
             string[] operatorButtonText = new string[] { "C", "+", "-", "*", "/" };
-            
+
             // C, +, -, *, /, =
-            for (int j = 0; j < operatorButtonText.Count(); j++) 
+            for (int j = 0; j < operatorButtonText.Count(); j++)
             {
                 operatorButton = new Button();
                 operatorButton.Text = operatorButtonText[j];
@@ -104,21 +104,13 @@ namespace Simple_Computer
                 deleteInputTextBox = false;
             }
             inputNumberTextBox.Text += numberButton.Text;
+            confirmNumber = true;
         }
-
 
         private void operatorFunction()
         {
             double calculateResult = 0;
-
-            if (operatorBefore != operatorAfter)
-            {
-                operatorNumber = operatorBefore;
-            }
-            else
-            {
-                operatorNumber = operatorAfter;
-            }
+            operatorNumber = operatorBefore;
 
             switch (operatorNumber)
             {
@@ -138,52 +130,57 @@ namespace Simple_Computer
             inputNumberTextBox.Text = calculateResult.ToString();
             number = calculateResult;
             numberTrigger = calculateResult;
+            confirmNumber = false;
         }
-        
+
         private void operatorButton_Click(object sender, EventArgs e)
-        {            
-            if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && startInput)
+        {
+            if (((Button)sender).Text == "C")
+            {
+                inputNumberTextBox.Text = "0";
+                startInput = true;
+                confirmNumber = false;
+                operatorBefore = null;
+            }
+            else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && startInput)
             {
                 number = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorNumber = ((Button)sender).Text;
                 operatorAfter = operatorNumber;
                 numberTrigger = number;
                 startInput = false;
+                confirmNumber = false;
+                operatorBefore = operatorBefore == null ? operatorNumber : operatorBefore;
             }
             else if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && !startInput)
             {
                 operatorNumber = ((Button)sender).Text;
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorAfter = operatorNumber;
-                if (inputNumberTextBox.Text != numberTrigger.ToString())
-                {
-                    operatorFunction();
-                }
-                else if(operatorBefore == operatorAfter && inputNumberTextBox.Text == numberTrigger.ToString())
-                {
-                    operatorFunction();
 
-                }
-                else if(operatorBefore != operatorAfter)
+                // 數字不相同
+                if (inputNumberTextBox.Text != numberTrigger.ToString() && confirmNumber)
                 {
-                    if(inputNumberTextBox.Text != numberTrigger.ToString())
-                    {
-                        operatorFunction();
-                    }
+                    operatorFunction();
                 }
+                // 數字相同、符號相同
+                else if (operatorBefore == operatorAfter && inputNumberTextBox.Text == numberTrigger.ToString() && confirmNumber)
+                {
+                    operatorFunction();
+                }
+                // 符號不相同
+                else if (operatorBefore != operatorAfter && confirmNumber)
+                {
+                    operatorFunction();
+                }
+                operatorBefore = operatorAfter;
             }
-            if (((Button)sender).Text == "C")
-            {
-                inputNumberTextBox.Text = "0";
-                startInput = true;
-            }
-            operatorBefore = operatorAfter;
             deleteInputTextBox = true;
         }
 
         private void equalsButton_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(inputNumberTextBox.Text))
+            if (!string.IsNullOrEmpty(inputNumberTextBox.Text) && confirmNumber)
             {
                 number2 = Convert.ToDouble(inputNumberTextBox.Text);
                 operatorFunction();
