@@ -12,43 +12,48 @@ namespace Geometry
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
+
+            IGeometry newGeometrySector = NewSector();
+            IGeometry newGeometryCircle = NewCircle();
+            IGeometry newGeometryRectangle = NewRectangle();
+            IGeometry newGeometrySquare = NewSquare();
+
+            Console.WriteLine("Sector Perimeter: " + newGeometrySector.Perimeter());
+            Console.WriteLine("Sector Area: " + newGeometrySector.Area());
+            Console.WriteLine("Circle Perimeter: " + newGeometryCircle.Perimeter());
+            Console.WriteLine("Circle Area: " + newGeometryCircle.Area());
+            Console.WriteLine("Rectangle Perimeter: " + newGeometryRectangle.Perimeter());
+            Console.WriteLine("Rectangle Area: " + newGeometryRectangle.Area());
+            Console.WriteLine("Square Perimeter: " + newGeometrySquare.Perimeter());
+            Console.WriteLine("Square Area: " + newGeometrySquare.Area());
+            
         }
 
-        IGeometry geometrySector = new Sector();
-        IGeometry geometryCircle = new Circle();
-        IGeometry geometryRectangle = new Rectangle();
-        IGeometry geometrySquare = new Square();
-
-        public void Sector(int radius = 2, int angle = 120)
+        public IGeometry NewSector(int radius = 2, int angle = 120)
         {
-            geometrySector.Perimeter();
-            geometrySector.Area();
-            return;
+            IGeometry geometrySector = new Sector(angle, radius);
+            return geometrySector;
         }
 
-        public void Circle(int radius = 3)
+        public IGeometry NewCircle(int radius = 3)
         {
-            geometryCircle.Perimeter();
-            geometryCircle.Area();
-            return;
+            IGeometry geometryCircle = new Circle(radius);
+            return geometryCircle;
         }
 
-        public void Rectangle(int length = 4 , int width = 5)
+        public IGeometry NewRectangle(int length = 4 , int width = 5)
         {
-            geometryRectangle.Perimeter();
-            geometryRectangle.Area();
-            return;
+            IGeometry geometryRectangle = new Rectangle(length, width);
+            return geometryRectangle;
         }
 
-        public void Square(int length = 2)
+        public IGeometry NewSquare(int length = 2)
         {
-            geometrySquare.Perimeter();
-            geometrySquare.Area();
-            return;
+            IGeometry geometrySquare = new Square(length);
+            return geometrySquare;
         }
     }
 }

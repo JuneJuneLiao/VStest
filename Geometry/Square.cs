@@ -8,19 +8,19 @@ namespace Geometry
 {
     class Square : Rectangle, IGeometry
     {
-        public Square()
+        public Square(double _length) : base(_length)
         {
-            length = width;
+            length = _length;
         }
             
-        public override int Perimeter()
+        public override double Perimeter()
         {
-            return Convert.ToInt32(2 * (length + length));            
+            return 2 * (length + length);            
         }
 
-        public override int Area()
+        public override double Area()
         {
-            return Convert.ToInt32(length * length);
+            return length * length;
         }
     }
 }

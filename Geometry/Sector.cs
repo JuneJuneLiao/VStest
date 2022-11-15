@@ -8,15 +8,28 @@ namespace Geometry
 {
     class Sector : IGeometry
     {
-        protected int angle;
-        protected int radius;
+        protected double angle;
+        protected double radius;
 
-        public virtual int Perimeter()
+        private double _radius;
+
+        public Sector(double _angle, double _radius)
+        {
+            angle = _angle;
+            radius = _radius;
+        }
+
+        public Sector(double radius)
+        {
+            _radius = radius;
+        }
+
+        public virtual double Perimeter()
         {    
             return Convert.ToInt32(2 * radius * Math.PI * (angle / 360));    
         }
 
-        public virtual int Area()
+        public virtual double Area()
         {
             return Convert.ToInt32(radius * radius * Math.PI * (angle / 360));  
         }

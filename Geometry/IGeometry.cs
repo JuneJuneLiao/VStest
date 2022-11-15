@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    interface IGeometry
+    public interface IGeometry
     {
-        int Perimeter();
-        int Area();
+        double Perimeter();
+        double Area();
     }
 }

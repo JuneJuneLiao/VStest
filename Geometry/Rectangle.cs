@@ -8,17 +8,29 @@ namespace Geometry
 {
     class Rectangle : IGeometry
     {
-        protected int length;
-        protected int width;
+        protected double length;
+        protected double width;
+        private double _length;
 
-        public virtual int Perimeter()
+        public Rectangle(double _length, double _width)
         {
-            return Convert.ToInt32(2 * (length + width));
+            length = _length;
+            width = _width;
         }
 
-        public virtual int Area()
+        public Rectangle(double length)
         {
-            return Convert.ToInt32(length * width);
+            _length = length;
+        }
+
+        public virtual double Perimeter()
+        {
+            return 2 * (length + width);
+        }
+
+        public virtual double Area()
+        {
+            return length * width;
         }
     }
 }
