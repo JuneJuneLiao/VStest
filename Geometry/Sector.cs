@@ -11,25 +11,18 @@ namespace Geometry
         protected double angle;
         protected double radius;
 
-        private double _radius;
-
-        public Sector(double _angle, double _radius)
+        public Sector(double radius, double angle)
         {
-            angle = _angle;
-            radius = _radius;
+            this.angle = angle;
+            this.radius = radius;
         }
 
-        public Sector(double radius)
-        {
-            _radius = radius;
-        }
-
-        public virtual double Perimeter()
+        public double Perimeter()
         {    
             return 2 * radius * Math.PI * (angle / 360);    
         }
 
-        public virtual double Area()
+        public double Area()
         {
             return radius * radius * Math.PI * (angle / 360);  
         }

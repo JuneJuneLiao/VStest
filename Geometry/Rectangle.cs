@@ -11,25 +11,18 @@ namespace Geometry
         protected double length;
         protected double width;
 
-        private double _length;
-
-        public Rectangle(double _length, double _width)
+        public Rectangle(double length, double width)
         {
-            length = _length;
-            width = _width;
+            this.length = length;
+            this.width = width;
         }
 
-        public Rectangle(double length)
-        {
-            _length = length;
-        }
-
-        public virtual double Perimeter()
+        public double Perimeter()
         {
             return 2 * (length + width);
         }
 
-        public virtual double Area()
+        public double Area()
         {
             return length * width;
         }

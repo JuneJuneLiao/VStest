@@ -8,20 +8,10 @@ namespace Geometry
 {
     class Circle : Sector, IGeometry
     {
-        public Circle(double _radius) : base(_radius)
+        public Circle(double radius, double angle) :base(radius, angle)
         {
-            angle = 360;
-            radius = _radius;
-        }
-
-        public override double Perimeter()
-        {
-            return 2 * radius * Math.PI * (angle / 360);
-        }
-
-        public override double Area()
-        {
-            return radius * radius * Math.PI * (angle / 360);
+            this.angle = 360;
+            this.radius = radius;
         }
     }
 }

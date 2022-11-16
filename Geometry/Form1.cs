@@ -16,10 +16,10 @@ namespace Geometry
         {
             InitializeComponent();
 
-            IGeometry newGeometrySector = NewSector();
-            IGeometry newGeometryCircle = NewCircle();
-            IGeometry newGeometryRectangle = NewRectangle();
-            IGeometry newGeometrySquare = NewSquare();
+            IGeometry newGeometrySector = NewSector(5, 150);
+            IGeometry newGeometryCircle = NewCircle(4, 120);
+            IGeometry newGeometryRectangle = NewRectangle(6, 5);
+            IGeometry newGeometrySquare = NewSquare(2, 6);
 
             Console.WriteLine("Sector Perimeter: " + newGeometrySector.Perimeter());
             Console.WriteLine("Sector Area: " + newGeometrySector.Area());
@@ -28,31 +28,30 @@ namespace Geometry
             Console.WriteLine("Rectangle Perimeter: " + newGeometryRectangle.Perimeter());
             Console.WriteLine("Rectangle Area: " + newGeometryRectangle.Area());
             Console.WriteLine("Square Perimeter: " + newGeometrySquare.Perimeter());
-            Console.WriteLine("Square Area: " + newGeometrySquare.Area());
-            
+            Console.WriteLine("Square Area: " + newGeometrySquare.Area());   
         }
 
-        public Sector NewSector(int radius = 5, int angle = 150)
+        public Sector NewSector(int radius, int angle)
         {
-            Sector geometrySector = new Sector(angle, radius);
+            Sector geometrySector = new Sector(radius, angle);
             return geometrySector;
         }
 
-        public Circle NewCircle(int radius = 3)
+        public Circle NewCircle(int radius, int angle)
         {
-            Circle geometryCircle = new Circle(radius);
+            Circle geometryCircle = new Circle(radius, angle);
             return geometryCircle;
         }
 
-        public Rectangle NewRectangle(int length = 4 , int width = 5)
+        public Rectangle NewRectangle(int length, int width)
         {
             Rectangle geometryRectangle = new Rectangle(length, width);
             return geometryRectangle;
         }
 
-        public Square NewSquare(int length = 2)
+        public Square NewSquare(int length, int width)
         {
-            Square geometrySquare = new Square(length);
+            Square geometrySquare = new Square(length, width);
             return geometrySquare;
         }
     }
