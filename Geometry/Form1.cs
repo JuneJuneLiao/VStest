@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Geometry
 {
-    public partial class Form1 : Form
+    partial class Form1 : Form
     {
         public Form1()
         {
@@ -32,27 +32,27 @@ namespace Geometry
             
         }
 
-        public IGeometry NewSector(int radius = 2, int angle = 120)
+        public Sector NewSector(int radius = 5, int angle = 150)
         {
-            IGeometry geometrySector = new Sector(angle, radius);
+            Sector geometrySector = new Sector(angle, radius);
             return geometrySector;
         }
 
-        public IGeometry NewCircle(int radius = 3)
+        public Circle NewCircle(int radius = 3)
         {
-            IGeometry geometryCircle = new Circle(radius);
+            Circle geometryCircle = new Circle(radius);
             return geometryCircle;
         }
 
-        public IGeometry NewRectangle(int length = 4 , int width = 5)
+        public Rectangle NewRectangle(int length = 4 , int width = 5)
         {
-            IGeometry geometryRectangle = new Rectangle(length, width);
+            Rectangle geometryRectangle = new Rectangle(length, width);
             return geometryRectangle;
         }
 
-        public IGeometry NewSquare(int length = 2)
+        public Square NewSquare(int length = 2)
         {
-            IGeometry geometrySquare = new Square(length);
+            Square geometrySquare = new Square(length);
             return geometrySquare;
         }
     }

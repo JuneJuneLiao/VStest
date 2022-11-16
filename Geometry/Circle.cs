@@ -16,12 +16,12 @@ namespace Geometry
 
         public override double Perimeter()
         {
-            return Convert.ToInt32(2 * radius * Math.PI * (angle / 360));
+            return 2 * radius * Math.PI * (angle / 360);
         }
 
         public override double Area()
         {
-            return Convert.ToInt32(radius * radius * Math.PI * (angle / 360));
+            return radius * radius * Math.PI * (angle / 360);
         }
     }
 }

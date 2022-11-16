@@ -10,6 +10,7 @@ namespace Geometry
     {
         protected double length;
         protected double width;
+
         private double _length;
 
         public Rectangle(double _length, double _width)

@@ -26,12 +26,12 @@ namespace Geometry
 
         public virtual double Perimeter()
         {    
-            return Convert.ToInt32(2 * radius * Math.PI * (angle / 360));    
+            return 2 * radius * Math.PI * (angle / 360);    
         }
 
         public virtual double Area()
         {
-            return Convert.ToInt32(radius * radius * Math.PI * (angle / 360));  
+            return radius * radius * Math.PI * (angle / 360);  
         }
     }
 }
