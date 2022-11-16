@@ -8,7 +8,7 @@ namespace Geometry
 {
     class Square : Rectangle
     {
-        public Square(double length) : base(length, 0)
+        public Square(double length) : base(length, length)
         {
             
         }

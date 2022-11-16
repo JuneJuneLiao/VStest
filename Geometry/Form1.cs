@@ -17,9 +17,9 @@ namespace Geometry
             InitializeComponent();
 
             IGeometry newGeometrySector = NewSector(5, 150);
-            IGeometry newGeometryCircle = NewCircle(4, 120);
-            IGeometry newGeometryRectangle = NewRectangle(6, 5);
-            IGeometry newGeometrySquare = NewSquare(2);
+            IGeometry newGeometryCircle = NewCircle(6);
+            IGeometry newGeometryRectangle = NewRectangle(7, 2);
+            IGeometry newGeometrySquare = NewSquare(3);
 
             Console.WriteLine("Sector Perimeter: " + newGeometrySector.Perimeter());
             Console.WriteLine("Sector Area: " + newGeometrySector.Area());
@@ -37,9 +37,9 @@ namespace Geometry
             return geometrySector;
         }
 
-        public Circle NewCircle(int radius, int angle)
+        public Circle NewCircle(int radius)
         {
-            Circle geometryCircle = new Circle(radius, angle);
+            Circle geometryCircle = new Circle(radius);
             return geometryCircle;
         }
 

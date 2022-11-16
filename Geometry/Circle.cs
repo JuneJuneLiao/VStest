@@ -8,7 +8,7 @@ namespace Geometry
 {
     class Circle : Sector
     {
-        public Circle(double radius, double angle) : base(radius, angle = 360)
+        public Circle(double radius) : base(radius, 360)
         {
 
         }
