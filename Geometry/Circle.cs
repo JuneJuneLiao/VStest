@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    class Circle : Sector, IGeometry
+    class Circle : Sector
     {
-        public Circle(double radius, double angle) :base(radius, angle)
+        public Circle(double radius, double angle) : base(radius, angle = 360)
         {
-            this.angle = 360;
-            this.radius = radius;
+
         }
     }
 }

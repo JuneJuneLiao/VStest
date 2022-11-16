@@ -19,7 +19,7 @@ namespace Geometry
             IGeometry newGeometrySector = NewSector(5, 150);
             IGeometry newGeometryCircle = NewCircle(4, 120);
             IGeometry newGeometryRectangle = NewRectangle(6, 5);
-            IGeometry newGeometrySquare = NewSquare(2, 6);
+            IGeometry newGeometrySquare = NewSquare(2);
 
             Console.WriteLine("Sector Perimeter: " + newGeometrySector.Perimeter());
             Console.WriteLine("Sector Area: " + newGeometrySector.Area());
@@ -49,9 +49,9 @@ namespace Geometry
             return geometryRectangle;
         }
 
-        public Square NewSquare(int length, int width)
+        public Square NewSquare(int length)
         {
-            Square geometrySquare = new Square(length, width);
+            Square geometrySquare = new Square(length);
             return geometrySquare;
         }
     }

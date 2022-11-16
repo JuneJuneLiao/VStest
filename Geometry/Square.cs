@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    class Square : Rectangle, IGeometry
+    class Square : Rectangle
     {
-        public Square(double length, double width) : base(length, width)
+        public Square(double length) : base(length, 0)
         {
-            this.length = length;
-            this.width = length;
+            
         }
     }
 }
