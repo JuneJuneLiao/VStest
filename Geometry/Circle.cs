@@ -10,7 +10,10 @@ namespace Geometry
     {
         public Circle(double radius) : base(radius, 360)
         {
-
+        }
+        public void RadiusUpgrade()
+        {
+            radius = 5;
         }
     }
 }

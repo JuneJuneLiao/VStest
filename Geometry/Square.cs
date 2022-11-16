@@ -9,8 +9,12 @@ namespace Geometry
     class Square : Rectangle
     {
         public Square(double length) : base(length, length)
+        {  
+        }
+
+        public void LengthUpgrade()
         {
-            
+            length = 5;
         }
     }
 }
