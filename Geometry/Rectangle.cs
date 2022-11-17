@@ -9,7 +9,7 @@ namespace Geometry
     class Rectangle : IGeometry
     {
         protected double length;
-        readonly protected double width;
+        protected double width;
 
         public Rectangle(double length, double width)
         {

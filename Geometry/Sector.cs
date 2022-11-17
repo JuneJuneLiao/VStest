@@ -8,7 +8,7 @@ namespace Geometry
 {
     class Sector : IGeometry
     {
-        protected readonly double angle;
+        private double angle;
         protected double radius;
 
         public Sector(double radius, double angle)

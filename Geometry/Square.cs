@@ -15,6 +15,7 @@ namespace Geometry
         public void LengthUpgrade()
         {
             length = 5;
+            width = 5;
         }
     }
 }
