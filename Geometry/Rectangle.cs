@@ -8,8 +8,8 @@ namespace Geometry
 {
     class Rectangle : IGeometry
     {
-        protected double length;
-        protected double width;
+        public double length;
+        public double width;
 
         public Rectangle(double length, double width)
         {

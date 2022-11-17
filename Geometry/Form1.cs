@@ -33,31 +33,32 @@ namespace Geometry
 
         public Sector NewSector(double radius, double angle)
         {
-            radius = 6;
-            angle = 120;
             Sector geometrySector = new Sector(radius, angle);
+            geometrySector.radius = 6;
+            geometrySector._angle = 120;
             return geometrySector;
         }
 
         public Circle NewCircle(double radius)
         {
-            radius = 5; 
             Circle geometryCircle = new Circle(radius);
+            geometryCircle.radius = 4;
             return geometryCircle;
         }
 
         public Rectangle NewRectangle(double length, double width)
         {
-            length = 3;
-            width = 4;
             Rectangle geometryRectangle = new Rectangle(length, width);
+            geometryRectangle.length = 10;
+            geometryRectangle.width = 5;
             return geometryRectangle;
         }
 
         public Square NewSquare(double length)
         {
-            length = 7;
             Square geometrySquare = new Square(length);
+            geometrySquare.length = 7;
+            geometrySquare.width = geometrySquare.length;
             return geometrySquare;
         }
     }

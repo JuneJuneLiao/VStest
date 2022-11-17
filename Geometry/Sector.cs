@@ -9,12 +9,14 @@ namespace Geometry
     class Sector : IGeometry
     {
         private double angle;
-        protected double radius;
+        public  double radius;
+        public double _angle;
 
         public Sector(double radius, double angle)
         {
             this.angle = angle;
             this.radius = radius;
+            _angle = angle;
         }
 
         public double Perimeter()
