@@ -11,11 +11,5 @@ namespace Geometry
         public Square(double length) : base(length, length)
         {  
         }
-
-        public void LengthUpgrade()
-        {
-            length = 5;
-            width = length;
-        }
     }
 }

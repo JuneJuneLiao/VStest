@@ -33,29 +33,31 @@ namespace Geometry
 
         public Sector NewSector(double radius, double angle)
         {
+            radius = 6;
+            angle = 120;
             Sector geometrySector = new Sector(radius, angle);
             return geometrySector;
         }
 
         public Circle NewCircle(double radius)
         {
-            //radius = 8;
+            radius = 5; 
             Circle geometryCircle = new Circle(radius);
-            geometryCircle.RadiusUpgrade();
             return geometryCircle;
         }
 
         public Rectangle NewRectangle(double length, double width)
         {
+            length = 3;
+            width = 4;
             Rectangle geometryRectangle = new Rectangle(length, width);
             return geometryRectangle;
         }
 
         public Square NewSquare(double length)
         {
-            //length = 7;
+            length = 7;
             Square geometrySquare = new Square(length);
-            geometrySquare.LengthUpgrade();
             return geometrySquare;
         }
     }
