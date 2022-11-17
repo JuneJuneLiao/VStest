@@ -8,6 +8,12 @@ namespace Geometry
 {
     class Square : Rectangle
     {
+        public override double Width
+        {
+            get { return Length; }
+            set { width = value; }
+        }
+
         public Square(double length) : base(length, length)
         {  
         }

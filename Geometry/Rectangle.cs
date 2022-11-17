@@ -9,7 +9,14 @@ namespace Geometry
     class Rectangle : IGeometry
     {
         public double Length;
-        public double Width;
+
+        protected double width;
+
+        public virtual double Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
 
         public Rectangle(double length, double width)
         {

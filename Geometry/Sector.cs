@@ -8,9 +8,9 @@ namespace Geometry
 {
     class Sector : IGeometry
     {
-        protected double angle;
+        private double angle;
 
-        public double Angle
+        public virtual double Angle
         {
             get { return angle; }
             set { angle = value; }

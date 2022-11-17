@@ -8,9 +8,16 @@ namespace Geometry
 {
     class Circle : Sector
     {
-        public new double Angle
+        public override double Angle
         {
-            get { return angle; }
+            get { return 360; }
+            set
+            {
+                /*if (angle == 0)
+                    angle = 360;*/
+               
+               Console.WriteLine("Error");
+            }
         }
 
         public Circle(double radius) : base(radius, 360)

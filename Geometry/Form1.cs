@@ -43,7 +43,7 @@ namespace Geometry
         {
             Circle geometryCircle = new Circle(radius);
             geometryCircle.Radius = 4;
-            //geometryCircle.Angle = 10;
+            geometryCircle.Angle = 10;
             return geometryCircle;
         }
 
@@ -58,8 +58,8 @@ namespace Geometry
         public Square NewSquare(double length)
         {
             Square geometrySquare = new Square(length);
-            geometrySquare.Length = 7;
-            geometrySquare.Width = geometrySquare.Length;
+            geometrySquare.Length = 8;
+            geometrySquare.Width = 3;
             return geometrySquare;
         }
     }
