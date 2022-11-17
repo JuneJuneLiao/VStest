@@ -8,6 +8,11 @@ namespace Geometry
 {
     class Circle : Sector
     {
+        public new double Angle
+        {
+            get { return angle; }
+        }
+
         public Circle(double radius) : base(radius, 360)
         {
         }

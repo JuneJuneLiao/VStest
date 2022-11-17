@@ -8,25 +8,30 @@ namespace Geometry
 {
     class Sector : IGeometry
     {
-        private double angle;
-        public  double radius;
-        public double _angle;
+        protected double angle;
+
+        public double Angle
+        {
+            get { return angle; }
+            set { angle = value; }
+        }
+
+        public double Radius;
 
         public Sector(double radius, double angle)
         {
-            this.angle = angle;
-            this.radius = radius;
-            _angle = angle;
+            Angle = angle;
+            Radius = radius;
         }
 
         public double Perimeter()
         {    
-            return 2 * radius * Math.PI * (angle / 360);    
+            return 2 * Radius * Math.PI * (Angle / 360);    
         }
 
         public double Area()
         {
-            return radius * radius * Math.PI * (angle / 360);  
+            return Radius * Radius * Math.PI * (Angle / 360);  
         }
     }
 }

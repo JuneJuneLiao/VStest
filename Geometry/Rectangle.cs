@@ -8,23 +8,23 @@ namespace Geometry
 {
     class Rectangle : IGeometry
     {
-        public double length;
-        public double width;
+        public double Length;
+        public double Width;
 
         public Rectangle(double length, double width)
         {
-            this.length = length;
-            this.width = width;
+            Length = length;
+            Width = width;
         }
 
         public double Perimeter()
         {
-            return 2 * (length + width);
+            return 2 * (Length + Width);
         }
 
         public double Area()
         {
-            return length * width;
+            return Length * Width;
         }
     }
 }
