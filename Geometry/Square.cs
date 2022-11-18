@@ -10,7 +10,7 @@ namespace Geometry
     {
         public override double Width
         {
-            get { return Length; }
+            get { return width; }
             set { width = value; }
         }
 
