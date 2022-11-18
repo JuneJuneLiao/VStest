@@ -9,12 +9,14 @@ namespace Geometry
 {
     class Square : Rectangle
     {
-        private string name { get; }
-
         public override double Length
         {
-            get { return width; }
-            set { width = value; }
+            get { return length; }
+            set
+            {
+                length = value;
+                width = value;
+            }
         }
 
         public override double Width
@@ -24,12 +26,11 @@ namespace Geometry
 
         public Square(double length) : base(length, length)
         {
-            name = "Square";
         }
 
-        public override string Name()
+        public override string Name
         {
-            return name;
+            get { return "Square"; }
         }
     }
 }

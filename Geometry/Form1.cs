@@ -21,10 +21,10 @@ namespace Geometry
             IGeometry rectangle = NewRectangle(6, 2);
             IGeometry square = NewSquare(3);
 
-            Console.WriteLine($"{sector.Name()}, Perimeter: {sector.Perimeter()}, Area: {sector.Area()}");
-            Console.WriteLine($"{circle.Name()}, Perimeter: {circle.Perimeter()}, Area: {circle.Area()}");
-            Console.WriteLine($"{rectangle.Name()}, Perimeter: {rectangle.Perimeter()}, Area: {rectangle.Area()}");
-            Console.WriteLine($"{square.Name()}, Perimeter: {square.Perimeter()}, Area: {square.Area()}");
+            Console.WriteLine($"{sector.Name}, Perimeter: {sector.Perimeter()}, Area: {sector.Area()}");
+            Console.WriteLine($"{circle.Name}, Perimeter: {circle.Perimeter()}, Area: {circle.Area()}");
+            Console.WriteLine($"{rectangle.Name}, Perimeter: {rectangle.Perimeter()}, Area: {rectangle.Area()}");
+            Console.WriteLine($"{square.Name}, Perimeter: {square.Perimeter()}, Area: {square.Area()}");
         }
 
         public Sector NewSector(double radius, double angle)

@@ -10,6 +10,6 @@ namespace Geometry
     {
         double Perimeter();
         double Area();
-        string Name();
+        string Name{ get; }
     }
 }
