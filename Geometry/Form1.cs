@@ -16,19 +16,15 @@ namespace Geometry
         {
             InitializeComponent();
 
-            IGeometry newGeometrySector = NewSector(5, 150);
-            IGeometry newGeometryCircle = NewCircle(3);
-            IGeometry newGeometryRectangle = NewRectangle(6, 2);
-            IGeometry newGeometrySquare = NewSquare(3);
+            IGeometry sector = NewSector(5, 150);
+            IGeometry circle = NewCircle(3);
+            IGeometry rectangle = NewRectangle(6, 2);
+            IGeometry square = NewSquare(3);
 
-            Console.WriteLine("Sector Perimeter: " + newGeometrySector.Perimeter());
-            Console.WriteLine("Sector Area: " + newGeometrySector.Area());
-            Console.WriteLine("Circle Perimeter: " + newGeometryCircle.Perimeter());
-            Console.WriteLine("Circle Area: " + newGeometryCircle.Area());
-            Console.WriteLine("Rectangle Perimeter: " + newGeometryRectangle.Perimeter());
-            Console.WriteLine("Rectangle Area: " + newGeometryRectangle.Area());
-            Console.WriteLine("Square Perimeter: " + newGeometrySquare.Perimeter());
-            Console.WriteLine("Square Area: " + newGeometrySquare.Area());   
+            Console.WriteLine($"{sector.Name()}, Perimeter: {sector.Perimeter()}, Area: {sector.Area()}");
+            Console.WriteLine($"{circle.Name()}, Perimeter: {circle.Perimeter()}, Area: {circle.Area()}");
+            Console.WriteLine($"{rectangle.Name()}, Perimeter: {rectangle.Perimeter()}, Area: {rectangle.Area()}");
+            Console.WriteLine($"{square.Name()}, Perimeter: {square.Perimeter()}, Area: {square.Area()}");
         }
 
         public Sector NewSector(double radius, double angle)
@@ -58,7 +54,7 @@ namespace Geometry
         public Square NewSquare(double length)
         {
             Square geometrySquare = new Square(length);
-            geometrySquare.Length = 10;
+            geometrySquare.Length = 12;
             geometrySquare.Width = 7;
             return geometrySquare;
         }

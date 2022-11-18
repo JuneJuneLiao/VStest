@@ -8,7 +8,11 @@ namespace Geometry
 {
     class Rectangle : IGeometry
     {
-        public double Length;
+        private string name { get; }
+
+        private double length;
+
+        public virtual double Length { get; set; }
 
         protected double width;
 
@@ -20,8 +24,9 @@ namespace Geometry
 
         public Rectangle(double length, double width)
         {
-            Length = length;
-            Width = width;
+            this.length = length;
+            this.width = width;
+            name = "Rectangle";
         }
 
         public double Perimeter()
@@ -32,6 +37,11 @@ namespace Geometry
         public double Area()
         {
             return Length * Width;
+        }
+
+        public virtual string Name()
+        {
+            return name; 
         }
     }
 }

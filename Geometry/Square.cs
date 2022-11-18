@@ -9,14 +9,27 @@ namespace Geometry
 {
     class Square : Rectangle
     {
+        private string name { get; }
+
+        public override double Length
+        {
+            get { return width; }
+            set { width = value; }
+        }
+
         public override double Width
         {
-            get { return Length; }
             set { MessageBox.Show("Invalid Width Input"); }
         }
 
         public Square(double length) : base(length, length)
-        {  
+        {
+            name = "Square";
+        }
+
+        public override string Name()
+        {
+            return name;
         }
     }
 }
