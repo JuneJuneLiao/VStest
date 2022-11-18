@@ -8,9 +8,9 @@ namespace Geometry
 {
     class Sector : IGeometry
     {
-        public double Radius;
-
         public virtual string Name { get { return "Sector"; } }
+
+        public double Radius;
 
         private double angle;
         public virtual double Angle

@@ -8,17 +8,16 @@ namespace Geometry
 {
     class Rectangle : IGeometry
     {
-        protected double length;
-        protected double width;
-
         public virtual string Name { get { return "Rectangle"; } }
 
+        protected double length;
         public virtual double Length
         {
             get { return length; }
             set { length = value; }
         }
 
+        protected double width;
         public virtual double Width
         {
             get { return width; }
