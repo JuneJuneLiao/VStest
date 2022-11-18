@@ -9,10 +9,11 @@ namespace Geometry
     class Rectangle : IGeometry
     {
         protected double length;
+        protected double width;
+
+        public virtual string Name { get { return "Rectangle"; }}
 
         public virtual double Length { get; set; }
-
-        protected double width;
 
         public virtual double Width
         {
@@ -34,11 +35,6 @@ namespace Geometry
         public double Area()
         {
             return Length * Width;
-        }
-
-        public virtual string Name
-        {
-            get { return "Rectangle"; }
         }
     }
 }

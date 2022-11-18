@@ -9,6 +9,8 @@ namespace Geometry
 {
     class Circle : Sector
     {
+        public override string Name { get { return "Circle"; }}
+
         public override double Angle
         {
             set { MessageBox.Show("Invalid Angle Input"); }
@@ -16,11 +18,6 @@ namespace Geometry
 
         public Circle(double radius) : base(radius, 360)
         {
-        }
-
-        public override string Name
-        {
-            get { return "Circle"; }
         }
     }
 }

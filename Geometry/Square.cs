@@ -9,6 +9,8 @@ namespace Geometry
 {
     class Square : Rectangle
     {
+        public override string Name { get { return "Square"; }}
+
         public override double Length
         {
             get { return length; }
@@ -26,11 +28,6 @@ namespace Geometry
 
         public Square(double length) : base(length, length)
         {
-        }
-
-        public override string Name
-        {
-            get { return "Square"; }
         }
     }
 }
