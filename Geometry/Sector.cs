@@ -9,10 +9,10 @@ namespace Geometry
     class Sector : IGeometry
     {
         public double Radius;
+
+        public virtual string Name { get { return "Sector"; } }
+
         private double angle;
-
-        public virtual string Name { get { return "Sector"; }}
-
         public virtual double Angle
         {
             get { return angle; }
@@ -21,8 +21,8 @@ namespace Geometry
 
         public Sector(double radius, double angle)
         {
-            this.angle = angle;
             Radius = radius;
+            this.angle = angle;   
         }
 
         public double Perimeter()

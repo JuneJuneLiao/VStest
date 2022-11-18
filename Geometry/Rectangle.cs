@@ -11,9 +11,13 @@ namespace Geometry
         protected double length;
         protected double width;
 
-        public virtual string Name { get { return "Rectangle"; }}
+        public virtual string Name { get { return "Rectangle"; } }
 
-        public virtual double Length { get; set; }
+        public virtual double Length
+        {
+            get { return length; }
+            set { length = value; }
+        }
 
         public virtual double Width
         {

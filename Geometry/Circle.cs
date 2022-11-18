@@ -9,7 +9,7 @@ namespace Geometry
 {
     class Circle : Sector
     {
-        public override string Name { get { return "Circle"; }}
+        public override string Name { get { return "Circle"; } }
 
         public override double Angle
         {

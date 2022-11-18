@@ -9,7 +9,7 @@ namespace Geometry
 {
     class Square : Rectangle
     {
-        public override string Name { get { return "Square"; }}
+        public override string Name { get { return "Square"; } }
 
         public override double Length
         {
