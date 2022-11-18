@@ -44,12 +44,6 @@ namespace Geometry
             Circle geometryCircle = new Circle(radius);
             geometryCircle.Radius = 4;
             geometryCircle.Angle = 10;
-
-            if(geometryCircle.Angle != 360)
-            {
-                MessageBox.Show("Invalid Angle Input");
-            }
-
             return geometryCircle;
         }
 
@@ -64,14 +58,8 @@ namespace Geometry
         public Square NewSquare(double length)
         {
             Square geometrySquare = new Square(length);
-            geometrySquare.Length = 8;
-            geometrySquare.Width = 8;
-
-            if(geometrySquare.Width != geometrySquare.Length)
-            {
-                MessageBox.Show("Invalid Width Input");
-            }
-
+            geometrySquare.Length = 10;
+            geometrySquare.Width = 7;
             return geometrySquare;
         }
     }

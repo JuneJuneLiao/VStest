@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Geometry
 {
@@ -10,8 +11,8 @@ namespace Geometry
     {
         public override double Width
         {
-            get { return width; }
-            set { width = value; }
+            get { return Length; }
+            set { MessageBox.Show("Invalid Width Input"); }
         }
 
         public Square(double length) : base(length, length)
