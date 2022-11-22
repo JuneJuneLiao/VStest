@@ -39,111 +39,85 @@ namespace SimpleComputerUI
 
         private void genUI()
         {
-            LayoutControl lc = LayoutControl.NewV(23, 23, 23, 23, 23);
+            LayoutControl lc = LayoutControl.NewH(-3, -1);
             lc.Dock = DockStyle.Fill;
             lc.Gap = 10;
             lc.Padding = new Padding(5);
             Controls.Add(lc);
 
-            // Textbox and C Button
-            var row = lc.AddControl(LayoutControl.NewH(-3, -1));
+            var row = lc.AddControl(LayoutControl.NewV(-1, -1, -1, -1, -1));
             row.Gap = 10;
 
             InputNumberTextBox = row.AddControl(CxTextBox.New(""));
+            // Textbox前的Labe
+            InputNumberTextBox.LabelMinWidth = 0;
 
-            // Textbox 前的Labe
-            InputNumberTextBox.LabelMinWidth = 0; 
-            operatorButton = row.AddControl(CxButton.New("C"));
-            operatorButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(operatorButton);
+            var row1 = row.AddControl(LayoutControl.NewH(-1, -1, -1));
+            row1.Gap = 10;
+            string[] numberButtonText = new string[] { "1", "2", "3" };
 
-            // 1 ~ 3 and + Button
-            row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 10;
-            numberButton = row.AddControl(CxButton.New("1"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
+            for (int i = 0; i < numberButtonText.Count(); i++)
+            {
+                numberButton = row1.AddControl(CxButton.New(numberButtonText[i]));
+                numberButton.Click += new EventHandler(numberButton_Click);
+            }
 
-            numberButton = row.AddControl(CxButton.New("2"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
+            row1 = row.AddControl(LayoutControl.NewH(-1, -1, -1));
+            row1.Gap = 10;
+            string[] numberButtonText2 = new string[] { "4", "5", "6" };
 
-            numberButton = row.AddControl(CxButton.New("3"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
+            for (int i = 0; i < numberButtonText2.Count(); i++)
+            {
+                numberButton = row1.AddControl(CxButton.New(numberButtonText2[i]));
+                numberButton.Click += new EventHandler(numberButton_Click);
+            }
 
-            operatorButton = row.AddControl(CxButton.New("+"));
-            operatorButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(operatorButton);
+            row1 = row.AddControl(LayoutControl.NewH(-1, -1, -1));
+            row1.Gap = 10;
+            string[] numberButtonText3 = new string[] { "7", "8", "9" };
 
-            // 4 ~ 6 and - Button
-            row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 10;
-            numberButton = row.AddControl(CxButton.New("4"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
+            for (int i = 0; i < numberButtonText3.Count(); i++)
+            {
+                numberButton = row1.AddControl(CxButton.New(numberButtonText3[i]));
+                numberButton.Click += new EventHandler(numberButton_Click);
+            }
 
-            numberButton = row.AddControl(CxButton.New("5"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
+            row1 = row.AddControl(LayoutControl.NewH(-1, -1, -1));
+            row1.Gap = 10;
+            string[] numberButtonText4 = new string[] { ".", "0"};
 
-            numberButton = row.AddControl(CxButton.New("6"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
+            for (int i = 0; i < numberButtonText4.Count(); i++)
+            {
+                numberButton = row1.AddControl(CxButton.New(numberButtonText4[i]));
+                numberButton.Click += new EventHandler(numberButton_Click);
+            }
 
-            operatorButton = row.AddControl(CxButton.New("-"));
-            operatorButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(operatorButton);
-
-            // 7 ~ 9 and * Button
-            row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 10;
-            numberButton = row.AddControl(CxButton.New("7"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
-
-            numberButton = row.AddControl(CxButton.New("8"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
-
-            numberButton = row.AddControl(CxButton.New("9"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
-
-            operatorButton = row.AddControl(CxButton.New("*"));
-            operatorButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(operatorButton);
-
-            // . 0 = and / Button
-            row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 10;
-            numberButton = row.AddControl(CxButton.New("."));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
-
-            numberButton = row.AddControl(CxButton.New("0"));
-            numberButton.Click += new EventHandler(numberButton_Click);
-            Controls.Add(numberButton);
-
-            equalsButton = row.AddControl(CxButton.New("="));
+            equalsButton = row1.AddControl(CxButton.New("="));
             equalsButton.Click += new EventHandler(equalsButton_Click);
-            Controls.Add(equalsButton);
 
-            operatorButton = row.AddControl(CxButton.New("/"));
-            operatorButton.Click += new EventHandler(operatorButton_Click);
-            Controls.Add(operatorButton);
-            
+            row = lc.AddControl(LayoutControl.NewV(-1, -1, -1, -1, -1));
+            row.Gap = 10;
+            string[] operatorButtonText = new string[] { "C", "+", "-", "*", "/" };
+
+            for (int i = 0; i < operatorButtonText.Count(); i++)
+            {
+                operatorButton = row.AddControl(CxButton.New(operatorButtonText[i]));
+                operatorButton.Click += new EventHandler(operatorButton_Click);
+            }
+
             lc.Render();
         }
 
         private void numberButton_Click(object sender, EventArgs e)
         {
             Button numberButton = (Button)sender;
+
             if (deleteInputTextBox)
             {
                 InputNumberTextBox.Value = "";
                 deleteInputTextBox = false;
             }
+
             InputNumberTextBox.Value += numberButton.Text;
             confirmNumber = true;
         }
@@ -207,6 +181,7 @@ namespace SimpleComputerUI
 
                 operatorBefore = operatorAfter;
             }
+
             deleteInputTextBox = true;
         }
 
