@@ -17,7 +17,7 @@ namespace SimpleComputerUI
         {
             InitializeComponent();
 
-            Size = new Size(640, 220);
+            Size = new Size(480, 220);
             genUI();
         }
 
@@ -39,51 +39,100 @@ namespace SimpleComputerUI
 
         private void genUI()
         {
-            LayoutControl lc = LayoutControl.NewV(23, 23, 23, 23);
+            LayoutControl lc = LayoutControl.NewV(23, 23, 23, 23, 23);
             lc.Dock = DockStyle.Fill;
-            lc.Gap = 90;
+            lc.Gap = 10;
             lc.Padding = new Padding(5);
             Controls.Add(lc);
 
             // Textbox and C Button
             var row = lc.AddControl(LayoutControl.NewH(-3, -1));
-            row.Gap = 30;
+            row.Gap = 10;
 
             InputNumberTextBox = row.AddControl(CxTextBox.New(""));
+
+            // Textbox 前的Labe
+            InputNumberTextBox.LabelMinWidth = 0; 
             operatorButton = row.AddControl(CxButton.New("C"));
+            operatorButton.Click += new EventHandler(operatorButton_Click);
+            Controls.Add(operatorButton);
 
             // 1 ~ 3 and + Button
             row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 30;
+            row.Gap = 10;
             numberButton = row.AddControl(CxButton.New("1"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             numberButton = row.AddControl(CxButton.New("2"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             numberButton = row.AddControl(CxButton.New("3"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             operatorButton = row.AddControl(CxButton.New("+"));
+            operatorButton.Click += new EventHandler(operatorButton_Click);
+            Controls.Add(operatorButton);
 
             // 4 ~ 6 and - Button
             row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 30;
+            row.Gap = 10;
             numberButton = row.AddControl(CxButton.New("4"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             numberButton = row.AddControl(CxButton.New("5"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             numberButton = row.AddControl(CxButton.New("6"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             operatorButton = row.AddControl(CxButton.New("-"));
+            operatorButton.Click += new EventHandler(operatorButton_Click);
+            Controls.Add(operatorButton);
 
             // 7 ~ 9 and * Button
             row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 30;
+            row.Gap = 10;
             numberButton = row.AddControl(CxButton.New("7"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             numberButton = row.AddControl(CxButton.New("8"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             numberButton = row.AddControl(CxButton.New("9"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
             operatorButton = row.AddControl(CxButton.New("*"));
+            operatorButton.Click += new EventHandler(operatorButton_Click);
+            Controls.Add(operatorButton);
 
             // . 0 = and / Button
             row = lc.AddControl(LayoutControl.NewH(-1, -1, -1, -1));
-            row.Gap = 30;
+            row.Gap = 10;
             numberButton = row.AddControl(CxButton.New("."));
-            numberButton = row.AddControl(CxButton.New("0"));
-            equalsButton = row.AddControl(CxButton.New("="));
-            operatorButton = row.AddControl(CxButton.New("/"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
 
+            numberButton = row.AddControl(CxButton.New("0"));
+            numberButton.Click += new EventHandler(numberButton_Click);
+            Controls.Add(numberButton);
+
+            equalsButton = row.AddControl(CxButton.New("="));
+            equalsButton.Click += new EventHandler(equalsButton_Click);
+            Controls.Add(equalsButton);
+
+            operatorButton = row.AddControl(CxButton.New("/"));
+            operatorButton.Click += new EventHandler(operatorButton_Click);
+            Controls.Add(operatorButton);
+            
             lc.Render();
         }
 
@@ -92,10 +141,10 @@ namespace SimpleComputerUI
             Button numberButton = (Button)sender;
             if (deleteInputTextBox)
             {
-                InputNumberTextBox.Text = "";
+                InputNumberTextBox.Value = "";
                 deleteInputTextBox = false;
             }
-            InputNumberTextBox.Text += numberButton.Text;
+            InputNumberTextBox.Value += numberButton.Text;
             confirmNumber = true;
         }
 
@@ -120,7 +169,7 @@ namespace SimpleComputerUI
                     break;
             }
 
-            InputNumberTextBox.Text = calculateResult.ToString();
+            InputNumberTextBox.Value = calculateResult.ToString();
             number = calculateResult;
             numberTrigger = calculateResult;
             confirmNumber = false;
@@ -130,14 +179,14 @@ namespace SimpleComputerUI
         {
             if (((Button)sender).Text == "C")
             {
-                InputNumberTextBox.Text = "0";
+                InputNumberTextBox.Value = "0";
                 startInput = true;
                 confirmNumber = false;
                 operatorBefore = null;
             }
-            else if (startInput && !string.IsNullOrEmpty(InputNumberTextBox.Text))
+            else if (startInput && !string.IsNullOrEmpty(InputNumberTextBox.Value))
             {
-                number = Convert.ToDouble(InputNumberTextBox.Text);
+                number = Convert.ToDouble(InputNumberTextBox.Value);
                 operatorNumber = ((Button)sender).Text;
                 operatorAfter = operatorNumber;
                 numberTrigger = number;
@@ -145,10 +194,10 @@ namespace SimpleComputerUI
                 confirmNumber = false;
                 operatorBefore = operatorBefore == null ? operatorNumber : operatorBefore;
             }
-            else if (!startInput && !string.IsNullOrEmpty(InputNumberTextBox.Text))
+            else if (!startInput && !string.IsNullOrEmpty(InputNumberTextBox.Value))
             {
                 operatorNumber = ((Button)sender).Text;
-                number2 = Convert.ToDouble(InputNumberTextBox.Text);
+                number2 = Convert.ToDouble(InputNumberTextBox.Value);
                 operatorAfter = operatorNumber;
 
                 if (confirmNumber)
@@ -163,9 +212,9 @@ namespace SimpleComputerUI
 
         private void equalsButton_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(InputNumberTextBox.Text) && confirmNumber)
+            if (!string.IsNullOrEmpty(InputNumberTextBox.Value) && confirmNumber)
             {
-                number2 = Convert.ToDouble(InputNumberTextBox.Text);
+                number2 = Convert.ToDouble(InputNumberTextBox.Value);
                 operatorFunction();
                 startInput = true;
                 deleteInputTextBox = true;
