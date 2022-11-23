@@ -408,6 +408,7 @@ packages
 VStest
 *.exe
 *.pdb
+*.txt
 README.md
 *.png
 *.log
