@@ -48,43 +48,43 @@ namespace SimpleComputerUI
             Controls.Add(lc);
 
             var column = lc.AddControl(LayoutControl.NewV(-1, -1, -1, -1, -1));
-            column.Gap = 10;
 
             inputNumberTextBox = column.AddControl(new TextBox());
+            column.Gap = 10;
 
             var row = column.AddControl(LayoutControl.NewH(-1, -1, -1));
             row.Gap = 10;
-            string[] numberButtonText = new string[] { "1", "2", "3" };
-            for (int i = 0; i < numberButtonText.Count(); i++)
+            string[] oneToThreeNumberButtonTexts = new string[] { "1", "2", "3" };
+            for (int i = 0; i < oneToThreeNumberButtonTexts.Count(); i++)
             {
-                numberButton = row.AddControl(CxButton.New(numberButtonText[i]));
+                numberButton = row.AddControl(CxButton.New(oneToThreeNumberButtonTexts[i]));
                 numberButton.Click += new EventHandler(numberButton_Click);
             }
 
             row = column.AddControl(LayoutControl.NewH(-1, -1, -1));
             row.Gap = 10;
-            string[] numberButtonText2 = new string[] { "4", "5", "6" };
-            for (int i = 0; i < numberButtonText2.Count(); i++)
+            string[] fourToSixNumberButtonTexts = new string[] { "4", "5", "6" };
+            for (int i = 0; i < fourToSixNumberButtonTexts.Count(); i++)
             {
-                numberButton = row.AddControl(CxButton.New(numberButtonText2[i]));
+                numberButton = row.AddControl(CxButton.New(fourToSixNumberButtonTexts[i]));
                 numberButton.Click += new EventHandler(numberButton_Click);
             }
 
             row = column.AddControl(LayoutControl.NewH(-1, -1, -1));
             row.Gap = 10;
-            string[] numberButtonText3 = new string[] { "7", "8", "9" };
-            for (int i = 0; i < numberButtonText3.Count(); i++)
+            string[] sevenToNineNumberButtonTexts = new string[] { "7", "8", "9" };
+            for (int i = 0; i < sevenToNineNumberButtonTexts.Count(); i++)
             {
-                numberButton = row.AddControl(CxButton.New(numberButtonText3[i]));
+                numberButton = row.AddControl(CxButton.New(sevenToNineNumberButtonTexts[i]));
                 numberButton.Click += new EventHandler(numberButton_Click);
             }
 
             row = column.AddControl(LayoutControl.NewH(-1, -1, -1));
             row.Gap = 10;
-            string[] numberButtonText4 = new string[] { ".", "0"};
-            for (int i = 0; i < numberButtonText4.Count(); i++)
+            string[] pointAndZeroNumberButtonTexts = new string[] { ".", "0" };
+            for (int i = 0; i < pointAndZeroNumberButtonTexts.Count(); i++)
             {
-                numberButton = row.AddControl(CxButton.New(numberButtonText4[i]));
+                numberButton = row.AddControl(CxButton.New(pointAndZeroNumberButtonTexts[i]));
                 numberButton.Click += new EventHandler(numberButton_Click);
             }
 
