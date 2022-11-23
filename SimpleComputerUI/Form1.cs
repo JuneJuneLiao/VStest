@@ -33,6 +33,7 @@ namespace SimpleComputerUI
 
             Size = new Size(480, 220);
             genUI();
+            // 1
         }
 
         private void genUI()
